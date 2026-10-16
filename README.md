@@ -73,11 +73,22 @@
 
 부수고 싶은 학교가 있으면 [이슈](https://github.com/Hong-Iron/SMASH/issues/new)로 알려 주세요.
 
+## 학교 대항 랭킹
+
+게임에서 얻은 점수는 30초마다 학교 점수로 모이고, 첫 화면 위쪽에 오늘 순위와 전체 순위가 나옵니다. 오늘 순위는 매일 자정(한국 시간)에 새로 시작합니다.
+
+- 서버는 Supabase입니다. 표와 함수는 `supabase/schema.sql`에 있고, Supabase의 SQL Editor에서 한 번 실행하면 됩니다. 다시 실행해도 모인 점수는 지워지지 않습니다.
+- 브라우저는 공개 키(publishable/anon key)로 두 함수만 부를 수 있습니다. `smash_add`는 점수를 더하고, `smash_board`는 학교별 합계를 돌려줍니다. 표를 직접 읽거나 쓸 수는 없습니다.
+- 점수를 부풀리는 것을 줄이려고 한 번에 더할 수 있는 점수에 상한을 둡니다(50만 점, 큰 캠퍼스는 건물 수 × 8,000점). 같은 IP에서는 1분에 60번까지만 받습니다. IP는 날짜와 섞은 해시로 바꿔 2분 동안만 둡니다.
+- 서버 주소와 공개 키는 `config.json`(이 레포와 각 게임 레포)에 있습니다. 비밀 키(secret, service_role)는 어디에도 넣지 않습니다.
+- 방문 수는 쿠키를 쓰지 않는 [GoatCounter](https://www.goatcounter.com/)로 셉니다.
+
 ## 학교 추가하는 법
 
 1. 학교 게임 레포를 하나 만듭니다(기존 레포를 복사해 `config.json`과 데이터만 바꿈).
 2. 이 레포의 `schools.json`에 학교를 한 줄 넣습니다(`code`, `name`, `campus`, `nameEn`, `region`, `url`, `buildings`, `added`). 허브의 검색은 이름·지역·영문·초성으로, 정렬은 이름순·최근 추가순·건물 많은 순으로 됩니다.
 3. `python3 tools/build.py`로 `site/index.html`을 다시 만들고 `main`에 push하면 GitHub Pages에 올라갑니다.
+4. `python3 tools/schools_sql.py > supabase/schools.sql`로 학교 목록 SQL을 다시 만들고, Supabase SQL Editor에서 실행합니다. 목록에 없는 학교의 점수는 랭킹 서버가 받지 않습니다.
 
 ## 앱 아이콘
 

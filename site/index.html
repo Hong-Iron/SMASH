@@ -18,6 +18,7 @@
 <link rel="icon" href="icon-32.png" sizes="32x32">
 <link rel="icon" href="icon-512.png" sizes="512x512">
 <link rel="apple-touch-icon" href="icon-180.png">
+<script data-goatcounter="https://sassafras.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bungee&family=IBM+Plex+Mono:wght@500&family=IBM+Plex+Sans+KR:wght@400;500;600&display=swap">
@@ -93,6 +94,32 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--gold); outline-
 .support .kakao { background: #fee500; }
 .support .bmc { background: #ffdd00; }
 
+.board { display: grid; gap: 12px; padding: 18px; background: var(--panel); border: 1px solid var(--line); border-radius: 14px; scroll-margin-top: 16px; }
+.board-head { display: flex; align-items: center; justify-content: space-between; gap: 10px 16px; flex-wrap: wrap; }
+.board h2 { margin: 0; font: 400 20px/1.2 var(--font-display); }
+.board h2 span { color: var(--gold); }
+.tabs { display: inline-flex; padding: 3px; border: 1px solid var(--line); border-radius: 999px; background: var(--bg); }
+.tabs button { padding: 5px 14px; border: 0; border-radius: 999px; background: transparent; color: var(--muted); font: 600 13px var(--font-ui); cursor: pointer; }
+.tabs button[aria-selected="true"] { background: var(--hot); color: #1a0d05; }
+.board-note { margin: -4px 0 0; color: var(--muted); font-size: 13px; }
+.board-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.board-list li { display: grid; grid-template-columns: 34px minmax(0, 1fr) 136px; align-items: center; column-gap: 12px; row-gap: 5px; padding: 9px 12px 10px; border-radius: 10px; background: var(--bg); }
+.board-list .pos { grid-row: span 2; font: 400 20px var(--font-display); color: var(--muted); text-align: center; font-variant-numeric: tabular-nums; }
+.board-list li:nth-child(1) .pos { color: var(--gold); }
+.board-list li:nth-child(2) .pos { color: #d7dde6; }
+.board-list li:nth-child(3) .pos { color: #e0965a; }
+.board-list .who { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 600; text-decoration: none; }
+.board-list .who:hover { color: var(--hot); }
+.board-list .pts { font: 500 15px var(--font-data); font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; }
+.board-list .bar { height: 5px; border-radius: 3px; background: var(--line); overflow: hidden; }
+.board-list .bar i { display: block; height: 100%; border-radius: 3px; background: linear-gradient(90deg, var(--hot), var(--gold)); }
+.board-list .sub { color: var(--muted); font-size: 12px; text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+@media (max-width: 560px) { .board-list li { grid-template-columns: 26px minmax(0, 1fr) 112px; column-gap: 10px; padding: 8px 10px 9px; } .board-list .sub { font-size: 11px; } }
+.board-empty { margin: 0; padding: 16px; border: 1px dashed var(--line); border-radius: 10px; color: var(--muted); text-align: center; font-size: 14px; }
+.board-more { justify-self: center; padding: 7px 16px; border: 1px solid var(--line); border-radius: 999px; background: transparent; color: var(--fg); font: 600 13px var(--font-ui); cursor: pointer; }
+.board-more:hover { border-color: var(--gold); }
+.card .today { color: var(--gold); }
+
 footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
 @media (prefers-reduced-motion: reduce) { .card { transition: none; } .card:hover { transform: none; } }
 </style>
@@ -105,6 +132,19 @@ footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
     <div class="chips"><span>무기 6가지</span><span>스타일 랭크 D~SSS</span><span>밤 모드</span><span>되감기</span><span>결과 카드 공유</span></div>
   </header>
 
+  <section class="board" id="rank" aria-labelledby="rank-title" hidden>
+    <div class="board-head">
+      <h2 id="rank-title">학교 대항 <span>파괴 랭킹</span></h2>
+      <div class="tabs" role="tablist" aria-label="기간">
+        <button type="button" role="tab" aria-selected="true" data-span="today">오늘</button>
+        <button type="button" role="tab" aria-selected="false" data-span="total">전체</button>
+      </div>
+    </div>
+    <p class="board-note" id="board-note"></p>
+    <ol class="board-list" id="board-list"></ol>
+    <button type="button" class="board-more" id="board-more" hidden></button>
+  </section>
+
   <div class="finder">
     <label class="search" for="q">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
@@ -115,6 +155,7 @@ footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
         <option value="name">이름순</option>
         <option value="new">최근 추가순</option>
         <option value="big">건물 많은 순</option>
+        <option value="hot" hidden>오늘 많이 부서진 순</option>
       </select>
     </label>
   </div>
@@ -132,11 +173,13 @@ footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
 
   <footer>
     <span>학교와 관계없는 비공식 팬 게임입니다. 학교 로고와 교표는 쓰지 않습니다.</span>
+    <span>학교 랭킹에는 학교 코드와 점수만 보냅니다. 방문 수는 쿠키를 쓰지 않는 GoatCounter로 셉니다.</span>
     <span>건물·도로 © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap 기여자</a> · 고도 AWS Terrain Tiles (SRTM 30 m 기반) · 소스 <a href="https://github.com/Hong-Iron/SMASH" target="_blank" rel="noopener">GitHub</a></span>
   </footer>
 </main>
 
 <script type="application/json" id="schools-data">[{"code": "CAU", "name": "중앙대학교", "campus": "중앙대학교 서울캠퍼스", "url": "https://hong-iron.github.io/SMASH-CAU/", "buildings": 25, "nameEn": "Chung-Ang University", "region": "서울 동작구 흑석동", "added": "2026-10-15"}, {"code": "SSU", "name": "숭실대학교", "campus": "숭실대학교 캠퍼스", "url": "https://hong-iron.github.io/SMASH-SSU/", "buildings": 31, "nameEn": "Soongsil University", "region": "서울 동작구 상도동", "added": "2026-10-16"}, {"code": "SNU", "name": "서울대학교", "campus": "서울대학교 관악캠퍼스", "url": "https://hong-iron.github.io/SMASH-SNU/", "buildings": 203, "nameEn": "Seoul National University", "region": "서울 관악구", "added": "2026-10-16"}, {"code": "KU", "name": "고려대학교", "campus": "고려대학교 서울캠퍼스", "url": "https://hong-iron.github.io/SMASH-KU/", "buildings": 123, "nameEn": "Korea University", "region": "서울 성북구 안암동", "added": "2026-10-16"}, {"code": "YONSEI", "name": "연세대학교", "campus": "연세대학교 신촌캠퍼스", "url": "https://hong-iron.github.io/SMASH-YONSEI/", "buildings": 146, "nameEn": "Yonsei University", "region": "서울 서대문구 신촌동", "added": "2026-10-16"}, {"code": "SOGANG", "name": "서강대학교", "campus": "서강대학교", "url": "https://hong-iron.github.io/SMASH-SOGANG/", "buildings": 31, "nameEn": "Sogang University", "region": "서울 마포구 신수동", "added": "2026-10-16"}, {"code": "HYU", "name": "한양대학교", "campus": "한양대학교 서울캠퍼스", "url": "https://hong-iron.github.io/SMASH-HYU/", "buildings": 63, "nameEn": "Hanyang University", "region": "서울 성동구 행당동", "added": "2026-10-16"}, {"code": "SKKU", "name": "성균관대학교", "campus": "성균관대학교 인문사회과학캠퍼스", "url": "https://hong-iron.github.io/SMASH-SKKU/", "buildings": 23, "nameEn": "Sungkyunkwan University", "region": "서울 종로구 명륜동", "added": "2026-10-16"}, {"code": "KHU", "name": "경희대학교", "campus": "경희대학교 서울캠퍼스", "url": "https://hong-iron.github.io/SMASH-KHU/", "buildings": 64, "nameEn": "Kyung Hee University", "region": "서울 동대문구 회기동", "added": "2026-10-16"}, {"code": "EWHA", "name": "이화여자대학교", "campus": "이화여자대학교", "url": "https://hong-iron.github.io/SMASH-EWHA/", "buildings": 65, "nameEn": "Ewha Womans University", "region": "서울 서대문구 대현동", "added": "2026-10-16"}, {"code": "KONKUK", "name": "건국대학교", "campus": "건국대학교 서울캠퍼스", "url": "https://hong-iron.github.io/SMASH-KONKUK/", "buildings": 48, "nameEn": "Konkuk University", "region": "서울 광진구 화양동", "added": "2026-10-16"}, {"code": "DGU", "name": "동국대학교", "campus": "동국대학교 서울캠퍼스", "url": "https://hong-iron.github.io/SMASH-DGU/", "buildings": 31, "nameEn": "Dongguk University", "region": "서울 중구 필동", "added": "2026-10-16"}, {"code": "HONGIK", "name": "홍익대학교", "campus": "홍익대학교 서울캠퍼스", "url": "https://hong-iron.github.io/SMASH-HONGIK/", "buildings": 31, "nameEn": "Hongik University", "region": "서울 마포구 상수동", "added": "2026-10-16"}, {"code": "UOS", "name": "서울시립대학교", "campus": "서울시립대학교", "url": "https://hong-iron.github.io/SMASH-UOS/", "buildings": 37, "nameEn": "University of Seoul", "region": "서울 동대문구 전농동", "added": "2026-10-16"}, {"code": "KMU", "name": "국민대학교", "campus": "국민대학교", "url": "https://hong-iron.github.io/SMASH-KMU/", "buildings": 26, "nameEn": "Kookmin University", "region": "서울 성북구 정릉동", "added": "2026-10-16"}, {"code": "SEJONG", "name": "세종대학교", "campus": "세종대학교", "url": "https://hong-iron.github.io/SMASH-SEJONG/", "buildings": 26, "nameEn": "Sejong University", "region": "서울 광진구 군자동", "added": "2026-10-16"}, {"code": "SOOKMYUNG", "name": "숙명여자대학교", "campus": "숙명여자대학교", "url": "https://hong-iron.github.io/SMASH-SOOKMYUNG/", "buildings": 20, "nameEn": "Sookmyung Women's University", "region": "서울 용산구 청파동", "added": "2026-10-16"}, {"code": "HUFS", "name": "한국외국어대학교", "campus": "한국외국어대학교 서울캠퍼스", "url": "https://hong-iron.github.io/SMASH-HUFS/", "buildings": 16, "nameEn": "Hankuk University of Foreign Studies", "region": "서울 동대문구 이문동", "added": "2026-10-16"}, {"code": "INHA", "name": "인하대학교", "campus": "인하대학교", "url": "https://hong-iron.github.io/SMASH-INHA/", "buildings": 25, "nameEn": "Inha University", "region": "인천 미추홀구 용현동", "added": "2026-10-16"}, {"code": "KANGWON", "name": "강원대학교", "campus": "강원대학교 춘천캠퍼스", "url": "https://hong-iron.github.io/SMASH-KANGWON/", "buildings": 125, "nameEn": "Kangwon National University", "region": "강원 춘천시 효자동", "added": "2026-10-17"}, {"code": "KANGWON-GANGNEUNG", "name": "강원대학교", "campus": "강원대학교 강릉캠퍼스", "url": "https://hong-iron.github.io/SMASH-KANGWON-GANGNEUNG/", "buildings": 41, "nameEn": "Kangwon National University Gangneung Campus", "region": "강원 강릉시 지변동", "added": "2026-10-17"}, {"code": "KANGWON-SAMCHEOK", "name": "강원대학교", "campus": "강원대학교 삼척캠퍼스", "url": "https://hong-iron.github.io/SMASH-KANGWON-SAMCHEOK/", "buildings": 26, "nameEn": "Kangwon National University Samcheok Campus", "region": "강원 삼척시 교동", "added": "2026-10-17"}, {"code": "KANGWON-WONJU", "name": "강원대학교", "campus": "강원대학교 원주캠퍼스", "url": "https://hong-iron.github.io/SMASH-KANGWON-WONJU/", "buildings": 16, "nameEn": "Kangwon National University Wonju Campus", "region": "강원 원주시 흥업면", "added": "2026-10-17"}, {"code": "KANGWON-DOGYE", "name": "강원대학교", "campus": "강원대학교 도계캠퍼스", "url": "https://hong-iron.github.io/SMASH-KANGWON-DOGYE/", "buildings": 9, "nameEn": "Kangwon National University Dogye Campus", "region": "강원 삼척시 도계읍", "added": "2026-10-17"}, {"code": "KDU-SEORAK", "name": "경동대학교", "campus": "경동대학교 설악캠퍼스", "url": "https://hong-iron.github.io/SMASH-KDU-SEORAK/", "buildings": 9, "nameEn": "Kyungdong University Seorak Campus", "region": "강원 속초시", "added": "2026-10-17"}, {"code": "KDU-WONJU", "name": "경동대학교", "campus": "경동대학교 메디컬캠퍼스", "url": "https://hong-iron.github.io/SMASH-KDU-WONJU/", "buildings": 7, "nameEn": "Kyungdong University Medical Campus", "region": "강원 원주시 문막읍", "added": "2026-10-17"}, {"code": "KDU-YANGJU", "name": "경동대학교", "campus": "경동대학교 메트로폴캠퍼스", "url": "https://hong-iron.github.io/SMASH-KDU-YANGJU/", "buildings": 6, "nameEn": "Kyungdong University Metropol Campus", "region": "경기 양주시 고암동", "added": "2026-10-17"}, {"code": "HKNU", "name": "한경국립대학교", "campus": "한경국립대학교 안성캠퍼스", "url": "https://hong-iron.github.io/SMASH-HKNU/", "buildings": 24, "nameEn": "Hankyong National University", "region": "경기 안성시 석정동", "added": "2026-10-17"}, {"code": "DIMA", "name": "동아방송예술대학교", "campus": "동아방송예술대학교", "url": "https://hong-iron.github.io/SMASH-DIMA/", "buildings": 9, "nameEn": "Dong-ah Institute of Media and Arts", "region": "경기 안성시 삼죽면", "added": "2026-10-17"}, {"code": "PNU", "name": "부산대학교", "campus": "부산대학교 부산캠퍼스", "url": "https://hong-iron.github.io/SMASH-PNU/", "buildings": 88, "nameEn": "Pusan National University", "region": "부산 금정구 장전동", "added": "2026-10-17"}, {"code": "PNU-MIRYANG", "name": "부산대학교", "campus": "부산대학교 밀양캠퍼스", "url": "https://hong-iron.github.io/SMASH-PNU-MIRYANG/", "buildings": 14, "nameEn": "Pusan National University Miryang Campus", "region": "경남 밀양시 삼랑진읍", "added": "2026-10-17"}, {"code": "PNU-YANGSAN", "name": "부산대학교", "campus": "부산대학교 양산캠퍼스", "url": "https://hong-iron.github.io/SMASH-PNU-YANGSAN/", "buildings": 13, "nameEn": "Pusan National University Yangsan Campus", "region": "경남 양산시 물금읍", "added": "2026-10-17"}, {"code": "PKNU", "name": "국립부경대학교", "campus": "국립부경대학교 대연캠퍼스", "url": "https://hong-iron.github.io/SMASH-PKNU/", "buildings": 68, "nameEn": "Pukyong National University", "region": "부산 남구 대연동", "added": "2026-10-17"}, {"code": "PKNU-YONGDANG", "name": "국립부경대학교", "campus": "국립부경대학교 용당캠퍼스", "url": "https://hong-iron.github.io/SMASH-PKNU-YONGDANG/", "buildings": 30, "nameEn": "Pukyong National University Yongdang Campus", "region": "부산 남구 용당동", "added": "2026-10-17"}, {"code": "DEU", "name": "동의대학교", "campus": "동의대학교 가야캠퍼스", "url": "https://hong-iron.github.io/SMASH-DEU/", "buildings": 33, "nameEn": "Dong-eui University", "region": "부산 부산진구 가야동", "added": "2026-10-17"}, {"code": "DGU-WISE", "name": "동국대학교", "campus": "동국대학교 WISE캠퍼스", "url": "https://hong-iron.github.io/SMASH-DGU-WISE/", "buildings": 18, "nameEn": "Dongguk University WISE Campus", "region": "경북 경주시 석장동", "added": "2026-10-17"}, {"code": "TUKOREA", "name": "한국공학대학교", "campus": "한국공학대학교", "url": "https://hong-iron.github.io/SMASH-TUKOREA/", "buildings": 16, "nameEn": "Tech University of Korea", "region": "경기 시흥시 정왕동", "added": "2026-10-17"}, {"code": "JNU", "name": "전남대학교", "campus": "전남대학교 광주캠퍼스", "url": "https://hong-iron.github.io/SMASH-JNU/", "buildings": 210, "nameEn": "Chonnam National University", "region": "광주 북구 용봉동", "added": "2026-10-17"}, {"code": "JNU-YEOSU", "name": "전남대학교", "campus": "전남대학교 여수캠퍼스", "url": "https://hong-iron.github.io/SMASH-JNU-YEOSU/", "buildings": 20, "nameEn": "Chonnam National University Yeosu Campus", "region": "전남 여수시 둔덕동", "added": "2026-10-17"}, {"code": "JNU-GUKDONG", "name": "전남대학교", "campus": "전남대학교 국동캠퍼스", "url": "https://hong-iron.github.io/SMASH-JNU-GUKDONG/", "buildings": 8, "nameEn": "Chonnam National University Gukdong Campus", "region": "전남 여수시 국동", "added": "2026-10-17"}, {"code": "JNU-HWASUN", "name": "전남대학교", "campus": "전남대학교 화순캠퍼스", "url": "https://hong-iron.github.io/SMASH-JNU-HWASUN/", "buildings": 15, "nameEn": "Chonnam National University Hwasun Campus", "region": "전남 화순군 화순읍", "added": "2026-10-17"}, {"code": "JNU-HAKDONG", "name": "전남대학교", "campus": "전남대학교 학동캠퍼스", "url": "https://hong-iron.github.io/SMASH-JNU-HAKDONG/", "buildings": 11, "nameEn": "Chonnam National University Hakdong Campus", "region": "광주 동구 학동", "added": "2026-10-17"}, {"code": "KNU", "name": "경북대학교", "campus": "경북대학교 대구캠퍼스", "url": "https://hong-iron.github.io/SMASH-KNU/", "buildings": 94, "nameEn": "Kyungpook National University", "region": "대구 북구 산격동", "added": "2026-10-17"}, {"code": "KNU-SANGJU", "name": "경북대학교", "campus": "경북대학교 상주캠퍼스", "url": "https://hong-iron.github.io/SMASH-KNU-SANGJU/", "buildings": 35, "nameEn": "Kyungpook National University Sangju Campus", "region": "경북 상주시 가장동", "added": "2026-10-17"}, {"code": "CHOSUN", "name": "조선대학교", "campus": "조선대학교", "url": "https://hong-iron.github.io/SMASH-CHOSUN/", "buildings": 62, "nameEn": "Chosun University", "region": "광주 동구 서석동", "added": "2026-10-17"}, {"code": "CAU-DAVINCI", "name": "중앙대학교", "campus": "중앙대학교 다빈치캠퍼스", "url": "https://hong-iron.github.io/SMASH-CAU-DAVINCI/", "buildings": 18, "nameEn": "Chung-Ang University DaVinci Campus", "region": "경기 안성시 대덕면", "added": "2026-10-17"}, {"code": "KU-SEJONG", "name": "고려대학교", "campus": "고려대학교 세종캠퍼스", "url": "https://hong-iron.github.io/SMASH-KU-SEJONG/", "buildings": 29, "nameEn": "Korea University Sejong Campus", "region": "세종 조치원읍", "added": "2026-10-17"}, {"code": "YONSEI-MIRAE", "name": "연세대학교", "campus": "연세대학교 미래캠퍼스", "url": "https://hong-iron.github.io/SMASH-YONSEI-MIRAE/", "buildings": 39, "nameEn": "Yonsei University Mirae Campus", "region": "강원 원주시 흥업면", "added": "2026-10-17"}, {"code": "YONSEI-INTL", "name": "연세대학교", "campus": "연세대학교 국제캠퍼스", "url": "https://hong-iron.github.io/SMASH-YONSEI-INTL/", "buildings": 30, "nameEn": "Yonsei University International Campus", "region": "인천 연수구 송도동", "added": "2026-10-17"}, {"code": "YONSEI-WMED", "name": "연세대학교", "campus": "연세대학교 원주의과대학", "url": "https://hong-iron.github.io/SMASH-YONSEI-WMED/", "buildings": 12, "nameEn": "Yonsei University Wonju College of Medicine", "region": "강원 원주시 일산동", "added": "2026-10-17"}, {"code": "HYU-ERICA", "name": "한양대학교", "campus": "한양대학교 ERICA캠퍼스", "url": "https://hong-iron.github.io/SMASH-HYU-ERICA/", "buildings": 60, "nameEn": "Hanyang University ERICA Campus", "region": "경기 안산시 상록구 사동", "added": "2026-10-17"}, {"code": "KHU-GLOBAL", "name": "경희대학교", "campus": "경희대학교 국제캠퍼스", "url": "https://hong-iron.github.io/SMASH-KHU-GLOBAL/", "buildings": 41, "nameEn": "Kyung Hee University Global Campus", "region": "경기 용인시 기흥구 서천동", "added": "2026-10-17"}, {"code": "KHU-GWANGNEUNG", "name": "경희대학교", "campus": "경희대학교 광릉캠퍼스", "url": "https://hong-iron.github.io/SMASH-KHU-GWANGNEUNG/", "buildings": 8, "nameEn": "Kyung Hee University Gwangneung Campus", "region": "경기 남양주시 진접읍", "added": "2026-10-17"}, {"code": "SKKU-SUWON", "name": "성균관대학교", "campus": "성균관대학교 자연과학캠퍼스", "url": "https://hong-iron.github.io/SMASH-SKKU-SUWON/", "buildings": 39, "nameEn": "Sungkyunkwan University Natural Sciences Campus", "region": "경기 수원시 장안구 천천동", "added": "2026-10-17"}, {"code": "HUFS-GLOBAL", "name": "한국외국어대학교", "campus": "한국외국어대학교 글로벌캠퍼스", "url": "https://hong-iron.github.io/SMASH-HUFS-GLOBAL/", "buildings": 24, "nameEn": "Hankuk University of Foreign Studies Global Campus", "region": "경기 용인시 처인구 모현읍", "added": "2026-10-17"}, {"code": "KONKUK-GLOCAL", "name": "건국대학교", "campus": "건국대학교 글로컬캠퍼스", "url": "https://hong-iron.github.io/SMASH-KONKUK-GLOCAL/", "buildings": 37, "nameEn": "Konkuk University Glocal Campus", "region": "충북 충주시 단월동", "added": "2026-10-17"}, {"code": "HONGIK-SEJONG", "name": "홍익대학교", "campus": "홍익대학교 세종캠퍼스", "url": "https://hong-iron.github.io/SMASH-HONGIK-SEJONG/", "buildings": 29, "nameEn": "Hongik University Sejong Campus", "region": "세종 조치원읍", "added": "2026-10-17"}, {"code": "SNU-SIHEUNG", "name": "서울대학교", "campus": "서울대학교 시흥캠퍼스", "url": "https://hong-iron.github.io/SMASH-SNU-SIHEUNG/", "buildings": 18, "nameEn": "Seoul National University Siheung Campus", "region": "경기 시흥시 배곧동", "added": "2026-10-17"}, {"code": "SNU-YEONGEON", "name": "서울대학교", "campus": "서울대학교 연건캠퍼스", "url": "https://hong-iron.github.io/SMASH-SNU-YEONGEON/", "buildings": 46, "nameEn": "Seoul National University Yeongeon Campus", "region": "서울 종로구 연건동", "added": "2026-10-17"}, {"code": "SNU-PYEONGCHANG", "name": "서울대학교", "campus": "서울대학교 평창캠퍼스", "url": "https://hong-iron.github.io/SMASH-SNU-PYEONGCHANG/", "buildings": 45, "nameEn": "Seoul National University Pyeongchang Campus", "region": "강원 평창군 대화면", "added": "2026-10-17"}]</script>
+<script type="application/json" id="hub-config">{"supabaseUrl": "https://qohxhopinnwrzrgxrdvj.supabase.co", "supabaseKey": "sb_publishable_9RcuLHwCWIpdzjqDvXMtIA_kicFhQ8g"}</script>
 <script>
   (function () {
     var schools = JSON.parse(document.getElementById('schools-data').textContent);
@@ -172,6 +215,8 @@ footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
       var name = document.createElement('span'); name.className = 'name'; name.textContent = s.campus;
       var region = document.createElement('span'); region.className = 'region'; region.textContent = s.region || '';
       var meta = document.createElement('span'); meta.className = 'meta'; meta.textContent = '건물 ' + s.buildings + '동';
+      var row = board && board[s.code];
+      if (row && row.today_score > 0) { var t = document.createElement('span'); t.className = 'today'; t.textContent = ' · 오늘 ' + fmtPts(row.today_score) + '점'; meta.append(t); }
       var go = document.createElement('span'); go.className = 'go'; go.textContent = '부수러 가기 →';
       body.append(code, name, region, meta, go);
       a.append(img, body);
@@ -193,6 +238,7 @@ footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
       list.sort(function (a, b) {
         if (mode === 'new') return (b.added || '').localeCompare(a.added || '') || a.name.localeCompare(b.name, 'ko');
         if (mode === 'big') return b.buildings - a.buildings;
+        if (mode === 'hot' && board) return todayOf(b) - todayOf(a) || a.name.localeCompare(b.name, 'ko');
         return a.name.localeCompare(b.name, 'ko');
       });
       grid.replaceChildren();
@@ -205,10 +251,81 @@ footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
       countEl.textContent = query ? ('‘' + query + '’ 검색 결과 ' + list.length + '곳') : ('학교 ' + schools.length + '곳');
       try { localStorage.setItem('smash-hub-sort', mode); } catch (e) { /* storage blocked */ }
     }
-    try { var saved = localStorage.getItem('smash-hub-sort'); if (saved) sortSel.value = saved; } catch (e) { /* storage blocked */ }
+    // ---- school leaderboard (Supabase): today's and all-time totals per school
+    var cfg = JSON.parse(document.getElementById('hub-config').textContent || '{}');
+    var board = null, span = 'today', showAll = false;
+    var byCode = {}; schools.forEach(function (s) { byCode[s.code] = s; });
+    function trim0(v, d) { return v.toFixed(d).replace(/\.0$/, ''); }
+    function fmtPts(n) { return n >= 1e8 ? trim0(n / 1e8, n >= 1e9 ? 0 : 1) + '억' : n >= 1e4 ? trim0(n / 1e4, n >= 1e5 ? 0 : 1) + '만' : Math.round(n).toLocaleString('ko-KR'); }
+    function todayOf(s) { var r = board && board[s.code]; return r ? r.today_score : 0; }
+    function shortName(s) { return s.campus.replace('대학교', '대').replace(/ 캠퍼스$/, ''); }
+    var listEl = document.getElementById('board-list'), noteEl = document.getElementById('board-note'), moreBtn = document.getElementById('board-more');
+    function renderBoard() {
+      var key = span === 'today' ? 'today' : 'total';
+      var rows = Object.keys(board).map(function (c) { return board[c]; })
+        .filter(function (r) { return byCode[r.code] && r[key + '_score'] > 0; })
+        .sort(function (a, b) { return b[key + '_score'] - a[key + '_score']; });
+      noteEl.textContent = span === 'today'
+        ? '게임에서 얻은 점수가 학교 점수로 모입니다. 오늘 순위는 매일 자정(한국 시간)에 새로 시작합니다.'
+        : '지금까지 모인 학교별 점수입니다.';
+      listEl.replaceChildren();
+      if (!rows.length) {
+        var e = document.createElement('p'); e.className = 'board-empty';
+        e.textContent = span === 'today' ? '오늘은 아직 아무도 부수지 않았습니다. 첫 점수를 올려 보세요.' : '아직 모인 점수가 없습니다.';
+        listEl.append(e); moreBtn.hidden = true; return;
+      }
+      var top = rows[0][key + '_score'];
+      (showAll ? rows : rows.slice(0, 10)).forEach(function (r, i) {
+        var s = byCode[r.code], v = r[key + '_score'];
+        var li = document.createElement('li');
+        var pos = document.createElement('span'); pos.className = 'pos'; pos.textContent = i + 1;
+        var who = document.createElement('a'); who.className = 'who'; who.href = s.url; who.textContent = shortName(s);
+        var pts = document.createElement('span'); pts.className = 'pts'; pts.textContent = fmtPts(v) + '점';
+        var bar = document.createElement('span'); bar.className = 'bar';
+        var fill = document.createElement('i'); fill.style.width = Math.max(2, Math.round(100 * v / top)) + '%'; bar.append(fill);
+        var sub = document.createElement('span'); sub.className = 'sub';
+        sub.textContent = '건물 ' + r[key + '_kills'].toLocaleString('ko-KR') + '동 · ' + r[key + '_players'].toLocaleString('ko-KR') + '판';
+        li.append(pos, who, pts, bar, sub);
+        listEl.append(li);
+      });
+      moreBtn.hidden = rows.length <= 10;
+      moreBtn.textContent = showAll ? '10위까지만 보기' : '전체 ' + rows.length + '곳 보기';
+    }
+    document.querySelectorAll('.tabs button').forEach(function (b) {
+      b.addEventListener('click', function () {
+        span = b.dataset.span; showAll = false;
+        document.querySelectorAll('.tabs button').forEach(function (x) { x.setAttribute('aria-selected', String(x === b)); });
+        renderBoard();
+      });
+    });
+    moreBtn.addEventListener('click', function () { showAll = !showAll; renderBoard(); });
+    function loadBoard() {
+      if (!cfg.supabaseUrl || !cfg.supabaseKey) return;
+      var h = { apikey: cfg.supabaseKey };
+      if (/^eyJ/.test(cfg.supabaseKey)) h.Authorization = 'Bearer ' + cfg.supabaseKey;
+      fetch(cfg.supabaseUrl.replace(/\/+$/, '') + '/rest/v1/rpc/smash_board', { headers: h })
+        .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+        .then(function (rows) {
+          if (!Array.isArray(rows)) return;
+          var first = !board;
+          board = {};
+          rows.forEach(function (r) {
+            board[r.code] = { code: r.code, today_score: +r.today_score, today_kills: +r.today_kills, today_players: +r.today_players, total_score: +r.total_score, total_kills: +r.total_kills, total_players: +r.total_players };
+          });
+          document.getElementById('rank').hidden = false;
+          sortSel.querySelector('option[value="hot"]').hidden = false;
+          if (first) { try { var sv = localStorage.getItem('smash-hub-sort'); if (sv === 'hot') sortSel.value = 'hot'; } catch (e) { /* storage blocked */ } }
+          renderBoard(); render();
+          if (first && location.hash === '#rank') document.getElementById('rank').scrollIntoView();
+        })
+        .catch(function () { /* leaderboard unavailable: the school list still works */ });
+    }
+    try { var saved = localStorage.getItem('smash-hub-sort'); if (saved && saved !== 'hot') sortSel.value = saved; } catch (e) { /* storage blocked */ }
     q.addEventListener('input', render);
     sortSel.addEventListener('change', render);
     render();
+    loadBoard();
+    setInterval(function () { if (document.visibilityState === 'visible') loadBoard(); }, 60000);
   })();
 </script>
 </body>

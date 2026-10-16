@@ -18,6 +18,7 @@
 <link rel="icon" href="icon-32.png" sizes="32x32">
 <link rel="icon" href="icon-512.png" sizes="512x512">
 <link rel="apple-touch-icon" href="icon-180.png">
+<!--GOATCOUNTER-->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bungee&family=IBM+Plex+Mono:wght@500&family=IBM+Plex+Sans+KR:wght@400;500;600&display=swap">
@@ -93,6 +94,32 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--gold); outline-
 .support .kakao { background: #fee500; }
 .support .bmc { background: #ffdd00; }
 
+.board { display: grid; gap: 12px; padding: 18px; background: var(--panel); border: 1px solid var(--line); border-radius: 14px; scroll-margin-top: 16px; }
+.board-head { display: flex; align-items: center; justify-content: space-between; gap: 10px 16px; flex-wrap: wrap; }
+.board h2 { margin: 0; font: 400 20px/1.2 var(--font-display); }
+.board h2 span { color: var(--gold); }
+.tabs { display: inline-flex; padding: 3px; border: 1px solid var(--line); border-radius: 999px; background: var(--bg); }
+.tabs button { padding: 5px 14px; border: 0; border-radius: 999px; background: transparent; color: var(--muted); font: 600 13px var(--font-ui); cursor: pointer; }
+.tabs button[aria-selected="true"] { background: var(--hot); color: #1a0d05; }
+.board-note { margin: -4px 0 0; color: var(--muted); font-size: 13px; }
+.board-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.board-list li { display: grid; grid-template-columns: 34px minmax(0, 1fr) 136px; align-items: center; column-gap: 12px; row-gap: 5px; padding: 9px 12px 10px; border-radius: 10px; background: var(--bg); }
+.board-list .pos { grid-row: span 2; font: 400 20px var(--font-display); color: var(--muted); text-align: center; font-variant-numeric: tabular-nums; }
+.board-list li:nth-child(1) .pos { color: var(--gold); }
+.board-list li:nth-child(2) .pos { color: #d7dde6; }
+.board-list li:nth-child(3) .pos { color: #e0965a; }
+.board-list .who { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 600; text-decoration: none; }
+.board-list .who:hover { color: var(--hot); }
+.board-list .pts { font: 500 15px var(--font-data); font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; }
+.board-list .bar { height: 5px; border-radius: 3px; background: var(--line); overflow: hidden; }
+.board-list .bar i { display: block; height: 100%; border-radius: 3px; background: linear-gradient(90deg, var(--hot), var(--gold)); }
+.board-list .sub { color: var(--muted); font-size: 12px; text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+@media (max-width: 560px) { .board-list li { grid-template-columns: 26px minmax(0, 1fr) 112px; column-gap: 10px; padding: 8px 10px 9px; } .board-list .sub { font-size: 11px; } }
+.board-empty { margin: 0; padding: 16px; border: 1px dashed var(--line); border-radius: 10px; color: var(--muted); text-align: center; font-size: 14px; }
+.board-more { justify-self: center; padding: 7px 16px; border: 1px solid var(--line); border-radius: 999px; background: transparent; color: var(--fg); font: 600 13px var(--font-ui); cursor: pointer; }
+.board-more:hover { border-color: var(--gold); }
+.card .today { color: var(--gold); }
+
 footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
 @media (prefers-reduced-motion: reduce) { .card { transition: none; } .card:hover { transform: none; } }
 </style>
@@ -105,6 +132,19 @@ footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
     <div class="chips"><span>무기 6가지</span><span>스타일 랭크 D~SSS</span><span>밤 모드</span><span>되감기</span><span>결과 카드 공유</span></div>
   </header>
 
+  <section class="board" id="rank" aria-labelledby="rank-title" hidden>
+    <div class="board-head">
+      <h2 id="rank-title">학교 대항 <span>파괴 랭킹</span></h2>
+      <div class="tabs" role="tablist" aria-label="기간">
+        <button type="button" role="tab" aria-selected="true" data-span="today">오늘</button>
+        <button type="button" role="tab" aria-selected="false" data-span="total">전체</button>
+      </div>
+    </div>
+    <p class="board-note" id="board-note"></p>
+    <ol class="board-list" id="board-list"></ol>
+    <button type="button" class="board-more" id="board-more" hidden></button>
+  </section>
+
   <div class="finder">
     <label class="search" for="q">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
@@ -115,6 +155,7 @@ footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
         <option value="name">이름순</option>
         <option value="new">최근 추가순</option>
         <option value="big">건물 많은 순</option>
+        <option value="hot" hidden>오늘 많이 부서진 순</option>
       </select>
     </label>
   </div>
@@ -132,11 +173,13 @@ footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
 
   <footer>
     <span>학교와 관계없는 비공식 팬 게임입니다. 학교 로고와 교표는 쓰지 않습니다.</span>
+    <span>학교 랭킹에는 학교 코드와 점수만 보냅니다. 방문 수는 쿠키를 쓰지 않는 GoatCounter로 셉니다.</span>
     <span>건물·도로 © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap 기여자</a> · 고도 AWS Terrain Tiles (SRTM 30 m 기반) · 소스 <a href="https://github.com/Hong-Iron/SMASH" target="_blank" rel="noopener">GitHub</a></span>
   </footer>
 </main>
 
 <script type="application/json" id="schools-data">__SCHOOLS__</script>
+<script type="application/json" id="hub-config">__HUB_CONFIG__</script>
 <script>
   (function () {
     var schools = JSON.parse(document.getElementById('schools-data').textContent);
@@ -172,6 +215,8 @@ footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
       var name = document.createElement('span'); name.className = 'name'; name.textContent = s.campus;
       var region = document.createElement('span'); region.className = 'region'; region.textContent = s.region || '';
       var meta = document.createElement('span'); meta.className = 'meta'; meta.textContent = '건물 ' + s.buildings + '동';
+      var row = board && board[s.code];
+      if (row && row.today_score > 0) { var t = document.createElement('span'); t.className = 'today'; t.textContent = ' · 오늘 ' + fmtPts(row.today_score) + '점'; meta.append(t); }
       var go = document.createElement('span'); go.className = 'go'; go.textContent = '부수러 가기 →';
       body.append(code, name, region, meta, go);
       a.append(img, body);
@@ -193,6 +238,7 @@ footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
       list.sort(function (a, b) {
         if (mode === 'new') return (b.added || '').localeCompare(a.added || '') || a.name.localeCompare(b.name, 'ko');
         if (mode === 'big') return b.buildings - a.buildings;
+        if (mode === 'hot' && board) return todayOf(b) - todayOf(a) || a.name.localeCompare(b.name, 'ko');
         return a.name.localeCompare(b.name, 'ko');
       });
       grid.replaceChildren();
@@ -205,10 +251,81 @@ footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
       countEl.textContent = query ? ('‘' + query + '’ 검색 결과 ' + list.length + '곳') : ('학교 ' + schools.length + '곳');
       try { localStorage.setItem('smash-hub-sort', mode); } catch (e) { /* storage blocked */ }
     }
-    try { var saved = localStorage.getItem('smash-hub-sort'); if (saved) sortSel.value = saved; } catch (e) { /* storage blocked */ }
+    // ---- school leaderboard (Supabase): today's and all-time totals per school
+    var cfg = JSON.parse(document.getElementById('hub-config').textContent || '{}');
+    var board = null, span = 'today', showAll = false;
+    var byCode = {}; schools.forEach(function (s) { byCode[s.code] = s; });
+    function trim0(v, d) { return v.toFixed(d).replace(/\.0$/, ''); }
+    function fmtPts(n) { return n >= 1e8 ? trim0(n / 1e8, n >= 1e9 ? 0 : 1) + '억' : n >= 1e4 ? trim0(n / 1e4, n >= 1e5 ? 0 : 1) + '만' : Math.round(n).toLocaleString('ko-KR'); }
+    function todayOf(s) { var r = board && board[s.code]; return r ? r.today_score : 0; }
+    function shortName(s) { return s.campus.replace('대학교', '대').replace(/ 캠퍼스$/, ''); }
+    var listEl = document.getElementById('board-list'), noteEl = document.getElementById('board-note'), moreBtn = document.getElementById('board-more');
+    function renderBoard() {
+      var key = span === 'today' ? 'today' : 'total';
+      var rows = Object.keys(board).map(function (c) { return board[c]; })
+        .filter(function (r) { return byCode[r.code] && r[key + '_score'] > 0; })
+        .sort(function (a, b) { return b[key + '_score'] - a[key + '_score']; });
+      noteEl.textContent = span === 'today'
+        ? '게임에서 얻은 점수가 학교 점수로 모입니다. 오늘 순위는 매일 자정(한국 시간)에 새로 시작합니다.'
+        : '지금까지 모인 학교별 점수입니다.';
+      listEl.replaceChildren();
+      if (!rows.length) {
+        var e = document.createElement('p'); e.className = 'board-empty';
+        e.textContent = span === 'today' ? '오늘은 아직 아무도 부수지 않았습니다. 첫 점수를 올려 보세요.' : '아직 모인 점수가 없습니다.';
+        listEl.append(e); moreBtn.hidden = true; return;
+      }
+      var top = rows[0][key + '_score'];
+      (showAll ? rows : rows.slice(0, 10)).forEach(function (r, i) {
+        var s = byCode[r.code], v = r[key + '_score'];
+        var li = document.createElement('li');
+        var pos = document.createElement('span'); pos.className = 'pos'; pos.textContent = i + 1;
+        var who = document.createElement('a'); who.className = 'who'; who.href = s.url; who.textContent = shortName(s);
+        var pts = document.createElement('span'); pts.className = 'pts'; pts.textContent = fmtPts(v) + '점';
+        var bar = document.createElement('span'); bar.className = 'bar';
+        var fill = document.createElement('i'); fill.style.width = Math.max(2, Math.round(100 * v / top)) + '%'; bar.append(fill);
+        var sub = document.createElement('span'); sub.className = 'sub';
+        sub.textContent = '건물 ' + r[key + '_kills'].toLocaleString('ko-KR') + '동 · ' + r[key + '_players'].toLocaleString('ko-KR') + '판';
+        li.append(pos, who, pts, bar, sub);
+        listEl.append(li);
+      });
+      moreBtn.hidden = rows.length <= 10;
+      moreBtn.textContent = showAll ? '10위까지만 보기' : '전체 ' + rows.length + '곳 보기';
+    }
+    document.querySelectorAll('.tabs button').forEach(function (b) {
+      b.addEventListener('click', function () {
+        span = b.dataset.span; showAll = false;
+        document.querySelectorAll('.tabs button').forEach(function (x) { x.setAttribute('aria-selected', String(x === b)); });
+        renderBoard();
+      });
+    });
+    moreBtn.addEventListener('click', function () { showAll = !showAll; renderBoard(); });
+    function loadBoard() {
+      if (!cfg.supabaseUrl || !cfg.supabaseKey) return;
+      var h = { apikey: cfg.supabaseKey };
+      if (/^eyJ/.test(cfg.supabaseKey)) h.Authorization = 'Bearer ' + cfg.supabaseKey;
+      fetch(cfg.supabaseUrl.replace(/\/+$/, '') + '/rest/v1/rpc/smash_board', { headers: h })
+        .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+        .then(function (rows) {
+          if (!Array.isArray(rows)) return;
+          var first = !board;
+          board = {};
+          rows.forEach(function (r) {
+            board[r.code] = { code: r.code, today_score: +r.today_score, today_kills: +r.today_kills, today_players: +r.today_players, total_score: +r.total_score, total_kills: +r.total_kills, total_players: +r.total_players };
+          });
+          document.getElementById('rank').hidden = false;
+          sortSel.querySelector('option[value="hot"]').hidden = false;
+          if (first) { try { var sv = localStorage.getItem('smash-hub-sort'); if (sv === 'hot') sortSel.value = 'hot'; } catch (e) { /* storage blocked */ } }
+          renderBoard(); render();
+          if (first && location.hash === '#rank') document.getElementById('rank').scrollIntoView();
+        })
+        .catch(function () { /* leaderboard unavailable: the school list still works */ });
+    }
+    try { var saved = localStorage.getItem('smash-hub-sort'); if (saved && saved !== 'hot') sortSel.value = saved; } catch (e) { /* storage blocked */ }
     q.addEventListener('input', render);
     sortSel.addEventListener('change', render);
     render();
+    loadBoard();
+    setInterval(function () { if (document.visibilityState === 'visible') loadBoard(); }, 60000);
   })();
 </script>
 </body>
