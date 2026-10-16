@@ -188,5 +188,415 @@
     "nameEn": "Inha University",
     "region": "인천 미추홀구 용현동",
     "added": "2026-10-16"
+  },
+  {
+    "code": "KANGWON",
+    "name": "강원대학교",
+    "campus": "강원대학교 춘천캠퍼스",
+    "url": "https://hong-iron.github.io/SMASH-KANGWON/",
+    "buildings": 125,
+    "nameEn": "Kangwon National University",
+    "region": "강원 춘천시 효자동",
+    "added": "2026-10-17"
+  },
+  {
+    "code": "KANGWON-GANGNEUNG",
+    "name": "강원대학교",
+    "campus": "강원대학교 강릉캠퍼스",
+    "url": "https://hong-iron.github.io/SMASH-KANGWON-GANGNEUNG/",
+    "buildings": 41,
+    "nameEn": "Kangwon National University Gangneung Campus",
+    "region": "강원 강릉시 지변동",
+    "added": "2026-10-17"
+  },
+  {
+    "code": "KANGWON-SAMCHEOK",
+    "name": "강원대학교",
+    "campus": "강원대학교 삼척캠퍼스",
+    "url": "https://hong-iron.github.io/SMASH-KANGWON-SAMCHEOK/",
+    "buildings": 26,
+    "nameEn": "Kangwon National University Samcheok Campus",
+    "region": "강원 삼척시 교동",
+    "added": "2026-10-17"
+  },
+  {
+    "code": "KANGWON-WONJU",
+    "name": "강원대학교",
+    "campus": "강원대학교 원주캠퍼스",
+    "url": "https://hong-iron.github.io/SMASH-KANGWON-WONJU/",
+    "buildings": 16,
+    "nameEn": "Kangwon National University Wonju Campus",
+    "region": "강원 원주시 흥업면",
+    "added": "2026-10-17"
+  },
+  {
+    "code": "KANGWON-DOGYE",
+    "name": "강원대학교",
+    "campus": "강원대학교 도계캠퍼스",
+    "url": "https://hong-iron.github.io/SMASH-KANGWON-DOGYE/",
+    "buildings": 9,
+    "nameEn": "Kangwon National University Dogye Campus",
+    "region": "강원 삼척시 도계읍",
+    "added": "2026-10-17"
+  },
+  {
+    "code": "KDU-SEORAK",
+    "name": "경동대학교",
+    "campus": "경동대학교 설악캠퍼스",
+    "url": "https://hong-iron.github.io/SMASH-KDU-SEORAK/",
+    "buildings": 9,
+    "nameEn": "Kyungdong University Seorak Campus",
+    "region": "강원 속초시",
+    "added": "2026-10-17"
+  },
+  {
+    "code": "KDU-WONJU",
+    "name": "경동대학교",
+    "campus": "경동대학교 메디컬캠퍼스",
+    "url": "https://hong-iron.github.io/SMASH-KDU-WONJU/",
+    "buildings": 7,
+    "nameEn": "Kyungdong University Medical Campus",
+    "region": "강원 원주시 문막읍",
+    "added": "2026-10-17"
+  },
+  {
+    "code": "KDU-YANGJU",
+    "name": "경동대학교",
+    "campus": "경동대학교 메트로폴캠퍼스",
+    "url": "https://hong-iron.github.io/SMASH-KDU-YANGJU/",
+    "buildings": 6,
+    "nameEn": "Kyungdong University Metropol Campus",
+    "region": "경기 양주시 고암동",
+    "added": "2026-10-17"
+  },
+  {
+    "code": "HKNU",
+    "name": "한경국립대학교",
+    "campus": "한경국립대학교 안성캠퍼스",
+    "url": "https://hong-iron.github.io/SMASH-HKNU/",
+    "buildings": 24,
+    "nameEn": "Hankyong National University",
+    "region": "경기 안성시 석정동",
+    "added": "2026-10-17"
+  },
+  {
+    "code": "DIMA",
+    "name": "동아방송예술대학교",
+    "campus": "동아방송예술대학교",
+    "url": "https://hong-iron.github.io/SMASH-DIMA/",
+    "buildings": 9,
+    "nameEn": "Dong-ah Institute of Media and Arts",
+    "region": "경기 안성시 삼죽면",
+    "added": "2026-10-17"
+  },
+  {
+    "code": "PNU",
+    "name": "부산대학교",
+    "campus": "부산대학교 부산캠퍼스",
+    "url": "https://hong-iron.github.io/SMASH-PNU/",
+    "buildings": 88,
+    "nameEn": "Pusan National University",
+    "region": "부산 금정구 장전동",
+    "added": "2026-10-17"
+  },
+  {
+    "code": "PNU-MIRYANG",
+    "name": "부산대학교",
+    "campus": "부산대학교 밀양캠퍼스",
+    "url": "https://hong-iron.github.io/SMASH-PNU-MIRYANG/",
+    "buildings": 14,
+    "nameEn": "Pusan National University Miryang Campus",
+    "region": "경남 밀양시 삼랑진읍",
+    "added": "2026-10-17"
+  },
+  {
+    "code": "PNU-YANGSAN",
+    "name": "부산대학교",
+    "campus": "부산대학교 양산캠퍼스",
+    "url": "https://hong-iron.github.io/SMASH-PNU-YANGSAN/",
+    "buildings": 13,
+    "nameEn": "Pusan National University Yangsan Campus",
+    "region": "경남 양산시 물금읍",
+    "added": "2026-10-17"
+  },
+  {
+    "code": "PKNU",
+    "name": "국립부경대학교",
+    "campus": "국립부경대학교 대연캠퍼스",
+    "url": "https://hong-iron.github.io/SMASH-PKNU/",
+    "buildings": 68,
+    "nameEn": "Pukyong National University",
+    "region": "부산 남구 대연동",
+    "added": "2026-10-17"
+  },
+  {
+    "code": "PKNU-YONGDANG",
+    "name": "국립부경대학교",
+    "campus": "국립부경대학교 용당캠퍼스",
+    "url": "https://hong-iron.github.io/SMASH-PKNU-YONGDANG/",
+    "buildings": 30,
+    "nameEn": "Pukyong National University Yongdang Campus",
+    "region": "부산 남구 용당동",
+    "added": "2026-10-17"
+  },
+  {
+    "code": "DEU",
+    "name": "동의대학교",
+    "campus": "동의대학교 가야캠퍼스",
+    "url": "https://hong-iron.github.io/SMASH-DEU/",
+    "buildings": 33,
+    "nameEn": "Dong-eui University",
+    "region": "부산 부산진구 가야동",
+    "added": "2026-10-17"
+  },
+  {
+    "code": "DGU-WISE",
+    "name": "동국대학교",
+    "campus": "동국대학교 WISE캠퍼스",
+    "url": "https://hong-iron.github.io/SMASH-DGU-WISE/",
+    "buildings": 18,
+    "nameEn": "Dongguk University WISE Campus",
+    "region": "경북 경주시 석장동",
+    "added": "2026-10-17"
+  },
+  {
+    "code": "TUKOREA",
+    "name": "한국공학대학교",
+    "campus": "한국공학대학교",
+    "url": "https://hong-iron.github.io/SMASH-TUKOREA/",
+    "buildings": 16,
+    "nameEn": "Tech University of Korea",
+    "region": "경기 시흥시 정왕동",
+    "added": "2026-10-17"
+  },
+  {
+    "code": "JNU",
+    "name": "전남대학교",
+    "campus": "전남대학교 광주캠퍼스",
+    "url": "https://hong-iron.github.io/SMASH-JNU/",
+    "buildings": 210,
+    "nameEn": "Chonnam National University",
+    "region": "광주 북구 용봉동",
+    "added": "2026-10-17"
+  },
+  {
+    "code": "JNU-YEOSU",
+    "name": "전남대학교",
+    "campus": "전남대학교 여수캠퍼스",
+    "url": "https://hong-iron.github.io/SMASH-JNU-YEOSU/",
+    "buildings": 20,
+    "nameEn": "Chonnam National University Yeosu Campus",
+    "region": "전남 여수시 둔덕동",
+    "added": "2026-10-17"
+  },
+  {
+    "code": "JNU-GUKDONG",
+    "name": "전남대학교",
+    "campus": "전남대학교 국동캠퍼스",
+    "url": "https://hong-iron.github.io/SMASH-JNU-GUKDONG/",
+    "buildings": 8,
+    "nameEn": "Chonnam National University Gukdong Campus",
+    "region": "전남 여수시 국동",
+    "added": "2026-10-17"
+  },
+  {
+    "code": "JNU-HWASUN",
+    "name": "전남대학교",
+    "campus": "전남대학교 화순캠퍼스",
+    "url": "https://hong-iron.github.io/SMASH-JNU-HWASUN/",
+    "buildings": 15,
+    "nameEn": "Chonnam National University Hwasun Campus",
+    "region": "전남 화순군 화순읍",
+    "added": "2026-10-17"
+  },
+  {
+    "code": "JNU-HAKDONG",
+    "name": "전남대학교",
+    "campus": "전남대학교 학동캠퍼스",
+    "url": "https://hong-iron.github.io/SMASH-JNU-HAKDONG/",
+    "buildings": 11,
+    "nameEn": "Chonnam National University Hakdong Campus",
+    "region": "광주 동구 학동",
+    "added": "2026-10-17"
+  },
+  {
+    "code": "KNU",
+    "name": "경북대학교",
+    "campus": "경북대학교 대구캠퍼스",
+    "url": "https://hong-iron.github.io/SMASH-KNU/",
+    "buildings": 94,
+    "nameEn": "Kyungpook National University",
+    "region": "대구 북구 산격동",
+    "added": "2026-10-17"
+  },
+  {
+    "code": "KNU-SANGJU",
+    "name": "경북대학교",
+    "campus": "경북대학교 상주캠퍼스",
+    "url": "https://hong-iron.github.io/SMASH-KNU-SANGJU/",
+    "buildings": 35,
+    "nameEn": "Kyungpook National University Sangju Campus",
+    "region": "경북 상주시 가장동",
+    "added": "2026-10-17"
+  },
+  {
+    "code": "CHOSUN",
+    "name": "조선대학교",
+    "campus": "조선대학교",
+    "url": "https://hong-iron.github.io/SMASH-CHOSUN/",
+    "buildings": 62,
+    "nameEn": "Chosun University",
+    "region": "광주 동구 서석동",
+    "added": "2026-10-17"
+  },
+  {
+    "code": "CAU-DAVINCI",
+    "name": "중앙대학교",
+    "campus": "중앙대학교 다빈치캠퍼스",
+    "url": "https://hong-iron.github.io/SMASH-CAU-DAVINCI/",
+    "buildings": 18,
+    "nameEn": "Chung-Ang University DaVinci Campus",
+    "region": "경기 안성시 대덕면",
+    "added": "2026-10-17"
+  },
+  {
+    "code": "KU-SEJONG",
+    "name": "고려대학교",
+    "campus": "고려대학교 세종캠퍼스",
+    "url": "https://hong-iron.github.io/SMASH-KU-SEJONG/",
+    "buildings": 29,
+    "nameEn": "Korea University Sejong Campus",
+    "region": "세종 조치원읍",
+    "added": "2026-10-17"
+  },
+  {
+    "code": "YONSEI-MIRAE",
+    "name": "연세대학교",
+    "campus": "연세대학교 미래캠퍼스",
+    "url": "https://hong-iron.github.io/SMASH-YONSEI-MIRAE/",
+    "buildings": 39,
+    "nameEn": "Yonsei University Mirae Campus",
+    "region": "강원 원주시 흥업면",
+    "added": "2026-10-17"
+  },
+  {
+    "code": "YONSEI-INTL",
+    "name": "연세대학교",
+    "campus": "연세대학교 국제캠퍼스",
+    "url": "https://hong-iron.github.io/SMASH-YONSEI-INTL/",
+    "buildings": 30,
+    "nameEn": "Yonsei University International Campus",
+    "region": "인천 연수구 송도동",
+    "added": "2026-10-17"
+  },
+  {
+    "code": "YONSEI-WMED",
+    "name": "연세대학교",
+    "campus": "연세대학교 원주의과대학",
+    "url": "https://hong-iron.github.io/SMASH-YONSEI-WMED/",
+    "buildings": 12,
+    "nameEn": "Yonsei University Wonju College of Medicine",
+    "region": "강원 원주시 일산동",
+    "added": "2026-10-17"
+  },
+  {
+    "code": "HYU-ERICA",
+    "name": "한양대학교",
+    "campus": "한양대학교 ERICA캠퍼스",
+    "url": "https://hong-iron.github.io/SMASH-HYU-ERICA/",
+    "buildings": 60,
+    "nameEn": "Hanyang University ERICA Campus",
+    "region": "경기 안산시 상록구 사동",
+    "added": "2026-10-17"
+  },
+  {
+    "code": "KHU-GLOBAL",
+    "name": "경희대학교",
+    "campus": "경희대학교 국제캠퍼스",
+    "url": "https://hong-iron.github.io/SMASH-KHU-GLOBAL/",
+    "buildings": 41,
+    "nameEn": "Kyung Hee University Global Campus",
+    "region": "경기 용인시 기흥구 서천동",
+    "added": "2026-10-17"
+  },
+  {
+    "code": "KHU-GWANGNEUNG",
+    "name": "경희대학교",
+    "campus": "경희대학교 광릉캠퍼스",
+    "url": "https://hong-iron.github.io/SMASH-KHU-GWANGNEUNG/",
+    "buildings": 8,
+    "nameEn": "Kyung Hee University Gwangneung Campus",
+    "region": "경기 남양주시 진접읍",
+    "added": "2026-10-17"
+  },
+  {
+    "code": "SKKU-SUWON",
+    "name": "성균관대학교",
+    "campus": "성균관대학교 자연과학캠퍼스",
+    "url": "https://hong-iron.github.io/SMASH-SKKU-SUWON/",
+    "buildings": 39,
+    "nameEn": "Sungkyunkwan University Natural Sciences Campus",
+    "region": "경기 수원시 장안구 천천동",
+    "added": "2026-10-17"
+  },
+  {
+    "code": "HUFS-GLOBAL",
+    "name": "한국외국어대학교",
+    "campus": "한국외국어대학교 글로벌캠퍼스",
+    "url": "https://hong-iron.github.io/SMASH-HUFS-GLOBAL/",
+    "buildings": 24,
+    "nameEn": "Hankuk University of Foreign Studies Global Campus",
+    "region": "경기 용인시 처인구 모현읍",
+    "added": "2026-10-17"
+  },
+  {
+    "code": "KONKUK-GLOCAL",
+    "name": "건국대학교",
+    "campus": "건국대학교 글로컬캠퍼스",
+    "url": "https://hong-iron.github.io/SMASH-KONKUK-GLOCAL/",
+    "buildings": 37,
+    "nameEn": "Konkuk University Glocal Campus",
+    "region": "충북 충주시 단월동",
+    "added": "2026-10-17"
+  },
+  {
+    "code": "HONGIK-SEJONG",
+    "name": "홍익대학교",
+    "campus": "홍익대학교 세종캠퍼스",
+    "url": "https://hong-iron.github.io/SMASH-HONGIK-SEJONG/",
+    "buildings": 29,
+    "nameEn": "Hongik University Sejong Campus",
+    "region": "세종 조치원읍",
+    "added": "2026-10-17"
+  },
+  {
+    "code": "SNU-SIHEUNG",
+    "name": "서울대학교",
+    "campus": "서울대학교 시흥캠퍼스",
+    "url": "https://hong-iron.github.io/SMASH-SNU-SIHEUNG/",
+    "buildings": 18,
+    "nameEn": "Seoul National University Siheung Campus",
+    "region": "경기 시흥시 배곧동",
+    "added": "2026-10-17"
+  },
+  {
+    "code": "SNU-YEONGEON",
+    "name": "서울대학교",
+    "campus": "서울대학교 연건캠퍼스",
+    "url": "https://hong-iron.github.io/SMASH-SNU-YEONGEON/",
+    "buildings": 46,
+    "nameEn": "Seoul National University Yeongeon Campus",
+    "region": "서울 종로구 연건동",
+    "added": "2026-10-17"
+  },
+  {
+    "code": "SNU-PYEONGCHANG",
+    "name": "서울대학교",
+    "campus": "서울대학교 평창캠퍼스",
+    "url": "https://hong-iron.github.io/SMASH-SNU-PYEONGCHANG/",
+    "buildings": 45,
+    "nameEn": "Seoul National University Pyeongchang Campus",
+    "region": "강원 평창군 대화면",
+    "added": "2026-10-17"
   }
 ]
