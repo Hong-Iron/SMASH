@@ -19,7 +19,7 @@
 ## 학교 추가하는 법
 
 1. 학교 게임 레포를 하나 만듭니다(기존 레포를 복사해 `config.json`과 데이터만 바꿈).
-2. 이 레포의 `schools.json`에 학교를 한 줄 넣습니다.
+2. 이 레포의 `schools.json`에 학교를 한 줄 넣습니다(`code`, `name`, `campus`, `nameEn`, `region`, `url`, `buildings`, `added`). 허브의 검색은 이름·지역·영문·초성으로, 정렬은 이름순·최근 추가순·건물 많은 순으로 됩니다.
 3. `python3 tools/build.py`로 `site/index.html`을 다시 만들고 `main`에 push하면 GitHub Pages에 올라갑니다.
 
 ## 앱 아이콘

@@ -4,20 +4,29 @@
     "name": "중앙대학교",
     "campus": "중앙대학교 서울캠퍼스",
     "url": "https://hong-iron.github.io/SMASH-CAU/",
-    "buildings": 25
+    "buildings": 25,
+    "nameEn": "Chung-Ang University",
+    "region": "서울 동작구 흑석동",
+    "added": "2026-10-15"
   },
   {
     "code": "SSU",
     "name": "숭실대학교",
     "campus": "숭실대학교 캠퍼스",
     "url": "https://hong-iron.github.io/SMASH-SSU/",
-    "buildings": 31
+    "buildings": 31,
+    "nameEn": "Soongsil University",
+    "region": "서울 동작구 상도동",
+    "added": "2026-10-16"
   },
   {
     "code": "SNU",
     "name": "서울대학교",
     "campus": "서울대학교 관악캠퍼스",
     "url": "https://hong-iron.github.io/SMASH-SNU/",
-    "buildings": 203
+    "buildings": 203,
+    "nameEn": "Seoul National University",
+    "region": "서울 관악구",
+    "added": "2026-10-16"
   }
 ]

@@ -55,6 +55,18 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--gold); outline-
 .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
 .chips span { padding: 3px 10px; border: 1px solid var(--line); border-radius: 999px; font-size: 12.5px; color: var(--muted); }
 
+.finder { display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: center; }
+.search { display: flex; align-items: center; gap: 8px; min-width: 0; padding: 0 12px; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; }
+.search:focus-within { border-color: var(--gold); }
+.search svg { width: 18px; height: 18px; flex: none; color: var(--muted); }
+.search input { flex: 1; min-width: 0; padding: 11px 0; border: 0; outline: 0; background: transparent; color: var(--fg); font: inherit; }
+.search input::placeholder { color: var(--muted); }
+.sort { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: 13px; white-space: nowrap; }
+.sort select { padding: 9px 10px; background: var(--panel); color: var(--fg); border: 1px solid var(--line); border-radius: 10px; font: inherit; }
+.count { margin: -14px 0 0; color: var(--muted); font-size: 13px; }
+.empty { grid-column: 1 / -1; padding: 22px; border: 1px dashed var(--line); border-radius: 14px; color: var(--muted); text-align: center; }
+.card .region { font-size: 13px; color: var(--muted); }
+@media (max-width: 560px) { .finder { grid-template-columns: 1fr; } .sort { justify-content: flex-end; } }
 .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
 .card {
   display: grid; grid-template-rows: auto 1fr; overflow: hidden; text-decoration: none;
@@ -93,6 +105,20 @@ footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
     <div class="chips"><span>무기 6가지</span><span>스타일 랭크 D~SSS</span><span>밤 모드</span><span>되감기</span><span>결과 카드 공유</span></div>
   </header>
 
+  <div class="finder">
+    <label class="search" for="q">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+      <input id="q" type="search" placeholder="학교 이름, 지역, 영문, 초성으로 찾기 (예: 중앙, 관악, SNU, ㅅㅅㄷ)" autocomplete="off" enterkeyhint="search">
+    </label>
+    <label class="sort" for="sort">정렬
+      <select id="sort">
+        <option value="name">이름순</option>
+        <option value="new">최근 추가순</option>
+        <option value="big">건물 많은 순</option>
+      </select>
+    </label>
+  </div>
+  <p class="count" id="count" aria-live="polite"></p>
   <section class="grid" id="schools" aria-label="학교 고르기"></section>
 
   <section class="support" aria-labelledby="support-title">
@@ -114,8 +140,29 @@ footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
 <script>
   (function () {
     var schools = JSON.parse(document.getElementById('schools-data').textContent);
-    var grid = document.getElementById('schools');
+    var grid = document.getElementById('schools'), q = document.getElementById('q'), sortSel = document.getElementById('sort'), countEl = document.getElementById('count');
+    var CHO = ['ㄱ','ㄲ','ㄴ','ㄷ','ㄸ','ㄹ','ㅁ','ㅂ','ㅃ','ㅅ','ㅆ','ㅇ','ㅈ','ㅉ','ㅊ','ㅋ','ㅌ','ㅍ','ㅎ'];
+    function chosung(str) {
+      var out = '';
+      for (var i = 0; i < str.length; i++) {
+        var c = str.charCodeAt(i) - 0xAC00;
+        out += (c >= 0 && c < 11172) ? CHO[Math.floor(c / 588)] : str[i];
+      }
+      return out;
+    }
+    var norm = function (t) { return (t || '').toLowerCase().replace(/[\s·\-_.]/g, ''); };
     schools.forEach(function (s) {
+      var text = [s.name, s.campus, s.code, s.nameEn, s.region, 'SMASH ' + s.code, s.name.replace('대학교', '대')].join(' ');
+      s._hay = norm(text);
+      s._cho = norm(chosung(text));
+    });
+    function matches(s, query) {
+      if (!query) return true;
+      var nq = norm(query);
+      if (s._hay.indexOf(nq) >= 0) return true;
+      return /^[ㄱ-ㅎ]+$/.test(nq) && s._cho.indexOf(nq) >= 0;
+    }
+    function card(s) {
       var a = document.createElement('a');
       a.className = 'card'; a.href = s.url;
       var img = document.createElement('img');
@@ -123,18 +170,45 @@ footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
       var body = document.createElement('div'); body.className = 'body';
       var code = document.createElement('span'); code.className = 'code'; code.textContent = 'SMASH ' + s.code;
       var name = document.createElement('span'); name.className = 'name'; name.textContent = s.campus;
+      var region = document.createElement('span'); region.className = 'region'; region.textContent = s.region || '';
       var meta = document.createElement('span'); meta.className = 'meta'; meta.textContent = '건물 ' + s.buildings + '동';
       var go = document.createElement('span'); go.className = 'go'; go.textContent = '부수러 가기 →';
-      body.append(code, name, meta, go);
+      body.append(code, name, region, meta, go);
       a.append(img, body);
-      grid.append(a);
-    });
-    var req = document.createElement('a');
-    req.className = 'request';
-    req.href = 'https://github.com/Hong-Iron/SMASH/issues/new?title=' + encodeURIComponent('학교 추가 요청: ') + '&body=' + encodeURIComponent('학교 이름:\n캠퍼스:\n');
-    req.target = '_blank'; req.rel = 'noopener';
-    req.innerHTML = '<strong>우리 학교도?</strong><span>부수고 싶은 학교를 알려 주세요. GitHub에 요청을 남기면 다음 후보에 올립니다.</span>';
-    grid.append(req);
+      return a;
+    }
+    function requestCard(query) {
+      var req = document.createElement('a');
+      req.className = 'request';
+      req.href = 'https://github.com/Hong-Iron/SMASH/issues/new?title=' + encodeURIComponent('학교 추가 요청: ' + (query || '')) + '&body=' + encodeURIComponent('학교 이름:\n캠퍼스:\n');
+      req.target = '_blank'; req.rel = 'noopener';
+      var st = document.createElement('strong'); st.textContent = query ? '‘' + query + '’도 부수고 싶다면?' : '우리 학교도?';
+      var sp = document.createElement('span'); sp.textContent = '부수고 싶은 학교를 알려 주세요. GitHub에 요청을 남기면 다음 후보에 올립니다.';
+      req.append(st, sp);
+      return req;
+    }
+    function render() {
+      var query = q.value.trim(), mode = sortSel.value;
+      var list = schools.filter(function (s) { return matches(s, query); });
+      list.sort(function (a, b) {
+        if (mode === 'new') return (b.added || '').localeCompare(a.added || '') || a.name.localeCompare(b.name, 'ko');
+        if (mode === 'big') return b.buildings - a.buildings;
+        return a.name.localeCompare(b.name, 'ko');
+      });
+      grid.replaceChildren();
+      list.forEach(function (s) { grid.append(card(s)); });
+      if (!list.length) {
+        var e = document.createElement('p'); e.className = 'empty'; e.textContent = '‘' + query + '’에 맞는 학교가 아직 없습니다.';
+        grid.append(e);
+      }
+      grid.append(requestCard(list.length ? '' : query));
+      countEl.textContent = query ? ('‘' + query + '’ 검색 결과 ' + list.length + '곳') : ('학교 ' + schools.length + '곳');
+      try { localStorage.setItem('smash-hub-sort', mode); } catch (e) { /* storage blocked */ }
+    }
+    try { var saved = localStorage.getItem('smash-hub-sort'); if (saved) sortSel.value = saved; } catch (e) { /* storage blocked */ }
+    q.addEventListener('input', render);
+    sortSel.addEventListener('change', render);
+    render();
   })();
 </script>
 </body>
