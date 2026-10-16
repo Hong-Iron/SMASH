@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+<defs>
+  <radialGradient id="bg" cx="50%" cy="50%" r="72%"><stop offset="0" stop-color="#2a1430"/><stop offset="1" stop-color="#0b0d12"/></radialGradient>
+  <radialGradient id="burst" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#fff3b0"/><stop offset="0.35" stop-color="#ffc23a"/><stop offset="0.75" stop-color="#ff6a2b"/><stop offset="1" stop-color="#c2410c"/></radialGradient>
+  <radialGradient id="burst2" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#ffffff"/><stop offset="0.5" stop-color="#ffe066"/><stop offset="1" stop-color="#ff9a2e"/></radialGradient>
+  <radialGradient id="bomb" cx="36%" cy="32%" r="75%"><stop offset="0" stop-color="#4a5160"/><stop offset="0.55" stop-color="#1c2027"/><stop offset="1" stop-color="#07080b"/></radialGradient>
+  <linearGradient id="cap" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8a919e"/><stop offset="1" stop-color="#3d434e"/></linearGradient>
+  <linearGradient id="chunk" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e8e4da"/><stop offset="1" stop-color="#9a958a"/></linearGradient>
+  <radialGradient id="spark" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#ffffff"/><stop offset="0.4" stop-color="#fff2a0"/><stop offset="1" stop-color="#ffb020" stop-opacity="0"/></radialGradient>
+  <filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="18"/></filter>
+</defs>
+<rect width="1024" height="1024" fill="url(#bg)"/>
+<polygon points="979.7,460.5 851.1,555.4 989.3,660.1 821.7,688.1 919.1,859.0 710.4,762.1 718.9,926.3 612.4,865.8 537.2,990.7 478.8,820.2 308.3,1016.1 356.7,776.3 143.3,854.9 276.2,670.8 72.0,644.5 273.2,541.3 77.7,428.5 257.4,399.2 185.8,244.4 356.2,295.1 346.5,102.1 494.6,284.7 560.2,49.0 623.5,250.9 752.0,149.6 719.0,344.0 955.4,239.1 819.6,425.3" fill="url(#burst)" opacity="0.95"/>
+<polygon points="885.7,564.9 765.0,609.1 854.9,715.2 723.4,702.9 749.8,828.8 638.5,762.9 599.9,842.4 537.3,761.3 450.7,893.8 442.1,742.4 312.1,815.2 386.9,663.8 245.8,675.4 347.0,583.4 215.5,531.4 338.0,488.9 286.4,405.5 395.9,413.8 363.9,291.9 457.6,333.4 487.7,205.7 558.0,347.9 642.7,211.5 643.4,372.8 771.5,294.8 709.5,431.9 821.8,432.6 775.5,507.9" fill="url(#burst2)"/>
+<rect x="156.5" y="303.3" width="46" height="36.8" rx="4" fill="url(#chunk)" transform="rotate(41 179.5 326.3)"/><rect x="383.9" y="100.4" width="34" height="27.2" rx="4" fill="url(#chunk)" transform="rotate(50 400.9 117.4)"/><rect x="121.3" y="695.9" width="40" height="32.0" rx="4" fill="url(#chunk)" transform="rotate(83 141.3 715.9)"/><rect x="256.4" y="913.0" width="30" height="24.0" rx="4" fill="url(#chunk)" transform="rotate(42 271.4 928.0)"/><rect x="939.7" y="727.9" width="36" height="28.8" rx="4" fill="url(#chunk)" transform="rotate(46 957.7 745.9)"/><rect x="682.2" y="980.0" width="28" height="22.4" rx="4" fill="url(#chunk)" transform="rotate(53 696.2 994.0)"/><rect x="935.7" y="289.3" width="26" height="20.8" rx="4" fill="url(#chunk)" transform="rotate(17 948.7 302.3)"/>
+<g>
+  <circle cx="470" cy="610" r="262" fill="#000" opacity="0.35" transform="translate(14 18)"/>
+  <circle cx="470" cy="610" r="262" fill="url(#bomb)"/>
+  <ellipse cx="385" cy="505" rx="92" ry="58" fill="#fff" opacity="0.28" transform="rotate(-35 385 505)"/>
+  <ellipse cx="360" cy="480" rx="30" ry="18" fill="#fff" opacity="0.55" transform="rotate(-35 360 480)"/>
+  <rect x="600" y="360" width="120" height="96" rx="18" fill="url(#cap)" transform="rotate(42 660 408)"/>
+  <path d="M690 365 C 735 300, 760 265, 812 238" fill="none" stroke="#3a2a18" stroke-width="34" stroke-linecap="round"/>
+  <path d="M690 365 C 735 300, 760 265, 812 238" fill="none" stroke="#d8b278" stroke-width="22" stroke-linecap="round" stroke-dasharray="28 16"/>
+</g>
+<circle cx="822" cy="228" r="92" fill="#ffb020" opacity="0.7" filter="url(#glow)"/>
+<polygon points="888.9,207.3 847.4,233.8 873.4,275.6 829.7,252.8 806.5,296.3 804.3,247.1 755.1,248.7 796.6,222.2 770.6,180.4 814.3,203.2 837.5,159.7 839.7,208.9" fill="#fff6c8"/>
+<circle cx="822" cy="228" r="26" fill="#ffffff"/>
+</svg>

@@ -22,6 +22,10 @@
 2. 이 레포의 `schools.json`에 학교를 한 줄 넣습니다.
 3. `python3 tools/build.py`로 `site/index.html`을 다시 만들고 `main`에 push하면 GitHub Pages에 올라갑니다.
 
+## 앱 아이콘
+
+폭탄과 폭발을 그린 아이콘입니다. 원본은 `assets/icon.svg`이고, 크기별 PNG는 `site/icon-1024.png`, `icon-512.png`, `icon-180.png`(홈 화면), `icon-128.png`, `icon-32.png`(브라우저 탭)입니다.
+
 ## 개발자 응원하기
 
 - 카카오페이: https://qr.kakaopay.com/FKcOJKyOy1f405462
