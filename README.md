@@ -10,9 +10,25 @@
 
 | 학교 | 게임 | 소스 |
 |---|---|---|
-| 중앙대학교 서울캠퍼스 | https://hong-iron.github.io/SMASH-CAU/ | [SMASH-CAU](https://github.com/Hong-Iron/SMASH-CAU) |
-| 숭실대학교 | https://hong-iron.github.io/SMASH-SSU/ | [SMASH-SSU](https://github.com/Hong-Iron/SMASH-SSU) |
+| 건국대학교 서울캠퍼스 | https://hong-iron.github.io/SMASH-KONKUK/ | [SMASH-KONKUK](https://github.com/Hong-Iron/SMASH-KONKUK) |
+| 경희대학교 서울캠퍼스 | https://hong-iron.github.io/SMASH-KHU/ | [SMASH-KHU](https://github.com/Hong-Iron/SMASH-KHU) |
+| 고려대학교 서울캠퍼스 | https://hong-iron.github.io/SMASH-KU/ | [SMASH-KU](https://github.com/Hong-Iron/SMASH-KU) |
+| 국민대학교 | https://hong-iron.github.io/SMASH-KMU/ | [SMASH-KMU](https://github.com/Hong-Iron/SMASH-KMU) |
+| 동국대학교 서울캠퍼스 | https://hong-iron.github.io/SMASH-DGU/ | [SMASH-DGU](https://github.com/Hong-Iron/SMASH-DGU) |
+| 서강대학교 | https://hong-iron.github.io/SMASH-SOGANG/ | [SMASH-SOGANG](https://github.com/Hong-Iron/SMASH-SOGANG) |
 | 서울대학교 관악캠퍼스 | https://hong-iron.github.io/SMASH-SNU/ | [SMASH-SNU](https://github.com/Hong-Iron/SMASH-SNU) |
+| 서울시립대학교 | https://hong-iron.github.io/SMASH-UOS/ | [SMASH-UOS](https://github.com/Hong-Iron/SMASH-UOS) |
+| 성균관대학교 인문사회과학캠퍼스 | https://hong-iron.github.io/SMASH-SKKU/ | [SMASH-SKKU](https://github.com/Hong-Iron/SMASH-SKKU) |
+| 세종대학교 | https://hong-iron.github.io/SMASH-SEJONG/ | [SMASH-SEJONG](https://github.com/Hong-Iron/SMASH-SEJONG) |
+| 숙명여자대학교 | https://hong-iron.github.io/SMASH-SOOKMYUNG/ | [SMASH-SOOKMYUNG](https://github.com/Hong-Iron/SMASH-SOOKMYUNG) |
+| 숭실대학교 캠퍼스 | https://hong-iron.github.io/SMASH-SSU/ | [SMASH-SSU](https://github.com/Hong-Iron/SMASH-SSU) |
+| 연세대학교 신촌캠퍼스 | https://hong-iron.github.io/SMASH-YONSEI/ | [SMASH-YONSEI](https://github.com/Hong-Iron/SMASH-YONSEI) |
+| 이화여자대학교 | https://hong-iron.github.io/SMASH-EWHA/ | [SMASH-EWHA](https://github.com/Hong-Iron/SMASH-EWHA) |
+| 인하대학교 | https://hong-iron.github.io/SMASH-INHA/ | [SMASH-INHA](https://github.com/Hong-Iron/SMASH-INHA) |
+| 중앙대학교 서울캠퍼스 | https://hong-iron.github.io/SMASH-CAU/ | [SMASH-CAU](https://github.com/Hong-Iron/SMASH-CAU) |
+| 한국외국어대학교 서울캠퍼스 | https://hong-iron.github.io/SMASH-HUFS/ | [SMASH-HUFS](https://github.com/Hong-Iron/SMASH-HUFS) |
+| 한양대학교 서울캠퍼스 | https://hong-iron.github.io/SMASH-HYU/ | [SMASH-HYU](https://github.com/Hong-Iron/SMASH-HYU) |
+| 홍익대학교 서울캠퍼스 | https://hong-iron.github.io/SMASH-HONGIK/ | [SMASH-HONGIK](https://github.com/Hong-Iron/SMASH-HONGIK) |
 
 부수고 싶은 학교가 있으면 [이슈](https://github.com/Hong-Iron/SMASH/issues/new)로 알려 주세요.
 

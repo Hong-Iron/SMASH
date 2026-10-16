@@ -28,5 +28,165 @@
     "nameEn": "Seoul National University",
     "region": "서울 관악구",
     "added": "2026-10-16"
+  },
+  {
+    "code": "KU",
+    "name": "고려대학교",
+    "campus": "고려대학교 서울캠퍼스",
+    "url": "https://hong-iron.github.io/SMASH-KU/",
+    "buildings": 123,
+    "nameEn": "Korea University",
+    "region": "서울 성북구 안암동",
+    "added": "2026-10-16"
+  },
+  {
+    "code": "YONSEI",
+    "name": "연세대학교",
+    "campus": "연세대학교 신촌캠퍼스",
+    "url": "https://hong-iron.github.io/SMASH-YONSEI/",
+    "buildings": 146,
+    "nameEn": "Yonsei University",
+    "region": "서울 서대문구 신촌동",
+    "added": "2026-10-16"
+  },
+  {
+    "code": "SOGANG",
+    "name": "서강대학교",
+    "campus": "서강대학교",
+    "url": "https://hong-iron.github.io/SMASH-SOGANG/",
+    "buildings": 31,
+    "nameEn": "Sogang University",
+    "region": "서울 마포구 신수동",
+    "added": "2026-10-16"
+  },
+  {
+    "code": "HYU",
+    "name": "한양대학교",
+    "campus": "한양대학교 서울캠퍼스",
+    "url": "https://hong-iron.github.io/SMASH-HYU/",
+    "buildings": 63,
+    "nameEn": "Hanyang University",
+    "region": "서울 성동구 행당동",
+    "added": "2026-10-16"
+  },
+  {
+    "code": "SKKU",
+    "name": "성균관대학교",
+    "campus": "성균관대학교 인문사회과학캠퍼스",
+    "url": "https://hong-iron.github.io/SMASH-SKKU/",
+    "buildings": 23,
+    "nameEn": "Sungkyunkwan University",
+    "region": "서울 종로구 명륜동",
+    "added": "2026-10-16"
+  },
+  {
+    "code": "KHU",
+    "name": "경희대학교",
+    "campus": "경희대학교 서울캠퍼스",
+    "url": "https://hong-iron.github.io/SMASH-KHU/",
+    "buildings": 64,
+    "nameEn": "Kyung Hee University",
+    "region": "서울 동대문구 회기동",
+    "added": "2026-10-16"
+  },
+  {
+    "code": "EWHA",
+    "name": "이화여자대학교",
+    "campus": "이화여자대학교",
+    "url": "https://hong-iron.github.io/SMASH-EWHA/",
+    "buildings": 65,
+    "nameEn": "Ewha Womans University",
+    "region": "서울 서대문구 대현동",
+    "added": "2026-10-16"
+  },
+  {
+    "code": "KONKUK",
+    "name": "건국대학교",
+    "campus": "건국대학교 서울캠퍼스",
+    "url": "https://hong-iron.github.io/SMASH-KONKUK/",
+    "buildings": 48,
+    "nameEn": "Konkuk University",
+    "region": "서울 광진구 화양동",
+    "added": "2026-10-16"
+  },
+  {
+    "code": "DGU",
+    "name": "동국대학교",
+    "campus": "동국대학교 서울캠퍼스",
+    "url": "https://hong-iron.github.io/SMASH-DGU/",
+    "buildings": 31,
+    "nameEn": "Dongguk University",
+    "region": "서울 중구 필동",
+    "added": "2026-10-16"
+  },
+  {
+    "code": "HONGIK",
+    "name": "홍익대학교",
+    "campus": "홍익대학교 서울캠퍼스",
+    "url": "https://hong-iron.github.io/SMASH-HONGIK/",
+    "buildings": 31,
+    "nameEn": "Hongik University",
+    "region": "서울 마포구 상수동",
+    "added": "2026-10-16"
+  },
+  {
+    "code": "UOS",
+    "name": "서울시립대학교",
+    "campus": "서울시립대학교",
+    "url": "https://hong-iron.github.io/SMASH-UOS/",
+    "buildings": 37,
+    "nameEn": "University of Seoul",
+    "region": "서울 동대문구 전농동",
+    "added": "2026-10-16"
+  },
+  {
+    "code": "KMU",
+    "name": "국민대학교",
+    "campus": "국민대학교",
+    "url": "https://hong-iron.github.io/SMASH-KMU/",
+    "buildings": 26,
+    "nameEn": "Kookmin University",
+    "region": "서울 성북구 정릉동",
+    "added": "2026-10-16"
+  },
+  {
+    "code": "SEJONG",
+    "name": "세종대학교",
+    "campus": "세종대학교",
+    "url": "https://hong-iron.github.io/SMASH-SEJONG/",
+    "buildings": 26,
+    "nameEn": "Sejong University",
+    "region": "서울 광진구 군자동",
+    "added": "2026-10-16"
+  },
+  {
+    "code": "SOOKMYUNG",
+    "name": "숙명여자대학교",
+    "campus": "숙명여자대학교",
+    "url": "https://hong-iron.github.io/SMASH-SOOKMYUNG/",
+    "buildings": 20,
+    "nameEn": "Sookmyung Women's University",
+    "region": "서울 용산구 청파동",
+    "added": "2026-10-16"
+  },
+  {
+    "code": "HUFS",
+    "name": "한국외국어대학교",
+    "campus": "한국외국어대학교 서울캠퍼스",
+    "url": "https://hong-iron.github.io/SMASH-HUFS/",
+    "buildings": 16,
+    "nameEn": "Hankuk University of Foreign Studies",
+    "region": "서울 동대문구 이문동",
+    "added": "2026-10-16"
+  },
+  {
+    "code": "INHA",
+    "name": "인하대학교",
+    "campus": "인하대학교",
+    "url": "https://hong-iron.github.io/SMASH-INHA/",
+    "buildings": 25,
+    "nameEn": "Inha University",
+    "region": "인천 미추홀구 용현동",
+    "added": "2026-10-16"
   }
 ]
