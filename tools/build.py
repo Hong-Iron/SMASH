@@ -6,7 +6,9 @@ root = pathlib.Path(__file__).resolve().parent.parent
 tpl = (root / "src" / "index.html").read_text(encoding="utf-8")
 schools = json.loads((root / "schools.json").read_text(encoding="utf-8"))
 cfg = json.loads((root / "config.json").read_text(encoding="utf-8"))
-for k in ("__SCHOOLS__", "__HUB_CONFIG__", "<!--GOATCOUNTER-->", "<!--JSONLD-->", "__CARDS__", "__COUNT__"):
+nf = root / "notices.json"   # 공지 카드: [{id, date, until, tag, title, body, url, image, cta}]
+notices = json.loads(nf.read_text(encoding="utf-8")) if nf.exists() else []
+for k in ("__NOTICES__", "__SCHOOLS__", "__HUB_CONFIG__", "<!--GOATCOUNTER-->", "<!--JSONLD-->", "__CARDS__", "__COUNT__"):
     assert k in tpl, k
 e = lambda v: html.escape(str(v), quote=True)
 blob = lambda v: json.dumps(v, ensure_ascii=False).replace("</", "<\\/")
@@ -18,6 +20,13 @@ cards = "".join(
     f'<div class="body"><span class="code">SMASH {e(s["code"])}</span><span class="name">{e(s["campus"])}</span>'
     f'<span class="region">{e(s.get("region", ""))}</span><span class="meta">건물 {e(s["buildings"])}동</span><span class="go">부수러 가기 →</span></div></a>'
     for s in by_name)
+def notice(n):
+    m, d = (int(x) for x in n["date"].split("-")[1:])
+    return (f'<a class="notice" href="{e(n["url"])}" data-id="{e(n["id"])}" data-until="{e(n.get("until", ""))}">'
+            f'<img src="{e(n["image"])}" alt="{e(n["title"])} 화면" width="1200" height="630">'
+            f'<div class="body"><span class="tag">{e(n.get("tag", "공지"))} · <time datetime="{e(n["date"])}">{m}월 {d}일</time></span>'
+            f'<strong>{e(n["title"])}</strong><span class="text">{e(n["body"])}</span><span class="go">{e(n.get("cta", "보러 가기"))} →</span></div></a>')
+notice_html = f'<section class="notices" aria-label="공지">{"".join(notice(n) for n in notices)}</section>' if notices else ""
 ld = {
     "@context": "https://schema.org",
     "@graph": [
@@ -32,6 +41,6 @@ ld = {
 }
 out = (tpl.replace("__SCHOOLS__", blob(schools)).replace("__HUB_CONFIG__", blob(pub)).replace("<!--GOATCOUNTER-->", gc)
        .replace("<!--JSONLD-->", '<script type="application/ld+json">' + blob(ld) + "</script>")
-       .replace("__CARDS__", cards).replace("__COUNT__", str(len(schools))))
+       .replace("__NOTICES__", notice_html).replace("__CARDS__", cards).replace("__COUNT__", str(len(schools))))
 (root / "site" / "index.html").write_text(out, encoding="utf-8")
 print("site/index.html", len(out.encode()) // 1024, "KB,", len(schools), "schools")
