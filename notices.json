@@ -1,5 +1,16 @@
 [
   {
+    "id": "update-1024",
+    "date": "2026-10-24",
+    "until": "2026-11-14",
+    "tag": "업데이트",
+    "title": "새 캠퍼스 45개, 지도로 고르기",
+    "body": "요청이 많았던 학교부터 45개 캠퍼스를 새로 넣어 이제 105개입니다. 학교 목록에서 '지도'를 누르면 지역을 골라 학교를 찾을 수 있어요. 레이저는 캠퍼스 끝에서 끝까지 그을 수 있게 길어졌고, 추가 요청을 누르면 검색한 학교 이름이 저절로 들어갑니다(Transient-Onlooker님 기여).",
+    "url": "#list-head",
+    "image": "notice-update-1024.jpg",
+    "cta": "새 학교 보러 가기"
+  },
+  {
     "id": "jonggang-launch",
     "date": "2026-10-19",
     "until": "2026-11-30",
@@ -8,6 +19,7 @@
     "body": "교수님을 직접 만들어 싸우는 도트 격투 게임입니다. 연타로 과제를 내고, 말풍선 공격은 [반박!]으로 막으세요. 단과대 7곳 대항 연승 랭킹과 친구 결투장 링크도 있습니다.",
     "url": "https://hong-iron.github.io/JONGGANG-FIGHTER/",
     "image": "https://hong-iron.github.io/JONGGANG-FIGHTER/og.png",
-    "cta": "한 판 하러 가기"
+    "cta": "한 판 하러 가기",
+    "pixel": true
   }
 ]

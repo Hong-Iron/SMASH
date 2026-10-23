@@ -23,7 +23,7 @@ cards = "".join(
 def notice(n):
     m, d = (int(x) for x in n["date"].split("-")[1:])
     return (f'<a class="notice" href="{e(n["url"])}" data-id="{e(n["id"])}" data-until="{e(n.get("until", ""))}">'
-            f'<img src="{e(n["image"])}" alt="{e(n["title"])} 화면" width="1200" height="630">'
+            f'<img src="{e(n["image"])}" alt="{e(n["title"])} 화면" width="1200" height="630"{' class="px"' if n.get("pixel") else ''}>'
             f'<div class="body"><span class="tag">{e(n.get("tag", "공지"))} · <time datetime="{e(n["date"])}">{m}월 {d}일</time></span>'
             f'<strong>{e(n["title"])}</strong><span class="text">{e(n["body"])}</span><span class="go">{e(n.get("cta", "보러 가기"))} →</span></div></a>')
 notice_html = (f'<section class="notices" aria-labelledby="notice-title"><h2 class="sec-title" id="notice-title">공지</h2>'
