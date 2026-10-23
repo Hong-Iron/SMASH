@@ -375,7 +375,8 @@ footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
       return out;
     }
     var norm = function (t) { return (t || '').toLowerCase().replace(/[\s·\-_.]/g, ''); };
-    schools.forEach(function (s) {
+    schools.forEach(function (s, i) {
+      s._i = i;
       var text = [s.name, s.campus, s.code, s.nameEn, s.region, 'SMASH ' + s.code, s.name.replace('대학교', '대'), s.campus.replace('대학교', '대')].join(' ');
       s._hay = norm(text);
       s._cho = norm(chosung(text));
@@ -699,7 +700,7 @@ footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
       if (query && !searchUsed) { searchUsed = true; ev('hub-search'); }
       var list = schools.filter(function (s) { return matches(s, query); });
       list.sort(function (a, b) {
-        if (mode === 'new') return (b.added || '').localeCompare(a.added || '') || a.name.localeCompare(b.name, 'ko');
+        if (mode === 'new') return (b.added || '').localeCompare(a.added || '') || a._i - b._i;   // 같은 날 추가된 학교는 schools.json 순서(요청이 많았던 순)
         if (mode === 'big') return b.buildings - a.buildings;
         if (mode === 'hot' && board) return todayOf(b) - todayOf(a) || a.name.localeCompare(b.name, 'ko');
         return a.name.localeCompare(b.name, 'ko');
