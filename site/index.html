@@ -57,9 +57,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--gold); outline-
 }
 .hero h1 span { color: var(--gold); }
 .hero p { margin: 0; max-width: 60ch; color: var(--muted); font-size: 16px; }
-.hero p b { color: var(--fg); font-weight: 600; }
-.chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
-.chips span { padding: 3px 10px; border: 1px solid var(--line); border-radius: 999px; font-size: 12.5px; color: var(--muted); }
+.hero .tag { color: var(--fg); font-size: clamp(17px, 2.6vw, 21px); font-weight: 600; }
 
 /* 학교 찾기: 제목 바로 아래 큰 검색창. 입력하면 맞는 학교가 바로 아래 링크로 뜬다 */
 .finder { display: grid; gap: 10px; margin-top: -8px; }
@@ -224,8 +222,7 @@ footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
   <a class="maker" href="https://hong-iron.github.io/Hongs_Blog/" target="_blank" rel="noopener" id="blog-link">Hong-Iron 블로그 ↗</a>
   <header class="hero">
     <h1>SMASH <span>대학교</span></h1>
-    <p><b>우리 학교 캠퍼스를 3D로 부숴 보세요.</b> 폭탄, 야구 배트, 레이저, 운석, 지진, 핵폭탄으로 건물을 무너뜨리고, 땅을 파서 지구 중심까지 내려갈 수 있습니다. 시험기간 스트레스 해소용입니다.</p>
-    <div class="chips"><span>무기 6가지</span><span>스타일 랭크 D~SSS</span><span>밤 모드</span><span>되감기</span><span>결과 카드 공유</span></div>
+    <p class="tag">우리 학교 캠퍼스를 3D로 부숴 보세요</p>
   </header>
 
   <section class="finder" aria-labelledby="finder-title">
