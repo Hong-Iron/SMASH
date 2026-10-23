@@ -527,26 +527,48 @@ footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
         return;
       }
       var top = null; if (board) schools.forEach(function (s) { if (todayOf(s) > 0 && (!top || todayOf(s) > todayOf(top))) top = s; });
-      var list = schools.filter(function (s) { return s.sec === curSec; }).sort(function (a, b) { return a.my - b.my; });
+      var list = schools.filter(function (s) { return s.sec === curSec; });
+      // 가까운 학교끼리 핀이 겹치면 화면에서 서로 밀어내 모두 보이게 하고, 원래 위치까지 가는 가는 선을 긋는다
+      var P = list.map(function (s) { var x = (s.mx - view.x) / px, y = (s.my - view.y) / px; return { s: s, x: x, y: y, ox: x, oy: y }; }), MIN = 24;
+      for (var it = 0; it < 60; it++) {
+        var moved = false;
+        for (var i = 0; i < P.length; i++) for (var j = i + 1; j < P.length; j++) {
+          var A = P[i], Bp = P[j], dx = Bp.x - A.x, dy = (Bp.y - A.y) * 1.2, d = Math.hypot(dx, dy);
+          if (d >= MIN) continue;
+          if (d < 0.01) { dx = Math.cos(i * 2.4 + j); dy = Math.sin(i * 2.4 + j); d = 1; }
+          var push = (MIN - d) / 2, ux = dx / d, uy = dy / d;
+          A.x -= ux * push; A.y -= uy * push; Bp.x += ux * push; Bp.y += uy * push; moved = true;
+        }
+        P.forEach(function (q2) { q2.x += (q2.ox - q2.x) * 0.04; q2.y += (q2.oy - q2.y) * 0.04; });
+        if (!moved) break;
+      }
+      P.forEach(function (q2) { q2.mx = view.x + q2.x * px; q2.my = view.y + q2.y * px; q2.off = Math.hypot(q2.x - q2.ox, q2.y - q2.oy) > 3; });
+      P.sort(function (a, b) { return a.my - b.my; });
+      draw.pins = P;
+      P.forEach(function (q2) {   // 밀려난 핀은 원래 자리에 작은 점과 가는 선
+        if (!q2.off) return;
+        pinsG.append(el('line', { x1: q2.s.mx, y1: q2.s.my, x2: q2.mx, y2: q2.my, stroke: 'rgba(255,255,255,.55)', 'stroke-width': 1.2 * px }));
+        pinsG.append(el('circle', { cx: q2.s.mx, cy: q2.s.my, r: 2.4 * px, fill: '#fff' }));
+      });
       var placed = [];
-      list.forEach(function (s) {   // 핀: 끝이 학교 위치를 가리키는 물방울 모양 (화면에서 항상 같은 크기)
-        var on = matches(s, query), h = heatOf(s), sz = (picked === s ? 34 : 26) * px, r = sz * 0.36;
+      P.forEach(function (q2) {   // 핀: 끝이 학교 위치(또는 밀려난 자리)를 가리키는 물방울 모양 (화면에서 항상 같은 크기)
+        var s = q2.s, X = q2.mx, Y = q2.my, on = matches(s, query), h = heatOf(s), sz = (picked === s ? 34 : 26) * px, r = sz * 0.36;
         var g = el('g', { 'class': 'pin' + (picked === s ? ' sel' : '') + (on ? '' : ' dim'), 'data-code': s.code });
-        var cy = s.my - sz + r;
-        g.append(el('path', { d: 'M' + s.mx + ',' + s.my + 'C' + (s.mx - r * .35) + ',' + (s.my - sz * .38) + ' ' + (s.mx - r) + ',' + (cy + r * .55) + ' ' + (s.mx - r) + ',' + cy +
-          'A' + r + ',' + r + ' 0 1 1 ' + (s.mx + r) + ',' + cy + 'C' + (s.mx + r) + ',' + (cy + r * .55) + ' ' + (s.mx + r * .35) + ',' + (s.my - sz * .38) + ' ' + s.mx + ',' + s.my + 'Z', fill: picked === s ? '#ffd23f' : heatColor(h) }));
-        g.append(el('circle', { cx: s.mx, cy: cy, r: r * 0.42 }));
+        var cy = Y - sz + r;
+        g.append(el('path', { d: 'M' + X + ',' + Y + 'C' + (X - r * .35) + ',' + (Y - sz * .38) + ' ' + (X - r) + ',' + (cy + r * .55) + ' ' + (X - r) + ',' + cy +
+          'A' + r + ',' + r + ' 0 1 1 ' + (X + r) + ',' + cy + 'C' + (X + r) + ',' + (cy + r * .55) + ' ' + (X + r * .35) + ',' + (Y - sz * .38) + ' ' + X + ',' + Y + 'Z', fill: picked === s ? '#ffd23f' : heatColor(h) }));
+        g.append(el('circle', { cx: X, cy: cy, r: r * 0.42 }));
         pinsG.append(g);
-        if (top === s) { var cr = el('text', { 'class': 'crown', x: s.mx, y: s.my - sz - 4 * px, 'font-size': 12 * px, 'stroke-width': 3 * px }); cr.textContent = '1위'; pinsG.append(cr); }
+        if (top === s) { var cr = el('text', { 'class': 'crown', x: X, y: Y - sz - 4 * px, 'font-size': 12 * px, 'stroke-width': 3 * px }); cr.textContent = '1위'; pinsG.append(cr); }
       });
       if (level === 'sec') {   // 핀 오른쪽에 학교 이름 (겹치면 생략)
-        list.forEach(function (s) {
-          if (!matches(s, query)) return;
-          var sx = (s.mx - view.x) / px, sy = (s.my - view.y) / px - 17, name = shortName(s), w = name.length * 11.5 + 4;
+        P.forEach(function (q2) {
+          var s = q2.s; if (!matches(s, query)) return;
+          var sx = q2.x, sy = q2.y - 17, name = shortName(s), w = name.length * 11.5 + 4;
           if (placed.some(function (b) { return sx + 12 < b[0] + b[2] && b[0] < sx + 12 + w && sy - 8 < b[1] + 16 && b[1] < sy + 8; })) return;
           placed.push([sx + 12, sy - 8, w]);
-          var t = el('text', { 'class': 'pname', x: s.mx + 12 * px, y: s.my - 17 * px, 'font-size': 11.5 * px, 'stroke-width': 3 * px, 'dominant-baseline': 'central' });
-          t.textContent = name; pinsG.append(t);
+          var tx = el('text', { 'class': 'pname', x: q2.mx + 12 * px, y: q2.my - 17 * px, 'font-size': 11.5 * px, 'stroke-width': 3 * px, 'dominant-baseline': 'central' });
+          tx.textContent = name; pinsG.append(tx);
         });
       }
     }
@@ -626,10 +648,9 @@ footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
       var r = svg.getBoundingClientRect(), mx = view.x + (cx - r.left) / r.width * view.w, my = view.y + (cy - r.top) / r.height * view.h, px = view.w / r.width;
       if (level !== 'all') {   // 핀 머리(끝에서 약 18px 위)에 가장 가까운 학교
         var best = null, bd = 24;
-        schools.forEach(function (s) {
-          if (s.sec !== curSec) return;
-          var d = Math.hypot((s.mx - mx) / px, (s.my - 16 * px - my) / px);
-          if (d < bd) { bd = d; best = s; }
+        (draw.pins || []).forEach(function (q2) {   // 그려진(밀려난) 핀 자리로 판단한다
+          var d = Math.hypot((q2.mx - mx) / px, (q2.my - 16 * px - my) / px);
+          if (d < bd) { bd = d; best = q2.s; }
         });
         if (best) { goPin(best); return; }
       }
@@ -708,7 +729,7 @@ footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
         listEl.append(e); moreBtn.hidden = true; return;
       }
       var top = rows[0][key + '_score'];
-      (showAll ? rows : rows.slice(0, 5)).forEach(function (r, i) {
+      (showAll ? rows : rows.slice(0, 3)).forEach(function (r, i) {
         var s = byCode[r.code], v = r[key + '_score'];
         var li = document.createElement('li');
         var pos = document.createElement('span'); pos.className = 'pos'; pos.textContent = i + 1;
@@ -721,7 +742,7 @@ footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
         li.append(pos, who, pts, bar, sub);
         listEl.append(li);
       });
-      moreBtn.hidden = rows.length <= 5;
+      moreBtn.hidden = rows.length <= 3;
       moreBtn.textContent = showAll ? '접기' : '더보기 · 전체 ' + rows.length + '개 학교';
     }
     document.querySelectorAll('.tabs button').forEach(function (b) {
@@ -731,7 +752,10 @@ footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
         renderBoard();
       });
     });
-    moreBtn.addEventListener('click', function () { showAll = !showAll; renderBoard(); });
+    moreBtn.addEventListener('click', function () {   // 접으면 랭킹 맨 위로 돌아온다 (긴 목록 아래에 남지 않게)
+      showAll = !showAll; renderBoard();
+      if (!showAll) document.getElementById('rank').scrollIntoView({ behavior: 'smooth' });
+    });
     function loadBoard() {
       if (!cfg.supabaseUrl || !cfg.supabaseKey) return;
       var h = { apikey: cfg.supabaseKey };
