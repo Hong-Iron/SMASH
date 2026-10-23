@@ -6,7 +6,7 @@ root = pathlib.Path(__file__).resolve().parent.parent
 tpl = (root / "src" / "index.html").read_text(encoding="utf-8")
 schools = json.loads((root / "schools.json").read_text(encoding="utf-8"))
 cfg = json.loads((root / "config.json").read_text(encoding="utf-8"))
-nf = root / "notices.json"   # 공지 카드: [{id, date, until, tag, title, body, url, image, cta}]
+nf = root / "notices.json"   # 공지 카드: [{id, date, until, tag, title, body, url, image, cta}] (body는 기록용, 화면에는 제목만)
 notices = json.loads(nf.read_text(encoding="utf-8")) if nf.exists() else []
 for k in ("__NOTICES__", "__SCHOOLS__", "__HUB_CONFIG__", "<!--GOATCOUNTER-->", "<!--JSONLD-->", "__CARDS__", "__COUNT__", "__MAP__"):
     assert k in tpl, k
@@ -25,7 +25,7 @@ def notice(n):
     return (f'<a class="notice" href="{e(n["url"])}" data-id="{e(n["id"])}" data-until="{e(n.get("until", ""))}">'
             f'<img src="{e(n["image"])}" alt="{e(n["title"])} 화면" width="1200" height="630"{' class="px"' if n.get("pixel") else ''}>'
             f'<div class="body"><span class="tag">{e(n.get("tag", "공지"))} · <time datetime="{e(n["date"])}">{m}월 {d}일</time></span>'
-            f'<strong>{e(n["title"])}</strong><span class="text">{e(n["body"])}</span><span class="go">{e(n.get("cta", "보러 가기"))} →</span></div></a>')
+            f'<strong>{e(n["title"])}</strong><span class="go">{e(n.get("cta", "보러 가기"))} →</span></div></a>')
 notice_html = (f'<section class="notices" aria-labelledby="notice-title"><h2 class="sec-title" id="notice-title">공지</h2>'
                f'{"".join(notice(n) for n in notices)}</section>') if notices else ""
 ld = {
