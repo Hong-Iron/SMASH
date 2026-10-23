@@ -125,6 +125,15 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--gold); outline-
 .card .today { color: var(--gold); }
 
 /* 공지: 제목 아래 가로 카드 (그림 왼쪽, 글 오른쪽). 폰에서는 그림이 위로 */
+.support-strip { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; padding: 10px 12px 10px 16px; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; font-size: 14px; }
+.support-strip p { flex: 1 1 320px; margin: 0; color: var(--muted); min-width: 0; }
+.support-strip p b { color: var(--fg); font-weight: 600; }
+.support-strip .acts { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.support-strip .acts a { padding: 6px 12px; border-radius: 999px; color: #191919; font-weight: 600; font-size: 13px; text-decoration: none; white-space: nowrap; }
+.support-strip .kakao { background: #fee500; }
+.support-strip .bmc { background: #ffdd00; }
+.support-strip .close { width: 30px; height: 30px; border: 0; border-radius: 8px; background: transparent; color: var(--muted); font-size: 20px; line-height: 1; cursor: pointer; }
+.support-strip .close:hover { background: var(--panel-hi); color: var(--fg); }
 .notices { display: grid; gap: 10px; }
 .notice { display: grid; grid-template-columns: minmax(0, 300px) minmax(0, 1fr); overflow: hidden; text-decoration: none; background: var(--panel); border: 1px solid var(--gold); border-radius: 14px; transition: background .15s; }
 .notice:hover { background: var(--panel-hi); }
@@ -147,6 +156,15 @@ footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
     <p><b>우리 학교 캠퍼스를 3D로 부숴 보세요.</b> 폭탄, 야구 배트, 레이저, 운석, 지진, 핵폭탄으로 건물을 무너뜨리고, 땅을 파서 지구 중심까지 내려갈 수 있습니다. 시험기간 스트레스 해소용입니다.</p>
     <div class="chips"><span>무기 6가지</span><span>스타일 랭크 D~SSS</span><span>밤 모드</span><span>되감기</span><span>결과 카드 공유</span></div>
   </header>
+
+  <aside class="support-strip" id="support-strip" aria-label="개발자 응원" hidden>
+    <p><b>학생 한 명이 만드는 비공식 팬 게임이에요.</b> 재밌었다면 천 원으로 다음 학교 추가를 응원해 주세요.</p>
+    <div class="acts">
+      <a class="kakao" data-ev="hub-support-kakaopay" href="https://qr.kakaopay.com/FKcOJKyOy1f405462" target="_blank" rel="noopener">카카오페이로 응원</a>
+      <a class="bmc" data-ev="hub-support-bmc" href="https://buymeacoffee.com/hongiron" target="_blank" rel="noopener">Buy Me a Coffee</a>
+      <button type="button" class="close" id="support-strip-close" aria-label="응원 안내 닫기 (7일 동안 숨김)">&times;</button>
+    </div>
+  </aside>
 
   __NOTICES__
   <section class="board" id="rank" aria-labelledby="rank-title" hidden>
@@ -198,6 +216,18 @@ footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
 <script type="application/json" id="schools-data">__SCHOOLS__</script>
 <script type="application/json" id="hub-config">__HUB_CONFIG__</script>
 <script>
+  // 응원 안내: 닫으면 7일 동안 숨기고, 누른 버튼은 방문 통계에 이벤트로 센다
+  (function () {
+    var strip = document.getElementById('support-strip'), KEY = 'smash-hub-support-closed', WEEK = 7 * 864e5;
+    var ev = function (path) { try { var g = window.goatcounter; if (g && g.count) g.count({ path: path, title: 'SMASH hub', event: true }); } catch (e) {} };
+    var closedAt = 0; try { closedAt = +localStorage.getItem(KEY) || 0; } catch (e) { /* storage blocked */ }
+    if (Date.now() - closedAt > WEEK) strip.hidden = false;
+    strip.querySelectorAll('a[data-ev]').forEach(function (a) { a.addEventListener('click', function () { ev(a.dataset.ev); }); });
+    document.getElementById('support-strip-close').addEventListener('click', function () {
+      strip.hidden = true; ev('hub-support-close');
+      try { localStorage.setItem(KEY, String(Date.now())); } catch (e) { /* storage blocked */ }
+    });
+  })();
   // 공지: 기한(until)이 지난 카드는 숨기고, 누르면 방문 통계에 notice-<id>로 센다
   (function () {
     var today = new Date(Date.now() + 9 * 3600e3).toISOString().slice(0, 10);   // 한국 날짜
