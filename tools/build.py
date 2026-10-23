@@ -26,7 +26,8 @@ def notice(n):
             f'<img src="{e(n["image"])}" alt="{e(n["title"])} 화면" width="1200" height="630">'
             f'<div class="body"><span class="tag">{e(n.get("tag", "공지"))} · <time datetime="{e(n["date"])}">{m}월 {d}일</time></span>'
             f'<strong>{e(n["title"])}</strong><span class="text">{e(n["body"])}</span><span class="go">{e(n.get("cta", "보러 가기"))} →</span></div></a>')
-notice_html = f'<section class="notices" aria-label="공지">{"".join(notice(n) for n in notices)}</section>' if notices else ""
+notice_html = (f'<section class="notices" aria-labelledby="notice-title"><h2 class="sec-title" id="notice-title">공지</h2>'
+               f'{"".join(notice(n) for n in notices)}</section>') if notices else ""
 ld = {
     "@context": "https://schema.org",
     "@graph": [

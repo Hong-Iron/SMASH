@@ -43,6 +43,7 @@
   color-scheme: dark;
 }
 * { box-sizing: border-box; }
+[hidden] { display: none !important; }
 html { -webkit-text-size-adjust: 100%; }
 body { margin: 0; background: var(--bg); color: var(--fg); font: 400 15px/1.6 var(--font-ui); }
 a { color: inherit; }
@@ -135,6 +136,8 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--gold); outline-
 .board-empty { margin: 0; padding: 16px; border: 1px dashed var(--line); border-radius: 10px; color: var(--muted); text-align: center; font-size: 14px; }
 .board-more { justify-self: center; padding: 7px 16px; border: 1px solid var(--line); border-radius: 999px; background: transparent; color: var(--fg); font: 600 13px var(--font-ui); cursor: pointer; }
 .board-more:hover { border-color: var(--gold); }
+.list-more { margin-top: -12px; padding: 9px 20px; font-size: 14px; }
+.sec-title { margin: 0; font: 400 20px/1.2 var(--font-display); }
 .card .today { color: var(--gold); }
 
 /* 공지: 제목 아래 가로 카드 (그림 왼쪽, 글 오른쪽). 폰에서는 그림이 위로 */
@@ -182,16 +185,6 @@ footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
     <ul class="hits" id="hits" aria-label="찾은 학교" hidden></ul>
   </section>
 
-  <aside class="support-strip" id="support-strip" aria-label="개발자 응원" hidden>
-    <p><b>작은 후원이 큰 힘이 됩니다!</b></p>
-    <div class="acts">
-      <a class="kakao" data-ev="hub-support-kakaopay" href="https://qr.kakaopay.com/FKcOJKyOy1f405462" target="_blank" rel="noopener">카카오페이로 응원</a>
-      <a class="bmc" data-ev="hub-support-bmc" href="https://buymeacoffee.com/hongiron" target="_blank" rel="noopener">Buy Me a Coffee</a>
-      <button type="button" class="close" id="support-strip-close" aria-label="응원 안내 닫기 (7일 동안 숨김)">&times;</button>
-    </div>
-  </aside>
-
-  __NOTICES__
   <section class="board" id="rank" aria-labelledby="rank-title" hidden>
     <div class="board-head">
       <h2 id="rank-title">학교 대항 <span>파괴 랭킹</span></h2>
@@ -217,6 +210,18 @@ footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
     </label>
   </div>
   <section class="grid" id="schools" aria-label="학교 고르기">__CARDS__</section>
+  <button type="button" class="board-more list-more" id="list-more" hidden></button>
+
+  <aside class="support-strip" id="support-strip" aria-label="개발자 응원" hidden>
+    <p><b>작은 후원이 큰 힘이 됩니다!</b></p>
+    <div class="acts">
+      <a class="kakao" data-ev="hub-support-kakaopay" href="https://qr.kakaopay.com/FKcOJKyOy1f405462" target="_blank" rel="noopener">카카오페이로 응원</a>
+      <a class="bmc" data-ev="hub-support-bmc" href="https://buymeacoffee.com/hongiron" target="_blank" rel="noopener">Buy Me a Coffee</a>
+      <button type="button" class="close" id="support-strip-close" aria-label="응원 안내 닫기 (7일 동안 숨김)">&times;</button>
+    </div>
+  </aside>
+
+  __NOTICES__
 
   <section class="support" aria-labelledby="support-title">
     <h2 id="support-title">개발자 응원하기</h2>
@@ -259,7 +264,7 @@ footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
       if (a.dataset.until && a.dataset.until < today) a.remove();
       a.addEventListener('click', function () { try { var g = window.goatcounter; if (g && g.count) g.count({ path: 'notice-' + a.dataset.id, title: 'SMASH hub', event: true }); } catch (e) {} });
     });
-    var box = document.querySelector('.notices'); if (box && !box.children.length) box.remove();
+    var box = document.querySelector('.notices'); if (box && !box.querySelector('.notice')) box.remove();
   })();
 </script>
 <script>
@@ -365,6 +370,14 @@ footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
       var first = hitsEl.querySelector('a.hit');
       if (first) { e.preventDefault(); first.click(); }
     });
+    var listMore = document.getElementById('list-more'), listOpen = false;
+    var phoneMQ = window.matchMedia('(max-width: 640px)');
+    function onMQ() { render(); }
+    if (phoneMQ.addEventListener) phoneMQ.addEventListener('change', onMQ); else phoneMQ.addListener(onMQ);
+    listMore.addEventListener('click', function () {
+      listOpen = !listOpen; render();
+      if (!listOpen) document.getElementById('list-head').scrollIntoView({ behavior: 'smooth' });
+    });
     function render() {
       var query = q.value.trim(), mode = sortSel.value;
       renderHits(query);
@@ -377,12 +390,15 @@ footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
         return a.name.localeCompare(b.name, 'ko');
       });
       grid.replaceChildren();
-      list.forEach(function (s) { grid.append(card(s)); });
+      var base = phoneMQ.matches ? 5 : 9, all = !!query || listOpen || list.length <= base;
+      (all ? list : list.slice(0, base)).forEach(function (s) { grid.append(card(s)); });
       if (!list.length) {
         var e = document.createElement('p'); e.className = 'empty'; e.textContent = '‘' + query + '’에 맞는 학교가 아직 없습니다.';
         grid.append(e);
       }
-      grid.append(requestCard(list.length ? '' : query));
+      if (all) grid.append(requestCard(list.length ? '' : query));
+      listMore.hidden = !!query || list.length <= base;
+      listMore.textContent = listOpen ? '접기' : '더보기 · 학교 ' + list.length + '곳 모두';
       countEl.textContent = query ? ('‘' + query + '’ 검색 결과 ' + list.length + '곳') : ('학교 ' + schools.length + '곳');
       try { localStorage.setItem('smash-hub-sort', mode); } catch (e) { /* storage blocked */ }
     }
@@ -410,7 +426,7 @@ footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
         listEl.append(e); moreBtn.hidden = true; return;
       }
       var top = rows[0][key + '_score'];
-      (showAll ? rows : rows.slice(0, 10)).forEach(function (r, i) {
+      (showAll ? rows : rows.slice(0, 5)).forEach(function (r, i) {
         var s = byCode[r.code], v = r[key + '_score'];
         var li = document.createElement('li');
         var pos = document.createElement('span'); pos.className = 'pos'; pos.textContent = i + 1;
@@ -423,8 +439,8 @@ footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
         li.append(pos, who, pts, bar, sub);
         listEl.append(li);
       });
-      moreBtn.hidden = rows.length <= 10;
-      moreBtn.textContent = showAll ? '10위까지만 보기' : '전체 ' + rows.length + '곳 보기';
+      moreBtn.hidden = rows.length <= 5;
+      moreBtn.textContent = showAll ? '접기' : '더보기 · 전체 ' + rows.length + '곳';
     }
     document.querySelectorAll('.tabs button').forEach(function (b) {
       b.addEventListener('click', function () {
