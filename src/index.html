@@ -145,12 +145,15 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--gold); outline-
 .notice .text { color: var(--muted); font-size: 14px; }
 .notice .go { justify-self: start; padding: 7px 14px; border-radius: 8px; background: var(--hot); color: #1a0d05; font-weight: 600; font-size: 14px; }
 @media (max-width: 640px) { .notice { grid-template-columns: 1fr; } .notice img { height: auto; } }
+.maker { justify-self: end; margin-bottom: -18px; color: var(--muted); font-size: 13px; text-decoration: none; }
+.maker:hover { color: var(--fg); text-decoration: underline; text-underline-offset: 3px; }
 footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
 @media (prefers-reduced-motion: reduce) { .card { transition: none; } .card:hover { transform: none; } }
 </style>
 </head>
 <body>
 <main class="wrap">
+  <a class="maker" href="https://hong-iron.github.io/Hongs_Blog/" target="_blank" rel="noopener" id="blog-link">만든 사람 · Hong-Iron 블로그 ↗</a>
   <header class="hero">
     <h1>SMASH <span>대학교</span></h1>
     <p><b>우리 학교 캠퍼스를 3D로 부숴 보세요.</b> 폭탄, 야구 배트, 레이저, 운석, 지진, 핵폭탄으로 건물을 무너뜨리고, 땅을 파서 지구 중심까지 내려갈 수 있습니다. 시험기간 스트레스 해소용입니다.</p>
@@ -210,6 +213,7 @@ footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
     <span>학교와 관계없는 비공식 팬 게임입니다. 학교 로고와 교표는 쓰지 않습니다.</span>
     <span>학교 랭킹에는 학교 코드와 점수만 보냅니다. 방문 수는 쿠키를 쓰지 않는 GoatCounter로 셉니다.</span>
     <span>건물·도로 © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap 기여자</a> · 고도 AWS Terrain Tiles (SRTM 30 m 기반) · 소스 <a href="https://github.com/Hong-Iron/SMASH" target="_blank" rel="noopener">GitHub</a></span>
+    <span>문의 <a href="mailto:hongcheolmin004@gmail.com" id="mail-link">hongcheolmin004@gmail.com</a></span>
   </footer>
 </main>
 
@@ -223,6 +227,8 @@ footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
     var closedAt = 0; try { closedAt = +localStorage.getItem(KEY) || 0; } catch (e) { /* storage blocked */ }
     if (Date.now() - closedAt > WEEK) strip.hidden = false;
     strip.querySelectorAll('a[data-ev]').forEach(function (a) { a.addEventListener('click', function () { ev(a.dataset.ev); }); });
+    document.getElementById('blog-link').addEventListener('click', function () { ev('hub-blog'); });
+    document.getElementById('mail-link').addEventListener('click', function () { ev('hub-mail'); });
     document.getElementById('support-strip-close').addEventListener('click', function () {
       strip.hidden = true; ev('hub-support-close');
       try { localStorage.setItem(KEY, String(Date.now())); } catch (e) { /* storage blocked */ }
