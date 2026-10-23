@@ -237,7 +237,7 @@ footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
     <h2 id="finder-title">우리 학교 <span>찾기</span></h2>
     <label class="search" for="q">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
-      <input id="q" type="search" placeholder="학교 이름 (예: 서울대, 부산, ㄱㅂㄷ)" aria-label="학교 이름, 캠퍼스, 지역, 영문, 초성으로 찾기" autocomplete="off" enterkeyhint="go">
+      <input id="q" type="search" maxlength="60" placeholder="학교 이름 (예: 서울대, 부산, ㄱㅂㄷ)" aria-label="학교 이름, 캠퍼스, 지역, 영문, 초성으로 찾기" autocomplete="off" enterkeyhint="go">
     </label>
     <ul class="hits" id="hits" aria-label="찾은 학교" hidden></ul>
   </section>
@@ -297,7 +297,7 @@ footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
   <div class="map-list" id="map-list" hidden>
     <label class="search map-search" for="mq">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
-      <input id="mq" type="search" placeholder="학교 이름 (예: 서울대, 부산, ㄱㅂㄷ)" aria-label="지도에서 학교 찾기" autocomplete="off" enterkeyhint="search">
+      <input id="mq" type="search" maxlength="60" placeholder="학교 이름 (예: 서울대, 부산, ㄱㅂㄷ)" aria-label="지도에서 학교 찾기" autocomplete="off" enterkeyhint="search">
     </label>
   </div>
   <section class="grid" id="schools" aria-label="학교 고르기">__CARDS__</section>
@@ -405,6 +405,8 @@ footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
       return a;
     }
     function requestCard(query) {
+      // 깨진 이모지 조각(짝 없는 서로게이트)은 encodeURIComponent가 오류를 내서 목록 갱신이 멈춘다: 대체 문자로 바꾸고, 링크가 너무 길어지지 않게 80자까지만
+      query = Array.from(String(query || '').replace(/[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(^|[^\uD800-\uDBFF])[\uDC00-\uDFFF]/g, function (m, pre) { return (pre || '') + '\uFFFD'; })).slice(0, 80).join('');
       var req = document.createElement('a');
       req.className = 'request';
       req.href = 'https://github.com/Hong-Iron/SMASH/issues/new?title=' + encodeURIComponent('학교 추가 요청: ' + (query || '')) + '&body=' + encodeURIComponent('학교 이름:' + (query ? ' ' + query : '') + '\n캠퍼스:\n');
