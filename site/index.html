@@ -211,6 +211,21 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--gold); outline-
 .map-side .m { color: var(--muted); font-size: 12.5px; }
 .map-side .m b { color: var(--gold); font-weight: 600; }
 .map-side .go { align-self: stretch; margin-top: auto; padding: 11px 12px; border-radius: 10px; background: var(--hot); color: #1a0d05; font-weight: 700; font-size: 15px; text-align: center; text-decoration: none; }
+.map-list { display: grid; gap: 10px; margin-top: -14px; }
+.map-search { border-width: 1px; box-shadow: none; }
+.map-search input { padding: 12px 0; font-size: 16px; }
+.ml-head { margin: 2px 0 0; color: var(--muted); font-size: 13px; }
+.ml-head b { color: var(--fg); font-weight: 600; }
+.ml { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; max-height: 62vh; overflow: auto; }
+.ml li { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 8px; padding: 0 8px 0 0; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; }
+.ml li.sel { border-color: var(--hot); background: var(--panel-hi); }
+.ml .row { display: grid; grid-template-columns: 12px minmax(0, 1fr) auto; align-items: center; gap: 10px; padding: 10px 4px 10px 12px; border: 0; background: transparent; color: var(--fg); font: inherit; text-align: left; cursor: pointer; min-width: 0; }
+.ml .dot { width: 10px; height: 10px; border-radius: 50%; }
+.ml .t { display: grid; min-width: 0; }
+.ml .t b { font-weight: 600; font-size: 15px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ml .t small { color: var(--muted); font-size: 12.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ml .sc { color: var(--gold); font: 500 12.5px var(--font-data); white-space: nowrap; }
+.ml .go { padding: 7px 12px; border-radius: 8px; background: var(--hot); color: #1a0d05; font-weight: 700; font-size: 13px; text-decoration: none; white-space: nowrap; }
 @media (max-width: 560px) { .map-side { width: 56%; padding: 10px; gap: 6px; } .map-side .c { font-size: 15px; } .map-side .n { font-size: 13px; } }
 footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
 @media (prefers-reduced-motion: reduce) { .card { transition: none; } .card:hover { transform: none; } }
@@ -283,6 +298,14 @@ footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
       <span class="c" id="ms-code"></span><span class="n" id="ms-name"></span><span class="m" id="ms-meta"></span>
       <a class="go" id="ms-go" href="#">부수러 가기 →</a>
     </aside>
+  </section>
+  <section class="map-list" id="map-list" aria-label="지도에서 보는 학교 목록" hidden>
+    <label class="search map-search" for="mq">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+      <input id="mq" type="search" placeholder="학교 이름 (예: 서울대, 부산, ㄱㅂㄷ)" aria-label="지도에서 학교 찾기" autocomplete="off" enterkeyhint="search">
+    </label>
+    <p class="ml-head" id="ml-head"></p>
+    <ul class="ml" id="ml"></ul>
   </section>
 
 
@@ -541,7 +564,35 @@ footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
         });
       }
     }
+    var mlist = document.getElementById('map-list'), mq = document.getElementById('mq'), ml = document.getElementById('ml'), mlHead = document.getElementById('ml-head');
+    function drawList() {   // 지도 아래 목록: 전국이면 모든 학교, 구역이면 그 구역 학교. 오늘 많이 부서진 순
+      if (!mapOn) return;
+      var query = q.value.trim(), list = schools.filter(function (s) { return matches(s, query) && (level === 'all' || s.sec === curSec); });
+      list.sort(function (a, b) { return todayOf(b) - todayOf(a) || a.campus.localeCompare(b.campus, 'ko'); });
+      mlHead.replaceChildren();
+      var where = level === 'all' ? '전국' : secByK[curSec].name, b = document.createElement('b'); b.textContent = where;
+      mlHead.append(b, document.createTextNode(' 학교 ' + list.length + (board ? ' · 오늘 많이 부서진 순' : '')));
+      ml.replaceChildren();
+      list.forEach(function (s) {
+        var li = document.createElement('li'); if (picked === s) li.className = 'sel';
+        var row = document.createElement('button'); row.type = 'button'; row.className = 'row';
+        var dot = document.createElement('span'); dot.className = 'dot'; dot.style.background = heatColor(heatOf(s));
+        var tt = document.createElement('span'); tt.className = 't';
+        var nm = document.createElement('b'); nm.textContent = s.campus;
+        var sm = document.createElement('small'); sm.textContent = (s.region || '') + ' · 건물 ' + s.buildings + '동';
+        tt.append(nm, sm);
+        var sc = document.createElement('span'); sc.className = 'sc'; sc.textContent = todayOf(s) > 0 ? '오늘 ' + fmtPts(todayOf(s)) : '';
+        row.append(dot, tt, sc);
+        row.addEventListener('click', function () { goPin(s); mapbox.scrollIntoView({ behavior: 'smooth', block: 'start' }); ev2('hub-map-list'); });
+        var go = document.createElement('a'); go.className = 'go'; go.href = s.url; go.textContent = '부수기';
+        li.append(row, go); ml.append(li);
+      });
+      if (!list.length) { var e = document.createElement('li'); e.style.padding = '14px'; e.style.color = 'var(--muted)'; e.textContent = '‘' + query + '’에 맞는 학교가 없어요'; ml.append(e); }
+    }
+    mq.addEventListener('input', function () { q.value = mq.value; q.dispatchEvent(new Event('input')); });
+    q.addEventListener('input', function () { if (mq.value !== q.value) mq.value = q.value; });
     function updateChrome() {
+      drawList();
       backBtn.hidden = level === 'all';
       backBtn.textContent = level === 'pin' ? '← ' + secByK[curSec].name : '← 전국';
       hint.textContent = level === 'all' ? '지역을 누르면 그 지역 학교가 나와요' : level === 'pin' ? '다른 핀을 눌러도 되고, 부수러 가기를 누르면 게임이 열려요' : (secByK[curSec].n ? '핀을 누르면 그 학교로 더 들어가요' : '이 지역은 아직 학교가 없어요');
@@ -639,7 +690,7 @@ footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
     function setMode(m) {
       mapOn = m === 'map';
       document.querySelectorAll('.view-tabs button').forEach(function (b) { b.setAttribute('aria-selected', String(b.dataset.view === m)); });
-      mapbox.hidden = !mapOn; grid.hidden = mapOn; sortSel.parentElement.hidden = mapOn;
+      mapbox.hidden = !mapOn; mlist.hidden = !mapOn; grid.hidden = mapOn; sortSel.parentElement.hidden = mapOn; mq.value = q.value;
       if (mapOn) { updateChrome(); setView(view || fullView()); ev2('hub-map-open'); }
       render();
     }
@@ -649,7 +700,7 @@ footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
     function render() {
       var query = q.value.trim(), mode = sortSel.value;
       renderHits(query);
-      if (mapOn) { draw(); if (query !== lastQuery) mapQuery(query); }
+      if (mapOn) { draw(); drawList(); if (query !== lastQuery) mapQuery(query); }
       lastQuery = query;
       if (query && !searchUsed) { searchUsed = true; ev('hub-search'); }
       var list = schools.filter(function (s) { return matches(s, query); });
