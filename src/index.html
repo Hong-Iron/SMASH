@@ -63,10 +63,10 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--gold); outline-
 .finder { display: grid; gap: 10px; margin-top: -8px; }
 .finder h2 { margin: 0; font: 400 22px/1.2 var(--font-display); }
 .finder h2 span { color: var(--gold); }
-.search { display: flex; align-items: center; gap: 10px; min-width: 0; padding: 0 16px; background: var(--panel); border: 2px solid var(--gold); border-radius: 14px; box-shadow: 0 0 0 4px rgba(255, 210, 63, .12), 0 10px 30px rgba(0, 0, 0, .35); cursor: text; }
+.search { display: flex; align-items: center; gap: 9px; min-width: 0; padding: 0 14px; background: var(--panel); border: 2px solid var(--gold); border-radius: 14px; box-shadow: 0 0 0 4px rgba(255, 210, 63, .12), 0 10px 30px rgba(0, 0, 0, .35); cursor: text; }
 .search:focus-within { border-color: var(--hot); box-shadow: 0 0 0 4px rgba(255, 106, 43, .25), 0 10px 30px rgba(0, 0, 0, .35); }
-.search svg { width: 24px; height: 24px; flex: none; color: var(--gold); }
-.search input { flex: 1; min-width: 0; padding: 16px 0; border: 0; outline: 0; background: transparent; color: var(--fg); font: 500 18px var(--font-ui); }
+.search svg { width: 20px; height: 20px; flex: none; color: var(--gold); }
+.search input { flex: 1; min-width: 0; padding: 12px 0; border: 0; outline: 0; background: transparent; color: var(--fg); font: 500 16px var(--font-ui); }   /* 16px 밑으로 내리면 아이폰이 눌렀을 때 확대한다 */
 .search input::placeholder { color: var(--muted); font-weight: 400; }
 .search input::-webkit-search-cancel-button { filter: invert(1); }
 .hits { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
@@ -146,14 +146,14 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--gold); outline-
 .card .today { color: var(--gold); }
 
 /* 공지: 제목 아래 가로 카드 (그림 왼쪽, 글 오른쪽). 폰에서는 그림이 위로 */
-.support-strip { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; padding: 10px 12px 10px 16px; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; font-size: 14px; }
+.support-strip { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; padding: 8px 10px 8px 14px; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; font-size: 13px; }
 .support-strip p { flex: 1 1 320px; margin: 0; color: var(--muted); min-width: 0; }
 .support-strip p b { color: var(--fg); font-weight: 600; }
 /* 버튼이 줄의 남은 너비를 채운다: 폰에서는 한 줄 전체, PC에서는 문구 옆 절반쯤 */
 .support-strip .acts { flex: 1 1 280px; display: flex; align-items: center; gap: 6px; min-width: 0; }
-.support-strip .acts a { flex: 1; padding: 12px 18px; border-radius: 10px; color: #191919; font-weight: 700; font-size: 15px; text-align: center; text-decoration: none; white-space: nowrap; }
+.support-strip .acts a { flex: 1; padding: 8px 14px; border-radius: 9px; color: #191919; font-weight: 700; font-size: 13.5px; text-align: center; text-decoration: none; white-space: nowrap; }
 .support-strip .kakao { background: #fee500; }
-.support-strip .close { width: 30px; height: 30px; border: 0; border-radius: 8px; background: transparent; color: var(--muted); font-size: 20px; line-height: 1; cursor: pointer; }
+.support-strip .close { width: 28px; height: 28px; border: 0; border-radius: 8px; background: transparent; color: var(--muted); font-size: 20px; line-height: 1; cursor: pointer; }
 .support-strip .close:hover { background: var(--panel-hi); color: var(--fg); }
 .notices { display: grid; gap: 10px; }
 .notice { display: grid; grid-template-columns: minmax(0, 300px) minmax(0, 1fr); overflow: hidden; text-decoration: none; background: var(--panel); border: 1px solid var(--gold); border-radius: 14px; transition: background .15s; }
