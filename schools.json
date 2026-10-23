@@ -7,7 +7,9 @@
     "buildings": 25,
     "nameEn": "Chung-Ang University",
     "region": "서울 동작구 흑석동",
-    "added": "2026-10-15"
+    "added": "2026-10-15",
+    "lat": 37.5048,
+    "lon": 126.957
   },
   {
     "code": "SSU",
@@ -17,7 +19,9 @@
     "buildings": 31,
     "nameEn": "Soongsil University",
     "region": "서울 동작구 상도동",
-    "added": "2026-10-16"
+    "added": "2026-10-16",
+    "lat": 37.49611,
+    "lon": 126.95734
   },
   {
     "code": "SNU",
@@ -27,7 +31,9 @@
     "buildings": 203,
     "nameEn": "Seoul National University",
     "region": "서울 관악구",
-    "added": "2026-10-16"
+    "added": "2026-10-16",
+    "lat": 37.45816,
+    "lon": 126.95434
   },
   {
     "code": "KU",
@@ -37,7 +43,9 @@
     "buildings": 123,
     "nameEn": "Korea University",
     "region": "서울 성북구 안암동",
-    "added": "2026-10-16"
+    "added": "2026-10-16",
+    "lat": 37.58802,
+    "lon": 127.02998
   },
   {
     "code": "YONSEI",
@@ -47,7 +55,9 @@
     "buildings": 146,
     "nameEn": "Yonsei University",
     "region": "서울 서대문구 신촌동",
-    "added": "2026-10-16"
+    "added": "2026-10-16",
+    "lat": 37.56775,
+    "lon": 126.93881
   },
   {
     "code": "SOGANG",
@@ -57,7 +67,9 @@
     "buildings": 31,
     "nameEn": "Sogang University",
     "region": "서울 마포구 신수동",
-    "added": "2026-10-16"
+    "added": "2026-10-16",
+    "lat": 37.55213,
+    "lon": 126.94098
   },
   {
     "code": "HYU",
@@ -67,7 +79,9 @@
     "buildings": 63,
     "nameEn": "Hanyang University",
     "region": "서울 성동구 행당동",
-    "added": "2026-10-16"
+    "added": "2026-10-16",
+    "lat": 37.55694,
+    "lon": 127.04619
   },
   {
     "code": "SKKU",
@@ -77,7 +91,9 @@
     "buildings": 23,
     "nameEn": "Sungkyunkwan University",
     "region": "서울 종로구 명륜동",
-    "added": "2026-10-16"
+    "added": "2026-10-16",
+    "lat": 37.58705,
+    "lon": 126.99315
   },
   {
     "code": "KHU",
@@ -87,7 +103,9 @@
     "buildings": 64,
     "nameEn": "Kyung Hee University",
     "region": "서울 동대문구 회기동",
-    "added": "2026-10-16"
+    "added": "2026-10-16",
+    "lat": 37.59713,
+    "lon": 127.05182
   },
   {
     "code": "EWHA",
@@ -97,7 +115,9 @@
     "buildings": 65,
     "nameEn": "Ewha Womans University",
     "region": "서울 서대문구 대현동",
-    "added": "2026-10-16"
+    "added": "2026-10-16",
+    "lat": 37.56437,
+    "lon": 126.94662
   },
   {
     "code": "KONKUK",
@@ -107,7 +127,9 @@
     "buildings": 48,
     "nameEn": "Konkuk University",
     "region": "서울 광진구 화양동",
-    "added": "2026-10-16"
+    "added": "2026-10-16",
+    "lat": 37.54185,
+    "lon": 127.07738
   },
   {
     "code": "DGU",
@@ -117,7 +139,9 @@
     "buildings": 31,
     "nameEn": "Dongguk University",
     "region": "서울 중구 필동",
-    "added": "2026-10-16"
+    "added": "2026-10-16",
+    "lat": 37.55827,
+    "lon": 127.00068
   },
   {
     "code": "HONGIK",
@@ -127,7 +151,9 @@
     "buildings": 31,
     "nameEn": "Hongik University",
     "region": "서울 마포구 상수동",
-    "added": "2026-10-16"
+    "added": "2026-10-16",
+    "lat": 37.55038,
+    "lon": 126.92577
   },
   {
     "code": "UOS",
@@ -137,7 +163,9 @@
     "buildings": 37,
     "nameEn": "University of Seoul",
     "region": "서울 동대문구 전농동",
-    "added": "2026-10-16"
+    "added": "2026-10-16",
+    "lat": 37.58307,
+    "lon": 127.05951
   },
   {
     "code": "KMU",
@@ -147,7 +175,9 @@
     "buildings": 26,
     "nameEn": "Kookmin University",
     "region": "서울 성북구 정릉동",
-    "added": "2026-10-16"
+    "added": "2026-10-16",
+    "lat": 37.61157,
+    "lon": 126.99597
   },
   {
     "code": "SEJONG",
@@ -157,7 +187,9 @@
     "buildings": 26,
     "nameEn": "Sejong University",
     "region": "서울 광진구 군자동",
-    "added": "2026-10-16"
+    "added": "2026-10-16",
+    "lat": 37.55081,
+    "lon": 127.07423
   },
   {
     "code": "SOOKMYUNG",
@@ -167,7 +199,9 @@
     "buildings": 20,
     "nameEn": "Sookmyung Women's University",
     "region": "서울 용산구 청파동",
-    "added": "2026-10-16"
+    "added": "2026-10-16",
+    "lat": 37.54536,
+    "lon": 126.96501
   },
   {
     "code": "HUFS",
@@ -177,7 +211,9 @@
     "buildings": 16,
     "nameEn": "Hankuk University of Foreign Studies",
     "region": "서울 동대문구 이문동",
-    "added": "2026-10-16"
+    "added": "2026-10-16",
+    "lat": 37.59702,
+    "lon": 127.05885
   },
   {
     "code": "INHA",
@@ -187,7 +223,9 @@
     "buildings": 25,
     "nameEn": "Inha University",
     "region": "인천 미추홀구 용현동",
-    "added": "2026-10-16"
+    "added": "2026-10-16",
+    "lat": 37.44941,
+    "lon": 126.65343
   },
   {
     "code": "KANGWON",
@@ -197,7 +235,9 @@
     "buildings": 125,
     "nameEn": "Kangwon National University",
     "region": "강원 춘천시 효자동",
-    "added": "2026-10-17"
+    "added": "2026-10-17",
+    "lat": 37.86721,
+    "lon": 127.74482
   },
   {
     "code": "KANGWON-GANGNEUNG",
@@ -207,7 +247,9 @@
     "buildings": 41,
     "nameEn": "Kangwon National University Gangneung Campus",
     "region": "강원 강릉시 지변동",
-    "added": "2026-10-17"
+    "added": "2026-10-17",
+    "lat": 37.76877,
+    "lon": 128.86964
   },
   {
     "code": "KANGWON-SAMCHEOK",
@@ -217,7 +259,9 @@
     "buildings": 26,
     "nameEn": "Kangwon National University Samcheok Campus",
     "region": "강원 삼척시 교동",
-    "added": "2026-10-17"
+    "added": "2026-10-17",
+    "lat": 37.45282,
+    "lon": 129.1627
   },
   {
     "code": "KANGWON-WONJU",
@@ -227,7 +271,9 @@
     "buildings": 16,
     "nameEn": "Kangwon National University Wonju Campus",
     "region": "강원 원주시 흥업면",
-    "added": "2026-10-17"
+    "added": "2026-10-17",
+    "lat": 37.30477,
+    "lon": 127.9236
   },
   {
     "code": "KANGWON-DOGYE",
@@ -237,7 +283,9 @@
     "buildings": 9,
     "nameEn": "Kangwon National University Dogye Campus",
     "region": "강원 삼척시 도계읍",
-    "added": "2026-10-17"
+    "added": "2026-10-17",
+    "lat": 37.22533,
+    "lon": 129.09683
   },
   {
     "code": "KDU-SEORAK",
@@ -247,7 +295,9 @@
     "buildings": 9,
     "nameEn": "Kyungdong University Seorak Campus",
     "region": "강원 속초시",
-    "added": "2026-10-17"
+    "added": "2026-10-17",
+    "lat": 38.1925,
+    "lon": 128.5548
   },
   {
     "code": "KDU-WONJU",
@@ -257,7 +307,9 @@
     "buildings": 7,
     "nameEn": "Kyungdong University Medical Campus",
     "region": "강원 원주시 문막읍",
-    "added": "2026-10-17"
+    "added": "2026-10-17",
+    "lat": 37.2652,
+    "lon": 127.7955
   },
   {
     "code": "KDU-YANGJU",
@@ -267,7 +319,9 @@
     "buildings": 6,
     "nameEn": "Kyungdong University Metropol Campus",
     "region": "경기 양주시 고암동",
-    "added": "2026-10-17"
+    "added": "2026-10-17",
+    "lat": 37.8107,
+    "lon": 127.0701
   },
   {
     "code": "HKNU",
@@ -277,7 +331,9 @@
     "buildings": 24,
     "nameEn": "Hankyong National University",
     "region": "경기 안성시 석정동",
-    "added": "2026-10-17"
+    "added": "2026-10-17",
+    "lat": 37.01168,
+    "lon": 127.26298
   },
   {
     "code": "DIMA",
@@ -287,7 +343,9 @@
     "buildings": 9,
     "nameEn": "Dong-ah Institute of Media and Arts",
     "region": "경기 안성시 삼죽면",
-    "added": "2026-10-17"
+    "added": "2026-10-17",
+    "lat": 37.0585,
+    "lon": 127.3586
   },
   {
     "code": "PNU",
@@ -297,7 +355,9 @@
     "buildings": 88,
     "nameEn": "Pusan National University",
     "region": "부산 금정구 장전동",
-    "added": "2026-10-17"
+    "added": "2026-10-17",
+    "lat": 35.23424,
+    "lon": 129.07927
   },
   {
     "code": "PNU-MIRYANG",
@@ -307,7 +367,9 @@
     "buildings": 14,
     "nameEn": "Pusan National University Miryang Campus",
     "region": "경남 밀양시 삼랑진읍",
-    "added": "2026-10-17"
+    "added": "2026-10-17",
+    "lat": 35.45398,
+    "lon": 128.80818
   },
   {
     "code": "PNU-YANGSAN",
@@ -317,7 +379,9 @@
     "buildings": 13,
     "nameEn": "Pusan National University Yangsan Campus",
     "region": "경남 양산시 물금읍",
-    "added": "2026-10-17"
+    "added": "2026-10-17",
+    "lat": 35.32447,
+    "lon": 129.00441
   },
   {
     "code": "PKNU",
@@ -327,7 +391,9 @@
     "buildings": 68,
     "nameEn": "Pukyong National University",
     "region": "부산 남구 대연동",
-    "added": "2026-10-17"
+    "added": "2026-10-17",
+    "lat": 35.13386,
+    "lon": 129.1055
   },
   {
     "code": "PKNU-YONGDANG",
@@ -337,7 +403,9 @@
     "buildings": 30,
     "nameEn": "Pukyong National University Yongdang Campus",
     "region": "부산 남구 용당동",
-    "added": "2026-10-17"
+    "added": "2026-10-17",
+    "lat": 35.11598,
+    "lon": 129.09063
   },
   {
     "code": "DEU",
@@ -347,7 +415,9 @@
     "buildings": 33,
     "nameEn": "Dong-eui University",
     "region": "부산 부산진구 가야동",
-    "added": "2026-10-17"
+    "added": "2026-10-17",
+    "lat": 35.14232,
+    "lon": 129.03527
   },
   {
     "code": "DGU-WISE",
@@ -357,7 +427,9 @@
     "buildings": 18,
     "nameEn": "Dongguk University WISE Campus",
     "region": "경북 경주시 석장동",
-    "added": "2026-10-17"
+    "added": "2026-10-17",
+    "lat": 35.861,
+    "lon": 129.194
   },
   {
     "code": "TUKOREA",
@@ -367,7 +439,9 @@
     "buildings": 16,
     "nameEn": "Tech University of Korea",
     "region": "경기 시흥시 정왕동",
-    "added": "2026-10-17"
+    "added": "2026-10-17",
+    "lat": 37.34028,
+    "lon": 126.73333
   },
   {
     "code": "JNU",
@@ -377,7 +451,9 @@
     "buildings": 210,
     "nameEn": "Chonnam National University",
     "region": "광주 북구 용봉동",
-    "added": "2026-10-17"
+    "added": "2026-10-17",
+    "lat": 35.17691,
+    "lon": 126.90481
   },
   {
     "code": "JNU-YEOSU",
@@ -387,7 +463,9 @@
     "buildings": 20,
     "nameEn": "Chonnam National University Yeosu Campus",
     "region": "전남 여수시 둔덕동",
-    "added": "2026-10-17"
+    "added": "2026-10-17",
+    "lat": 34.77461,
+    "lon": 127.69864
   },
   {
     "code": "JNU-GUKDONG",
@@ -397,7 +475,9 @@
     "buildings": 8,
     "nameEn": "Chonnam National University Gukdong Campus",
     "region": "전남 여수시 국동",
-    "added": "2026-10-17"
+    "added": "2026-10-17",
+    "lat": 34.72851,
+    "lon": 127.71708
   },
   {
     "code": "JNU-HWASUN",
@@ -407,7 +487,9 @@
     "buildings": 15,
     "nameEn": "Chonnam National University Hwasun Campus",
     "region": "전남 화순군 화순읍",
-    "added": "2026-10-17"
+    "added": "2026-10-17",
+    "lat": 35.05555,
+    "lon": 127.00128
   },
   {
     "code": "JNU-HAKDONG",
@@ -417,7 +499,9 @@
     "buildings": 11,
     "nameEn": "Chonnam National University Hakdong Campus",
     "region": "광주 동구 학동",
-    "added": "2026-10-17"
+    "added": "2026-10-17",
+    "lat": 35.1424,
+    "lon": 126.92321
   },
   {
     "code": "KNU",
@@ -427,7 +511,9 @@
     "buildings": 94,
     "nameEn": "Kyungpook National University",
     "region": "대구 북구 산격동",
-    "added": "2026-10-17"
+    "added": "2026-10-17",
+    "lat": 35.89043,
+    "lon": 128.61035
   },
   {
     "code": "KNU-SANGJU",
@@ -437,7 +523,9 @@
     "buildings": 35,
     "nameEn": "Kyungpook National University Sangju Campus",
     "region": "경북 상주시 가장동",
-    "added": "2026-10-17"
+    "added": "2026-10-17",
+    "lat": 36.37632,
+    "lon": 128.14336
   },
   {
     "code": "CHOSUN",
@@ -447,7 +535,9 @@
     "buildings": 62,
     "nameEn": "Chosun University",
     "region": "광주 동구 서석동",
-    "added": "2026-10-17"
+    "added": "2026-10-17",
+    "lat": 35.14117,
+    "lon": 126.92976
   },
   {
     "code": "CAU-DAVINCI",
@@ -457,7 +547,9 @@
     "buildings": 18,
     "nameEn": "Chung-Ang University DaVinci Campus",
     "region": "경기 안성시 대덕면",
-    "added": "2026-10-17"
+    "added": "2026-10-17",
+    "lat": 37.004,
+    "lon": 127.23
   },
   {
     "code": "KU-SEJONG",
@@ -467,7 +559,9 @@
     "buildings": 29,
     "nameEn": "Korea University Sejong Campus",
     "region": "세종 조치원읍",
-    "added": "2026-10-17"
+    "added": "2026-10-17",
+    "lat": 36.6105,
+    "lon": 127.28732
   },
   {
     "code": "YONSEI-MIRAE",
@@ -477,7 +571,9 @@
     "buildings": 39,
     "nameEn": "Yonsei University Mirae Campus",
     "region": "강원 원주시 흥업면",
-    "added": "2026-10-17"
+    "added": "2026-10-17",
+    "lat": 37.28002,
+    "lon": 127.90224
   },
   {
     "code": "YONSEI-INTL",
@@ -487,7 +583,9 @@
     "buildings": 30,
     "nameEn": "Yonsei University International Campus",
     "region": "인천 연수구 송도동",
-    "added": "2026-10-17"
+    "added": "2026-10-17",
+    "lat": 37.38164,
+    "lon": 126.6732
   },
   {
     "code": "YONSEI-WMED",
@@ -497,7 +595,9 @@
     "buildings": 12,
     "nameEn": "Yonsei University Wonju College of Medicine",
     "region": "강원 원주시 일산동",
-    "added": "2026-10-17"
+    "added": "2026-10-17",
+    "lat": 37.34939,
+    "lon": 127.9454
   },
   {
     "code": "HYU-ERICA",
@@ -507,7 +607,9 @@
     "buildings": 60,
     "nameEn": "Hanyang University ERICA Campus",
     "region": "경기 안산시 상록구 사동",
-    "added": "2026-10-17"
+    "added": "2026-10-17",
+    "lat": 37.29666,
+    "lon": 126.83559
   },
   {
     "code": "KHU-GLOBAL",
@@ -517,7 +619,9 @@
     "buildings": 41,
     "nameEn": "Kyung Hee University Global Campus",
     "region": "경기 용인시 기흥구 서천동",
-    "added": "2026-10-17"
+    "added": "2026-10-17",
+    "lat": 37.24322,
+    "lon": 127.08179
   },
   {
     "code": "KHU-GWANGNEUNG",
@@ -527,7 +631,9 @@
     "buildings": 8,
     "nameEn": "Kyung Hee University Gwangneung Campus",
     "region": "경기 남양주시 진접읍",
-    "added": "2026-10-17"
+    "added": "2026-10-17",
+    "lat": 37.74899,
+    "lon": 127.1864
   },
   {
     "code": "SKKU-SUWON",
@@ -537,7 +643,9 @@
     "buildings": 39,
     "nameEn": "Sungkyunkwan University Natural Sciences Campus",
     "region": "경기 수원시 장안구 천천동",
-    "added": "2026-10-17"
+    "added": "2026-10-17",
+    "lat": 37.29402,
+    "lon": 126.97467
   },
   {
     "code": "HUFS-GLOBAL",
@@ -547,7 +655,9 @@
     "buildings": 24,
     "nameEn": "Hankuk University of Foreign Studies Global Campus",
     "region": "경기 용인시 처인구 모현읍",
-    "added": "2026-10-17"
+    "added": "2026-10-17",
+    "lat": 37.33664,
+    "lon": 127.26608
   },
   {
     "code": "KONKUK-GLOCAL",
@@ -557,7 +667,9 @@
     "buildings": 37,
     "nameEn": "Konkuk University Glocal Campus",
     "region": "충북 충주시 단월동",
-    "added": "2026-10-17"
+    "added": "2026-10-17",
+    "lat": 36.94959,
+    "lon": 127.90898
   },
   {
     "code": "HONGIK-SEJONG",
@@ -567,7 +679,9 @@
     "buildings": 29,
     "nameEn": "Hongik University Sejong Campus",
     "region": "세종 조치원읍",
-    "added": "2026-10-17"
+    "added": "2026-10-17",
+    "lat": 36.62147,
+    "lon": 127.28631
   },
   {
     "code": "SNU-SIHEUNG",
@@ -577,7 +691,9 @@
     "buildings": 18,
     "nameEn": "Seoul National University Siheung Campus",
     "region": "경기 시흥시 배곧동",
-    "added": "2026-10-17"
+    "added": "2026-10-17",
+    "lat": 37.36612,
+    "lon": 126.72041
   },
   {
     "code": "SNU-YEONGEON",
@@ -587,7 +703,9 @@
     "buildings": 46,
     "nameEn": "Seoul National University Yeongeon Campus",
     "region": "서울 종로구 연건동",
-    "added": "2026-10-17"
+    "added": "2026-10-17",
+    "lat": 37.5793,
+    "lon": 126.99931
   },
   {
     "code": "SNU-PYEONGCHANG",
@@ -597,7 +715,9 @@
     "buildings": 45,
     "nameEn": "Seoul National University Pyeongchang Campus",
     "region": "강원 평창군 대화면",
-    "added": "2026-10-17"
+    "added": "2026-10-17",
+    "lat": 37.54228,
+    "lon": 128.43991
   },
   {
     "code": "DANKOOK",
@@ -607,7 +727,9 @@
     "buildings": 43,
     "nameEn": "Dankook University Jukjeon Campus",
     "region": "경기 용인시 수지구 죽전동",
-    "added": "2026-10-24"
+    "added": "2026-10-24",
+    "lat": 37.31922,
+    "lon": 127.12862
   },
   {
     "code": "DANKOOK-CHEONAN",
@@ -617,7 +739,9 @@
     "buildings": 22,
     "nameEn": "Dankook University Cheonan Campus",
     "region": "충남 천안시 동남구 안서동",
-    "added": "2026-10-24"
+    "added": "2026-10-24",
+    "lat": 36.83677,
+    "lon": 127.16927
   },
   {
     "code": "GNU",
@@ -627,7 +751,9 @@
     "buildings": 159,
     "nameEn": "Gyeongsang National University Gajwa Campus",
     "region": "경남 진주시 가좌동",
-    "added": "2026-10-24"
+    "added": "2026-10-24",
+    "lat": 35.1546,
+    "lon": 128.09927
   },
   {
     "code": "DONGA",
@@ -637,7 +763,9 @@
     "buildings": 21,
     "nameEn": "Dong-A University Seunghak Campus",
     "region": "부산 사하구 하단동",
-    "added": "2026-10-24"
+    "added": "2026-10-24",
+    "lat": 35.11619,
+    "lon": 128.96733
   },
   {
     "code": "DONGA-BUMIN",
@@ -647,7 +775,9 @@
     "buildings": 13,
     "nameEn": "Dong-A University Bumin Campus",
     "region": "부산 서구 부민동",
-    "added": "2026-10-24"
+    "added": "2026-10-24",
+    "lat": 35.10462,
+    "lon": 129.01907
   },
   {
     "code": "AJOU",
@@ -657,7 +787,9 @@
     "buildings": 39,
     "nameEn": "Ajou University",
     "region": "경기 수원시 영통구 원천동",
-    "added": "2026-10-24"
+    "added": "2026-10-24",
+    "lat": 37.28294,
+    "lon": 127.04589
   },
   {
     "code": "GACHON",
@@ -667,7 +799,9 @@
     "buildings": 21,
     "nameEn": "Gachon University Global Campus",
     "region": "경기 성남시 수정구 태평동",
-    "added": "2026-10-24"
+    "added": "2026-10-24",
+    "lat": 37.45285,
+    "lon": 127.13139
   },
   {
     "code": "KYONGGI",
@@ -677,7 +811,9 @@
     "buildings": 44,
     "nameEn": "Kyonggi University Suwon Campus",
     "region": "경기 수원시 장안구 연무동",
-    "added": "2026-10-24"
+    "added": "2026-10-24",
+    "lat": 37.30144,
+    "lon": 127.03692
   },
   {
     "code": "KYONGGI-SEOUL",
@@ -687,7 +823,9 @@
     "buildings": 7,
     "nameEn": "Kyonggi University Seoul Campus",
     "region": "서울 서대문구 충정로",
-    "added": "2026-10-24"
+    "added": "2026-10-24",
+    "lat": 37.5648,
+    "lon": 126.96203
   },
   {
     "code": "JBNU",
@@ -697,7 +835,9 @@
     "buildings": 161,
     "nameEn": "Jeonbuk National University",
     "region": "전북 전주시 덕진구 덕진동",
-    "added": "2026-10-24"
+    "added": "2026-10-24",
+    "lat": 35.84666,
+    "lon": 127.13519
   },
   {
     "code": "SEOULTECH",
@@ -707,7 +847,9 @@
     "buildings": 38,
     "nameEn": "Seoul National University of Science and Technology",
     "region": "서울 노원구 공릉동",
-    "added": "2026-10-24"
+    "added": "2026-10-24",
+    "lat": 37.63237,
+    "lon": 127.07919
   },
   {
     "code": "CBNU",
@@ -717,7 +859,9 @@
     "buildings": 157,
     "nameEn": "Chungbuk National University",
     "region": "충북 청주시 서원구 개신동",
-    "added": "2026-10-24"
+    "added": "2026-10-24",
+    "lat": 36.62816,
+    "lon": 127.45673
   },
   {
     "code": "KEIMYUNG",
@@ -727,7 +871,9 @@
     "buildings": 50,
     "nameEn": "Keimyung University Seongseo Campus",
     "region": "대구 달서구 신당동",
-    "added": "2026-10-24"
+    "added": "2026-10-24",
+    "lat": 35.85666,
+    "lon": 128.4849
   },
   {
     "code": "KEIMYUNG-DAEMYEONG",
@@ -737,7 +883,9 @@
     "buildings": 15,
     "nameEn": "Keimyung University Daemyeong Campus",
     "region": "대구 남구 대명동",
-    "added": "2026-10-24"
+    "added": "2026-10-24",
+    "lat": 35.85455,
+    "lon": 128.58106
   },
   {
     "code": "CNU",
@@ -747,7 +895,9 @@
     "buildings": 180,
     "nameEn": "Chungnam National University",
     "region": "대전 유성구 궁동",
-    "added": "2026-10-24"
+    "added": "2026-10-24",
+    "lat": 36.36997,
+    "lon": 127.34788
   },
   {
     "code": "YU",
@@ -757,7 +907,9 @@
     "buildings": 105,
     "nameEn": "Yeungnam University",
     "region": "경북 경산시 대동",
-    "added": "2026-10-24"
+    "added": "2026-10-24",
+    "lat": 35.82782,
+    "lon": 128.75897
   },
   {
     "code": "MJU",
@@ -767,7 +919,9 @@
     "buildings": 8,
     "nameEn": "Myongji University Seoul Campus",
     "region": "서울 서대문구 남가좌동",
-    "added": "2026-10-24"
+    "added": "2026-10-24",
+    "lat": 37.57997,
+    "lon": 126.923
   },
   {
     "code": "MJU-YONGIN",
@@ -777,7 +931,9 @@
     "buildings": 46,
     "nameEn": "Myongji University Yongin Campus",
     "region": "경기 용인시 처인구 남동",
-    "added": "2026-10-24"
+    "added": "2026-10-24",
+    "lat": 37.22102,
+    "lon": 127.18654
   },
   {
     "code": "KSU",
@@ -787,7 +943,9 @@
     "buildings": 27,
     "nameEn": "Kyungsung University",
     "region": "부산 남구 대연동",
-    "added": "2026-10-24"
+    "added": "2026-10-24",
+    "lat": 35.14067,
+    "lon": 129.09804
   },
   {
     "code": "SMU",
@@ -797,7 +955,9 @@
     "buildings": 19,
     "nameEn": "Sangmyung University Seoul Campus",
     "region": "서울 종로구 홍지동",
-    "added": "2026-10-24"
+    "added": "2026-10-24",
+    "lat": 37.60254,
+    "lon": 126.95534
   },
   {
     "code": "SMU-CHEONAN",
@@ -807,7 +967,9 @@
     "buildings": 20,
     "nameEn": "Sangmyung University Cheonan Campus",
     "region": "충남 천안시 동남구 안서동",
-    "added": "2026-10-24"
+    "added": "2026-10-24",
+    "lat": 36.83304,
+    "lon": 127.17937
   },
   {
     "code": "DAEGU",
@@ -817,7 +979,9 @@
     "buildings": 72,
     "nameEn": "Daegu University Gyeongsan Campus",
     "region": "경북 경산시 진량읍",
-    "added": "2026-10-24"
+    "added": "2026-10-24",
+    "lat": 35.90256,
+    "lon": 128.84873
   },
   {
     "code": "KONGJU",
@@ -827,7 +991,9 @@
     "buildings": 61,
     "nameEn": "Kongju National University Singwan Campus",
     "region": "충남 공주시 신관동",
-    "added": "2026-10-24"
+    "added": "2026-10-24",
+    "lat": 36.4683,
+    "lon": 127.14133
   },
   {
     "code": "KONGJU-CHEONAN",
@@ -837,7 +1003,9 @@
     "buildings": 28,
     "nameEn": "Kongju National University Cheonan Campus",
     "region": "충남 천안시 서북구 부대동",
-    "added": "2026-10-24"
+    "added": "2026-10-24",
+    "lat": 36.85174,
+    "lon": 127.15137
   },
   {
     "code": "KONGJU-YESAN",
@@ -847,7 +1015,9 @@
     "buildings": 8,
     "nameEn": "Kongju National University Yesan Campus",
     "region": "충남 예산군 예산읍 대회리",
-    "added": "2026-10-24"
+    "added": "2026-10-24",
+    "lat": 36.66934,
+    "lon": 126.86101
   },
   {
     "code": "CHUNGKANG",
@@ -857,7 +1027,9 @@
     "buildings": 15,
     "nameEn": "Chungkang College of Cultural Industries",
     "region": "경기 이천시 마장면 해월리",
-    "added": "2026-10-24"
+    "added": "2026-10-24",
+    "lat": 37.2059,
+    "lon": 127.35445
   },
   {
     "code": "KAIST",
@@ -867,7 +1039,9 @@
     "buildings": 169,
     "nameEn": "KAIST",
     "region": "대전 유성구 구성동",
-    "added": "2026-10-24"
+    "added": "2026-10-24",
+    "lat": 36.37013,
+    "lon": 127.3626
   },
   {
     "code": "CUK",
@@ -877,7 +1051,9 @@
     "buildings": 20,
     "nameEn": "The Catholic University of Korea Songsim Campus",
     "region": "경기 부천시 원미구 역곡동",
-    "added": "2026-10-24"
+    "added": "2026-10-24",
+    "lat": 37.48678,
+    "lon": 126.80139
   },
   {
     "code": "KMOU",
@@ -887,7 +1063,9 @@
     "buildings": 33,
     "nameEn": "Korea Maritime & Ocean University",
     "region": "부산 영도구 동삼동",
-    "added": "2026-10-24"
+    "added": "2026-10-24",
+    "lat": 35.07619,
+    "lon": 129.08908
   },
   {
     "code": "KNUT",
@@ -897,7 +1075,9 @@
     "buildings": 38,
     "nameEn": "Korea National University of Transportation Chungju Campus",
     "region": "충북 충주시 대소원면 검단리",
-    "added": "2026-10-24"
+    "added": "2026-10-24",
+    "lat": 36.97073,
+    "lon": 127.87203
   },
   {
     "code": "KNUT-JEUNGPYEONG",
@@ -907,7 +1087,9 @@
     "buildings": 13,
     "nameEn": "Korea National University of Transportation Jeungpyeong Campus",
     "region": "충북 증평군 증평읍 용강리",
-    "added": "2026-10-24"
+    "added": "2026-10-24",
+    "lat": 36.76934,
+    "lon": 127.62411
   },
   {
     "code": "KOREATECH",
@@ -917,7 +1099,9 @@
     "buildings": 36,
     "nameEn": "KOREATECH",
     "region": "충남 천안시 동남구 병천면",
-    "added": "2026-10-24"
+    "added": "2026-10-24",
+    "lat": 36.76354,
+    "lon": 127.28063
   },
   {
     "code": "INU",
@@ -927,7 +1111,9 @@
     "buildings": 48,
     "nameEn": "Incheon National University Songdo Campus",
     "region": "인천 연수구 송도동",
-    "added": "2026-10-24"
+    "added": "2026-10-24",
+    "lat": 37.37505,
+    "lon": 126.6326
   },
   {
     "code": "SKUNIV",
@@ -937,7 +1123,9 @@
     "buildings": 11,
     "nameEn": "Seokyeong University",
     "region": "서울 성북구 정릉동",
-    "added": "2026-10-24"
+    "added": "2026-10-24",
+    "lat": 37.61492,
+    "lon": 127.01273
   },
   {
     "code": "WKU",
@@ -947,7 +1135,9 @@
     "buildings": 137,
     "nameEn": "Wonkwang University",
     "region": "전북 익산시 신동",
-    "added": "2026-10-24"
+    "added": "2026-10-24",
+    "lat": 35.96866,
+    "lon": 126.9593
   },
   {
     "code": "SCH",
@@ -957,7 +1147,9 @@
     "buildings": 29,
     "nameEn": "Soonchunhyang University",
     "region": "충남 아산시 신창면 읍내리",
-    "added": "2026-10-24"
+    "added": "2026-10-24",
+    "lat": 36.76998,
+    "lon": 126.93137
   },
   {
     "code": "HANSUNG",
@@ -967,7 +1159,9 @@
     "buildings": 36,
     "nameEn": "Hansung University",
     "region": "서울 성북구 삼선동",
-    "added": "2026-10-24"
+    "added": "2026-10-24",
+    "lat": 37.5827,
+    "lon": 127.0105
   },
   {
     "code": "KW",
@@ -977,7 +1171,9 @@
     "buildings": 55,
     "nameEn": "Kwangwoon University",
     "region": "서울 노원구 월계동",
-    "added": "2026-10-24"
+    "added": "2026-10-24",
+    "lat": 37.6196,
+    "lon": 127.058
   },
   {
     "code": "SUNGSHIN",
@@ -987,7 +1183,9 @@
     "buildings": 13,
     "nameEn": "Sungshin Women's University",
     "region": "서울 성북구 동선동",
-    "added": "2026-10-24"
+    "added": "2026-10-24",
+    "lat": 37.59149,
+    "lon": 127.02244
   },
   {
     "code": "HNU",
@@ -997,7 +1195,9 @@
     "buildings": 43,
     "nameEn": "Hannam University",
     "region": "대전 대덕구 오정동",
-    "added": "2026-10-24"
+    "added": "2026-10-24",
+    "lat": 36.35445,
+    "lon": 127.42266
   },
   {
     "code": "CJU",
@@ -1007,7 +1207,9 @@
     "buildings": 42,
     "nameEn": "Cheongju University",
     "region": "충북 청주시 청원구 우암동",
-    "added": "2026-10-24"
+    "added": "2026-10-24",
+    "lat": 36.65539,
+    "lon": 127.49672
   },
   {
     "code": "SWU",
@@ -1017,7 +1219,9 @@
     "buildings": 13,
     "nameEn": "Seoul Women's University",
     "region": "서울 노원구 공릉동",
-    "added": "2026-10-24"
+    "added": "2026-10-24",
+    "lat": 37.6283,
+    "lon": 127.09133
   },
   {
     "code": "HANBAT",
@@ -1027,7 +1231,9 @@
     "buildings": 38,
     "nameEn": "Hanbat National University",
     "region": "대전 유성구 덕명동",
-    "added": "2026-10-24"
+    "added": "2026-10-24",
+    "lat": 36.35025,
+    "lon": 127.3021
   },
   {
     "code": "BU",
@@ -1037,7 +1243,9 @@
     "buildings": 18,
     "nameEn": "Baekseok University",
     "region": "충남 천안시 동남구 안서동",
-    "added": "2026-10-24"
+    "added": "2026-10-24",
+    "lat": 36.8398,
+    "lon": 127.18493
   },
   {
     "code": "UOU",
@@ -1047,6 +1255,8 @@
     "buildings": 69,
     "nameEn": "University of Ulsan",
     "region": "울산 남구 무거동",
-    "added": "2026-10-24"
+    "added": "2026-10-24",
+    "lat": 35.54429,
+    "lon": 129.25485
   }
 ]
