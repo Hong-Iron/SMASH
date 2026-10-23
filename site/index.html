@@ -162,7 +162,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--gold); outline-
 @media (max-width: 640px) { .notice { grid-template-columns: 1fr; } .notice img { height: auto; } }
 .maker { justify-self: end; margin-bottom: -18px; color: var(--muted); font-size: 13px; text-decoration: none; }
 .maker:hover { color: var(--fg); text-decoration: underline; text-underline-offset: 3px; }
-.fab { position: fixed; right: calc(16px + env(safe-area-inset-right, 0px)); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); z-index: 50; padding: 11px 16px; border-radius: 999px; background: #fee500; color: #191919; font: 700 14px var(--font-ui); text-decoration: none; white-space: nowrap; box-shadow: 0 8px 24px rgba(0, 0, 0, .5), 0 0 0 3px rgba(254, 229, 0, .18); transition: opacity .2s, transform .2s; }
+.fab { position: fixed; right: max(calc(16px + env(safe-area-inset-right, 0px)), calc((100vw - 1080px) / 2 + 16px)); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); z-index: 50; padding: 11px 16px; border-radius: 999px; background: #fee500; color: #191919; font: 700 14px var(--font-ui); text-decoration: none; white-space: nowrap; box-shadow: 0 8px 24px rgba(0, 0, 0, .5), 0 0 0 3px rgba(254, 229, 0, .18); transition: opacity .2s, transform .2s; }
 .fab.off { opacity: 0; transform: translateY(12px); pointer-events: none; }
 .wrap { padding-bottom: calc(84px + env(safe-area-inset-bottom, 0px)); }
 footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
@@ -254,7 +254,7 @@ footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
     strip.querySelectorAll('a[data-ev]').forEach(function (a) { a.addEventListener('click', function () { ev(a.dataset.ev); }); });
     document.getElementById('blog-link').addEventListener('click', function () { ev('hub-blog'); });
     document.getElementById('mail-link').addEventListener('click', function () { ev('hub-mail'); });
-    // 떠 있는 버튼: 응원 줄·응원 상자가 안 보일 때만 나타난다
+    // 떠 있는 버튼: 위쪽 응원 줄이 화면에 보일 때만 숨는다 (PC는 페이지가 짧아 아래 상자까지 기준으로 삼으면 거의 안 보였다)
     var fab = document.getElementById('fab'), shown = new Set();
     fab.addEventListener('click', function () { ev('hub-support-fab'); });
     var syncFab = function () { fab.classList.toggle('off', shown.size > 0); };
@@ -263,7 +263,7 @@ footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
         es.forEach(function (e) { if (e.isIntersecting && !e.target.hidden) shown.add(e.target); else shown.delete(e.target); });
         syncFab();
       });
-      io.observe(strip); io.observe(document.getElementById('support'));
+      io.observe(strip);
     } else syncFab();
     document.getElementById('support-strip-close').addEventListener('click', function () {
       strip.hidden = true; ev('hub-support-close'); shown.delete(strip); syncFab();
