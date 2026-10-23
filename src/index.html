@@ -133,6 +133,14 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--gold); outline-
 .board-empty { margin: 0; padding: 16px; border: 1px dashed var(--line); border-radius: 10px; color: var(--muted); text-align: center; font-size: 14px; }
 .board-more { justify-self: center; padding: 7px 16px; border: 1px solid var(--line); border-radius: 999px; background: transparent; color: var(--fg); font: 600 13px var(--font-ui); cursor: pointer; }
 .board-more:hover { border-color: var(--gold); }
+/* 랭킹은 접힌 채 시작: 1위 학교 이름만. 펼치면 3위까지, 더보기로 전체 */
+.board-body { display: grid; gap: 12px; }
+.board-fold { margin-left: auto; padding: 5px 12px; border: 1px solid var(--line); border-radius: 999px; background: transparent; color: var(--fg); font: 600 13px var(--font-ui); cursor: pointer; white-space: nowrap; }
+.board-fold:hover { border-color: var(--gold); }
+.board-peek { display: flex; align-items: center; gap: 12px; width: 100%; padding: 10px 14px; border: 0; border-radius: 10px; background: var(--bg); color: var(--fg); font: inherit; text-align: left; cursor: pointer; }
+.board-peek .pos { font: 400 20px var(--font-display); color: var(--gold); }
+.board-peek .who { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 600; font-size: 16px; }
+.board-peek .lbl { color: var(--muted); font-size: 12.5px; white-space: nowrap; }
 .list-more { margin-top: -12px; padding: 9px 20px; font-size: 14px; }
 .sec-title { margin: 0; font: 400 20px/1.2 var(--font-display); }
 .card .today { color: var(--gold); }
@@ -249,10 +257,14 @@ footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
         <button type="button" role="tab" aria-selected="true" data-span="today">오늘</button>
         <button type="button" role="tab" aria-selected="false" data-span="total">전체</button>
       </div>
+      <button type="button" class="board-fold" id="board-fold" aria-expanded="false" aria-controls="board-body">펼치기 ▾</button>
     </div>
-    <p class="board-note" id="board-note"></p>
-    <ol class="board-list" id="board-list"></ol>
-    <button type="button" class="board-more" id="board-more" hidden></button>
+    <button type="button" class="board-peek" id="board-peek" aria-label="랭킹 펼치기"></button>
+    <div class="board-body" id="board-body" hidden>
+      <p class="board-note" id="board-note"></p>
+      <ol class="board-list" id="board-list"></ol>
+      <button type="button" class="board-more" id="board-more" hidden></button>
+    </div>
   </section>
 
   <div class="list-head" id="list-head">
@@ -726,7 +738,8 @@ footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
       if (!rows.length) {
         var e = document.createElement('p'); e.className = 'board-empty';
         e.textContent = span === 'today' ? '오늘은 아직 아무도 부수지 않았습니다. 첫 점수를 올려 보세요.' : '아직 모인 점수가 없습니다.';
-        listEl.append(e); moreBtn.hidden = true; return;
+        listEl.append(e); moreBtn.hidden = true;
+        document.getElementById('board-peek').textContent = '아직 모인 점수가 없어요 · 펼쳐서 보기'; return;
       }
       var top = rows[0][key + '_score'];
       (showAll ? rows : rows.slice(0, 3)).forEach(function (r, i) {
@@ -743,8 +756,28 @@ footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
         listEl.append(li);
       });
       moreBtn.hidden = rows.length <= 3;
-      moreBtn.textContent = showAll ? '접기' : '더보기 · 전체 ' + rows.length + '개 학교';
+      moreBtn.textContent = showAll ? '3위까지만 보기' : '더보기 · 전체 ' + rows.length + '개 학교';
+      var peek = document.getElementById('board-peek'), s1 = byCode[rows[0].code];   // 접힌 상태: 1위 학교 이름만
+      peek.replaceChildren();
+      var p1 = document.createElement('span'); p1.className = 'pos'; p1.textContent = '1';
+      var w1 = document.createElement('span'); w1.className = 'who'; w1.textContent = s1.campus;
+      var l1 = document.createElement('span'); l1.className = 'lbl'; l1.textContent = span === 'today' ? '오늘 1위' : '전체 1위';
+      peek.append(p1, w1, l1);
     }
+    var folded = location.hash !== '#rank';
+    function syncFold() {
+      document.getElementById('board-body').hidden = folded;
+      document.getElementById('board-peek').hidden = folded ? !board : true;
+      document.querySelector('#rank .tabs').hidden = folded;
+      var fb = document.getElementById('board-fold'); fb.textContent = folded ? '펼치기 ▾' : '접기 ▴'; fb.setAttribute('aria-expanded', String(!folded));
+    }
+    function setFold(v) {
+      folded = v; if (folded) showAll = false;
+      renderBoard(); syncFold();
+      if (folded) document.getElementById('rank').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+    document.getElementById('board-fold').addEventListener('click', function () { setFold(!folded); });
+    document.getElementById('board-peek').addEventListener('click', function () { setFold(false); });
     document.querySelectorAll('.tabs button').forEach(function (b) {
       b.addEventListener('click', function () {
         span = b.dataset.span; showAll = false;
@@ -772,7 +805,7 @@ footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
           document.getElementById('rank').hidden = false;
           sortSel.querySelector('option[value="hot"]').hidden = false;
           if (first) { try { var sv = localStorage.getItem('smash-hub-sort'); if (sv === 'hot') sortSel.value = 'hot'; } catch (e) { /* storage blocked */ } }
-          renderBoard(); render();
+          renderBoard(); syncFold(); render();
           if (first && location.hash === '#rank') document.getElementById('rank').scrollIntoView();
         })
         .catch(function () { /* leaderboard unavailable: the school list still works */ });
