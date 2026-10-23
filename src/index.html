@@ -110,7 +110,6 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--gold); outline-
 .support .row { display: flex; flex-wrap: wrap; gap: 8px; }
 .support a { padding: 8px 14px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 14px; color: #191919; }
 .support .kakao { background: #fee500; }
-.support .bmc { background: #ffdd00; }
 
 .board { display: grid; gap: 12px; padding: 18px; background: var(--panel); border: 1px solid var(--line); border-radius: 14px; scroll-margin-top: 16px; }
 .board-head { display: flex; align-items: center; justify-content: space-between; gap: 10px 16px; flex-wrap: wrap; }
@@ -147,7 +146,6 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--gold); outline-
 .support-strip .acts { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
 .support-strip .acts a { padding: 6px 12px; border-radius: 999px; color: #191919; font-weight: 600; font-size: 13px; text-decoration: none; white-space: nowrap; }
 .support-strip .kakao { background: #fee500; }
-.support-strip .bmc { background: #ffdd00; }
 .support-strip .close { width: 30px; height: 30px; border: 0; border-radius: 8px; background: transparent; color: var(--muted); font-size: 20px; line-height: 1; cursor: pointer; }
 .support-strip .close:hover { background: var(--panel-hi); color: var(--fg); }
 .notices { display: grid; gap: 10px; }
@@ -163,6 +161,9 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--gold); outline-
 @media (max-width: 640px) { .notice { grid-template-columns: 1fr; } .notice img { height: auto; } }
 .maker { justify-self: end; margin-bottom: -18px; color: var(--muted); font-size: 13px; text-decoration: none; }
 .maker:hover { color: var(--fg); text-decoration: underline; text-underline-offset: 3px; }
+.fab { position: fixed; right: calc(16px + env(safe-area-inset-right, 0px)); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); z-index: 50; padding: 11px 16px; border-radius: 999px; background: #fee500; color: #191919; font: 700 14px var(--font-ui); text-decoration: none; white-space: nowrap; box-shadow: 0 8px 24px rgba(0, 0, 0, .5), 0 0 0 3px rgba(254, 229, 0, .18); transition: opacity .2s, transform .2s; }
+.fab.off { opacity: 0; transform: translateY(12px); pointer-events: none; }
+.wrap { padding-bottom: calc(84px + env(safe-area-inset-bottom, 0px)); }
 footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
 @media (prefers-reduced-motion: reduce) { .card { transition: none; } .card:hover { transform: none; } }
 </style>
@@ -184,6 +185,14 @@ footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
     </label>
     <ul class="hits" id="hits" aria-label="찾은 학교" hidden></ul>
   </section>
+
+  <aside class="support-strip" id="support-strip" aria-label="개발자 응원" hidden>
+    <p><b>작은 후원이 큰 힘이 됩니다!</b></p>
+    <div class="acts">
+      <a class="kakao" data-ev="hub-support-kakaopay" href="https://qr.kakaopay.com/FKcOJKyOy1f405462" target="_blank" rel="noopener">카카오페이로 응원</a>
+      <button type="button" class="close" id="support-strip-close" aria-label="응원 안내 닫기 (7일 동안 숨김)">&times;</button>
+    </div>
+  </aside>
 
   <section class="board" id="rank" aria-labelledby="rank-title" hidden>
     <div class="board-head">
@@ -212,23 +221,14 @@ footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
   <section class="grid" id="schools" aria-label="학교 고르기">__CARDS__</section>
   <button type="button" class="board-more list-more" id="list-more" hidden></button>
 
-  <aside class="support-strip" id="support-strip" aria-label="개발자 응원" hidden>
-    <p><b>작은 후원이 큰 힘이 됩니다!</b></p>
-    <div class="acts">
-      <a class="kakao" data-ev="hub-support-kakaopay" href="https://qr.kakaopay.com/FKcOJKyOy1f405462" target="_blank" rel="noopener">카카오페이로 응원</a>
-      <a class="bmc" data-ev="hub-support-bmc" href="https://buymeacoffee.com/hongiron" target="_blank" rel="noopener">Buy Me a Coffee</a>
-      <button type="button" class="close" id="support-strip-close" aria-label="응원 안내 닫기 (7일 동안 숨김)">&times;</button>
-    </div>
-  </aside>
 
   __NOTICES__
 
-  <section class="support" aria-labelledby="support-title">
+  <section class="support" id="support" aria-labelledby="support-title">
     <h2 id="support-title">개발자 응원하기</h2>
     <p>작은 후원이 큰 힘이 됩니다!</p>
     <div class="row">
       <a class="kakao" href="https://qr.kakaopay.com/FKcOJKyOy1f405462" target="_blank" rel="noopener">카카오페이로 응원</a>
-      <a class="bmc" href="https://buymeacoffee.com/hongiron" target="_blank" rel="noopener">☕ Buy Me a Coffee</a>
     </div>
   </section>
 
@@ -239,6 +239,7 @@ footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
     <span>문의 <a href="mailto:hongcheolmin004@gmail.com" id="mail-link">hongcheolmin004@gmail.com</a></span>
   </footer>
 </main>
+<a class="fab off" id="fab" href="https://qr.kakaopay.com/FKcOJKyOy1f405462" target="_blank" rel="noopener" aria-label="카카오페이로 개발자 응원하기">💛 카카오페이로 응원</a>
 
 <script type="application/json" id="schools-data">__SCHOOLS__</script>
 <script type="application/json" id="hub-config">__HUB_CONFIG__</script>
@@ -252,8 +253,19 @@ footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
     strip.querySelectorAll('a[data-ev]').forEach(function (a) { a.addEventListener('click', function () { ev(a.dataset.ev); }); });
     document.getElementById('blog-link').addEventListener('click', function () { ev('hub-blog'); });
     document.getElementById('mail-link').addEventListener('click', function () { ev('hub-mail'); });
+    // 떠 있는 버튼: 응원 줄·응원 상자가 안 보일 때만 나타난다
+    var fab = document.getElementById('fab'), shown = new Set();
+    fab.addEventListener('click', function () { ev('hub-support-fab'); });
+    var syncFab = function () { fab.classList.toggle('off', shown.size > 0); };
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (es) {
+        es.forEach(function (e) { if (e.isIntersecting && !e.target.hidden) shown.add(e.target); else shown.delete(e.target); });
+        syncFab();
+      });
+      io.observe(strip); io.observe(document.getElementById('support'));
+    } else syncFab();
     document.getElementById('support-strip-close').addEventListener('click', function () {
-      strip.hidden = true; ev('hub-support-close');
+      strip.hidden = true; ev('hub-support-close'); shown.delete(strip); syncFab();
       try { localStorage.setItem(KEY, String(Date.now())); } catch (e) { /* storage blocked */ }
     });
   })();
