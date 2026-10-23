@@ -550,7 +550,7 @@ footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
         pinsG.append(el('line', { x1: q2.s.mx, y1: q2.s.my, x2: q2.mx, y2: q2.my, stroke: 'rgba(255,255,255,.55)', 'stroke-width': 1.2 * px }));
         pinsG.append(el('circle', { cx: q2.s.mx, cy: q2.s.my, r: 2.4 * px, fill: '#fff' }));
       });
-      var placed = [];
+      var placed = []; draw.labels = [];
       P.forEach(function (q2) {   // 핀: 끝이 학교 위치(또는 밀려난 자리)를 가리키는 물방울 모양 (화면에서 항상 같은 크기)
         var s = q2.s, X = q2.mx, Y = q2.my, on = matches(s, query), h = heatOf(s), sz = (picked === s ? 34 : 26) * px, r = sz * 0.36;
         var g = el('g', { 'class': 'pin' + (picked === s ? ' sel' : '') + (on ? '' : ' dim'), 'data-code': s.code });
@@ -566,7 +566,7 @@ footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
           var s = q2.s; if (!matches(s, query)) return;
           var sx = q2.x, sy = q2.y - 17, name = shortName(s), w = name.length * 11.5 + 4;
           if (placed.some(function (b) { return sx + 12 < b[0] + b[2] && b[0] < sx + 12 + w && sy - 8 < b[1] + 16 && b[1] < sy + 8; })) return;
-          placed.push([sx + 12, sy - 8, w]);
+          placed.push([sx + 12, sy - 8, w]); draw.labels.push({ s: s, x: sx + 12, y: sy - 8, w: w });
           var tx = el('text', { 'class': 'pname', x: q2.mx + 12 * px, y: q2.my - 17 * px, 'font-size': 11.5 * px, 'stroke-width': 3 * px, 'dominant-baseline': 'central' });
           tx.textContent = name; pinsG.append(tx);
         });
@@ -646,7 +646,10 @@ footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
     }, { passive: false });
     function tapAt(cx, cy) {
       var r = svg.getBoundingClientRect(), mx = view.x + (cx - r.left) / r.width * view.w, my = view.y + (cy - r.top) / r.height * view.h, px = view.w / r.width;
-      if (level !== 'all') {   // 핀 머리(끝에서 약 18px 위)에 가장 가까운 학교
+      if (level !== 'all') {   // 학교 이름표를 눌렀거나, 핀 머리(끝에서 약 18px 위)에 가장 가까운 학교
+        var lx = cx - r.left, ly = cy - r.top, lab = null;
+        (draw.labels || []).forEach(function (b) { if (lx > b.x - 6 && lx < b.x + b.w + 6 && ly > b.y - 6 && ly < b.y + 22) lab = b.s; });
+        if (lab) { goPin(lab); return; }
         var best = null, bd = 24;
         (draw.pins || []).forEach(function (q2) {   // 그려진(밀려난) 핀 자리로 판단한다
           var d = Math.hypot((q2.mx - mx) / px, (q2.my - 16 * px - my) / px);
