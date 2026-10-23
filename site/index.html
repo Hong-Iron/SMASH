@@ -325,7 +325,7 @@ footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
     function requestCard(query) {
       var req = document.createElement('a');
       req.className = 'request';
-      req.href = 'https://github.com/Hong-Iron/SMASH/issues/new?title=' + encodeURIComponent('학교 추가 요청: ' + (query || '')) + '&body=' + encodeURIComponent('학교 이름:\n캠퍼스:\n');
+      req.href = 'https://github.com/Hong-Iron/SMASH/issues/new?title=' + encodeURIComponent('학교 추가 요청: ' + (query || '')) + '&body=' + encodeURIComponent('학교 이름:' + (query ? ' ' + query : '') + '\n캠퍼스:\n');
       req.target = '_blank'; req.rel = 'noopener';
       var st = document.createElement('strong'); st.textContent = query ? '‘' + query + '’도 부수고 싶다면?' : '우리 학교도?';
       var sp = document.createElement('span'); sp.textContent = '부수고 싶은 학교를 알려 주세요. GitHub에 요청을 남기면 다음 후보에 올립니다.';
