@@ -281,6 +281,7 @@ footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
   <aside class="support-strip" id="support-strip" aria-label="개발자 응원" hidden>
     <p><b>작은 후원이 큰 힘이 됩니다!</b></p>
     <div class="acts">
+      <a class="kakao" data-ev="hub-support-kakaopay" href="https://qr.kakaopay.com/FKcOJKyOy1f405462" target="_blank" rel="noopener">카카오페이로 응원</a>
       <a class="toss" data-ev="hub-support-toss" href="supertoss://send?amount=1000&amp;bank=%ED%86%A0%EC%8A%A4%EB%B1%85%ED%81%AC&amp;accountNo=100123297463&amp;origin=qr">토스로 응원</a>
       <button type="button" class="close" id="support-strip-close" aria-label="응원 안내 닫기 (7일 동안 숨김)">&times;</button>
     </div>
@@ -329,6 +330,7 @@ footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
     <h2 id="support-title">개발자 응원하기</h2>
     <p>작은 후원이 큰 힘이 됩니다!</p>
     <div class="row">
+      <a class="kakao" href="https://qr.kakaopay.com/FKcOJKyOy1f405462" target="_blank" rel="noopener">카카오페이로 응원</a>
       <a class="toss" data-ev="hub-support-box-toss" href="supertoss://send?amount=1000&amp;bank=%ED%86%A0%EC%8A%A4%EB%B1%85%ED%81%AC&amp;accountNo=100123297463&amp;origin=qr">토스로 응원</a>
     </div>
   </section>
@@ -341,6 +343,7 @@ footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
   </footer>
 </main>
 <div class="fab off" id="fab">
+  <a class="kakao" id="fab-kakao" href="https://qr.kakaopay.com/FKcOJKyOy1f405462" target="_blank" rel="noopener" aria-label="카카오페이로 개발자 응원하기">💛 카카오페이로 응원</a>
   <a class="toss" data-ev="hub-support-fab-toss" href="supertoss://send?amount=1000&amp;bank=%ED%86%A0%EC%8A%A4%EB%B1%85%ED%81%AC&amp;accountNo=100123297463&amp;origin=qr" aria-label="토스로 개발자 응원하기">🤍 토스로 응원</a>
 </div>
 
@@ -371,9 +374,7 @@ footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
     document.getElementById('mail-link').addEventListener('click', function () { ev('hub-mail'); });
     // 떠 있는 버튼: 위쪽 응원 줄이 화면에 보일 때만 숨는다 (PC는 페이지가 짧아 아래 상자까지 기준으로 삼으면 거의 안 보였다)
     var fab = document.getElementById('fab'), shown = new Set();
-    // 카카오페이 버튼은 송금코드 하루 한도 때문에 잠시 뺐다 (되돌릴 때 이 줄이 다시 쓰인다)
-    var fabKakao = document.getElementById('fab-kakao');
-    if (fabKakao) fabKakao.addEventListener('click', function () { ev('hub-support-fab'); });
+    document.getElementById('fab-kakao').addEventListener('click', function () { ev('hub-support-fab'); });
     var syncFab = function () { fab.classList.toggle('off', shown.size > 0); };
     if ('IntersectionObserver' in window) {
       var io = new IntersectionObserver(function (es) {
