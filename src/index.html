@@ -308,7 +308,7 @@ footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
     <p class="map-hint" id="map-hint">지역을 누르면 그 지역 학교가 나와요</p>
     <aside class="map-side" id="map-side" hidden>
       <button type="button" class="x" id="ms-x" aria-label="닫기">&times;</button>
-      <img id="ms-img" alt="" width="1200" height="630">
+      <img id="ms-img" alt="" width="600" height="315">
       <span class="c" id="ms-code"></span><span class="n" id="ms-name"></span><span class="m" id="ms-meta"></span>
       <a class="go" id="ms-go" href="#">부수러 가기 →</a>
     </aside>
@@ -427,7 +427,8 @@ footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
       var a = document.createElement('a');
       a.className = 'card'; a.href = s.url;
       var img = document.createElement('img');
-      img.src = s.url + 'og.png'; img.alt = s.campus + '가 부서지는 게임 화면'; img.loading = 'lazy'; img.width = 1200; img.height = 630;
+      img.src = s.url + 'card.webp'; img.alt = s.campus + '가 부서지는 게임 화면'; img.loading = 'lazy'; img.width = 600; img.height = 315;
+      img.onerror = function () { this.onerror = null; this.src = s.url + 'og.png'; };   // card.webp가 아직 없는 학교
       var body = document.createElement('div'); body.className = 'body';
       var code = document.createElement('span'); code.className = 'code'; code.textContent = 'SMASH ' + s.code;
       var name = document.createElement('span'); name.className = 'name'; name.textContent = s.campus;
@@ -644,7 +645,9 @@ footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
       level = 'pin'; curSec = s.sec; picked = s; updateChrome();
       var a = aspect(), w = 18, h = w * a;   // 핀은 왼쪽 4분의 1 지점, 오른쪽 절반은 썸네일
       animateTo({ x: s.mx - w * 0.24, y: s.my - h * 0.55, w: w, h: h });
-      document.getElementById('ms-img').src = s.url + 'og.png';
+      var msImg = document.getElementById('ms-img');
+      msImg.onerror = function () { this.onerror = null; this.src = s.url + 'og.png'; };
+      msImg.src = s.url + 'card.webp';
       document.getElementById('ms-img').alt = s.campus + ' 게임 화면';
       document.getElementById('ms-code').textContent = 'SMASH ' + s.code;
       document.getElementById('ms-name').textContent = s.campus;

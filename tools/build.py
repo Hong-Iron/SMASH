@@ -16,7 +16,7 @@ gc = f'<script data-goatcounter="{e(cfg["goatcounter"])}" async src="https://gc.
 pub = {k: cfg[k] for k in ("supabaseUrl", "supabaseKey", "rankingPaused") if cfg.get(k)}
 by_name = sorted(schools, key=lambda s: s["name"])  # same order as the page's default "이름순"; the script re-sorts with Korean collation
 cards = "".join(
-    f'<a class="card" href="{e(s["url"])}"><img src="{e(s["url"])}og.png" alt="{e(s["campus"])}가 부서지는 게임 화면" loading="lazy" width="1200" height="630">'
+    f'<a class="card" href="{e(s["url"])}"><img src="{e(s["url"])}card.webp" alt="{e(s["campus"])}가 부서지는 게임 화면" loading="lazy" width="600" height="315" onerror="this.onerror=null;this.src=this.src.replace(\'card.webp\',\'og.png\')">'
     f'<div class="body"><span class="code">SMASH {e(s["code"])}</span><span class="name">{e(s["campus"])}</span>'
     f'<span class="region">{e(s.get("region", ""))}</span><span class="meta">건물 {e(s["buildings"])}동</span><span class="go">부수러 가기 →</span></div></a>'
     for s in by_name)
