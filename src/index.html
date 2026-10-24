@@ -252,7 +252,7 @@ footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
     <ul class="hits" id="hits" aria-label="찾은 학교" hidden></ul>
   </section>
 
-  <section class="board rank-down" id="rank-down" aria-labelledby="rank-down-title" hidden>
+  <section class="board rank-down" id="rank-down" aria-labelledby="rank-down-title"__RANK_DOWN_HIDDEN__>
     <div class="board-head">
       <h2 id="rank-down-title">학교 대항 <span>파괴 랭킹</span></h2>
       <span class="paused">잠시 멈춤</span>
@@ -829,7 +829,7 @@ footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
       if (!showAll) document.getElementById('rank').scrollIntoView({ behavior: 'smooth' });
     });
     function loadBoard() {
-      if (!cfg.supabaseUrl || !cfg.supabaseKey) return;
+      if (!cfg.supabaseUrl || !cfg.supabaseKey || cfg.rankingPaused) return;
       var h = { apikey: cfg.supabaseKey };
       if (/^eyJ/.test(cfg.supabaseKey)) h.Authorization = 'Bearer ' + cfg.supabaseKey;
       // 서버가 멈추면 응답 없이 20초 넘게 걸려서, 8초에 끊고 '잠시 멈춤' 안내를 띄운다

@@ -13,7 +13,7 @@ for k in ("__NOTICES__", "__SCHOOLS__", "__HUB_CONFIG__", "<!--GOATCOUNTER-->", 
 e = lambda v: html.escape(str(v), quote=True)
 blob = lambda v: json.dumps(v, ensure_ascii=False).replace("</", "<\\/")
 gc = f'<script data-goatcounter="{e(cfg["goatcounter"])}" async src="https://gc.zgo.at/count.js"></script>' if cfg.get("goatcounter") else ""
-pub = {k: cfg[k] for k in ("supabaseUrl", "supabaseKey") if cfg.get(k)}
+pub = {k: cfg[k] for k in ("supabaseUrl", "supabaseKey", "rankingPaused") if cfg.get(k)}
 by_name = sorted(schools, key=lambda s: s["name"])  # same order as the page's default "이름순"; the script re-sorts with Korean collation
 cards = "".join(
     f'<a class="card" href="{e(s["url"])}"><img src="{e(s["url"])}og.png" alt="{e(s["campus"])}가 부서지는 게임 화면" loading="lazy" width="1200" height="630">'
@@ -109,6 +109,8 @@ map_svg = (f'<svg class="kmap" id="kmap" viewBox="0 0 {W} {Hh}" data-w="{W}" dat
            f'<script type="application/json" id="map-sections">{blob(secs)}</script>')
 out = (tpl.replace("__SCHOOLS__", blob(schools)).replace("__HUB_CONFIG__", blob(pub)).replace("<!--GOATCOUNTER-->", gc)
        .replace("<!--JSONLD-->", '<script type="application/ld+json">' + blob(ld) + "</script>")
-       .replace("__NOTICES__", notice_html).replace("__MAP__", map_svg).replace("__CARDS__", cards).replace("__COUNT__", str(len(schools))))
+       .replace("__NOTICES__", notice_html).replace("__MAP__", map_svg).replace("__CARDS__", cards).replace("__COUNT__", str(len(schools)))
+       # 랭킹을 멈춘 동안(config rankingPaused)은 안내 카드를 처음부터 보이고, 랭킹 서버는 부르지 않는다
+       .replace("__RANK_DOWN_HIDDEN__", "" if cfg.get("rankingPaused") else " hidden"))
 (root / "site" / "index.html").write_text(out, encoding="utf-8")
 print("site/index.html", len(out.encode()) // 1024, "KB,", len(schools), "schools")
