@@ -114,6 +114,9 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--gold); outline-
 .board-head { display: flex; align-items: center; justify-content: space-between; gap: 10px 16px; flex-wrap: wrap; }
 .board h2 { margin: 0; font: 400 20px/1.2 var(--font-display); }
 .board h2 span { color: var(--gold); }
+.rank-down p { margin: 0; color: var(--fg); font-size: 15px; line-height: 1.6; }
+.rank-down .paused { padding: 3px 10px; border-radius: 999px; background: var(--bg); border: 1px solid var(--line); color: var(--muted); font-size: 12.5px; }
+.rank-down a.toss { justify-self: start; padding: 10px 16px; border-radius: 10px; background: #3182f6; color: #fff; font-weight: 700; font-size: 14.5px; text-decoration: none; }
 .tabs { display: inline-flex; padding: 3px; border: 1px solid var(--line); border-radius: 999px; background: var(--bg); }
 .tabs button { padding: 5px 14px; border: 0; border-radius: 999px; background: transparent; color: var(--muted); font: 600 13px var(--font-ui); cursor: pointer; }
 .tabs button[aria-selected="true"] { background: var(--hot); color: #1a0d05; }
@@ -247,6 +250,15 @@ footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
       <input id="q" type="search" maxlength="60" placeholder="학교 이름 (예: 서울대, 부산, ㄱㅂㄷ)" aria-label="학교 이름, 캠퍼스, 지역, 영문, 초성으로 찾기" autocomplete="off" enterkeyhint="go">
     </label>
     <ul class="hits" id="hits" aria-label="찾은 학교" hidden></ul>
+  </section>
+
+  <section class="board rank-down" id="rank-down" aria-labelledby="rank-down-title" hidden>
+    <div class="board-head">
+      <h2 id="rank-down-title">학교 대항 <span>파괴 랭킹</span></h2>
+      <span class="paused">잠시 멈춤</span>
+    </div>
+    <p>너무 많은 분이 찾아와 주셔서 랭킹 서버 한도를 넘었어요.<br>학교 랭킹은 잠시 멈췄지만 게임은 그대로 할 수 있어요!</p>
+    <a class="toss" data-ev="hub-rank-down-toss" href="supertoss://send?amount=1000&amp;bank=%ED%86%A0%EC%8A%A4%EB%B1%85%ED%81%AC&amp;accountNo=100123297463&amp;origin=qr">랭킹 서버비 보태기 →</a>
   </section>
 
   <section class="board" id="rank" aria-labelledby="rank-title" hidden>
@@ -820,7 +832,10 @@ footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
       if (!cfg.supabaseUrl || !cfg.supabaseKey) return;
       var h = { apikey: cfg.supabaseKey };
       if (/^eyJ/.test(cfg.supabaseKey)) h.Authorization = 'Bearer ' + cfg.supabaseKey;
-      fetch(cfg.supabaseUrl.replace(/\/+$/, '') + '/rest/v1/rpc/smash_board', { headers: h })
+      // 서버가 멈추면 응답 없이 20초 넘게 걸려서, 8초에 끊고 '잠시 멈춤' 안내를 띄운다
+      var ctl = window.AbortController ? new AbortController() : null;
+      if (ctl) setTimeout(function () { ctl.abort(); }, 8000);
+      fetch(cfg.supabaseUrl.replace(/\/+$/, '') + '/rest/v1/rpc/smash_board', { headers: h, signal: ctl ? ctl.signal : undefined })
         .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
         .then(function (rows) {
           if (!Array.isArray(rows)) return;
@@ -830,19 +845,20 @@ footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
             board[r.code] = { code: r.code, today_score: +r.today_score, today_kills: +r.today_kills, today_players: +r.today_players, total_score: +r.total_score, total_kills: +r.total_kills, total_players: +r.total_players };
           });
           document.getElementById('rank').hidden = false;
+          document.getElementById('rank-down').hidden = true;
           sortSel.querySelector('option[value="hot"]').hidden = false;
           if (first) { try { var sv = localStorage.getItem('smash-hub-sort'); if (sv === 'hot') sortSel.value = 'hot'; } catch (e) { /* storage blocked */ } }
           renderBoard(); syncFold(); render();
           if (first && location.hash === '#rank') document.getElementById('rank').scrollIntoView();
         })
-        .catch(function () { /* leaderboard unavailable: the school list still works */ });
+        .catch(function () { if (!board) document.getElementById('rank-down').hidden = false; /* the school list still works */ });
     }
     try { var saved = localStorage.getItem('smash-hub-sort'); if (saved && saved !== 'hot') sortSel.value = saved; } catch (e) { /* storage blocked */ }
     q.addEventListener('input', render);
     sortSel.addEventListener('change', render);
     render();
     loadBoard();
-    setInterval(function () { if (document.visibilityState === 'visible') loadBoard(); }, 60000);
+    setInterval(function () { if (document.visibilityState === 'visible') loadBoard(); }, 300000);   // 5분마다 (서버 전송량 한도 때문에 1분에서 늘림)
   })();
 </script>
 </body>
