@@ -10,90 +10,43 @@
   @media (prefers-color-scheme: dark) { :root { --bg: #17171c; --card: #202027; --text: #ececf0; --sub: #9a9aa6; --line: #34343e; } }
   * { box-sizing: border-box; }
   body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.5 -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif; }
-  main { max-width: 480px; margin: 0 auto; padding: 20px 16px 40px; }
-  h1 { font-size: 20px; margin: 4px 0 4px; }
-  p.sub { color: var(--sub); font-size: 14px; margin: 0 0 16px; }
-  .card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 16px; margin-bottom: 14px; }
-  label { display: block; font-size: 13px; color: var(--sub); margin: 10px 0 4px; }
-  input, select { width: 100%; font: inherit; padding: 11px 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--bg); color: var(--text); }
-  button, a.btn { display: block; width: 100%; text-align: center; font: inherit; font-weight: 700; padding: 13px; border: 0; border-radius: 12px; background: var(--blue); color: #fff; text-decoration: none; margin-top: 10px; cursor: pointer; }
-  a.btn.alt { background: transparent; color: var(--blue); border: 1px solid var(--blue); }
-  code { display: block; word-break: break-all; font-size: 12px; color: var(--sub); background: var(--bg); padding: 8px; border-radius: 8px; margin-top: 8px; }
-  #msg { font-size: 14px; margin-top: 10px; min-height: 1.5em; }
+  main { max-width: 480px; margin: 0 auto; padding: 24px 16px 40px; }
+  h1 { font-size: 20px; margin: 0 0 16px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 16px; }
+  a.btn { display: block; text-align: center; font-weight: 700; padding: 15px; border-radius: 12px; background: var(--blue); color: #fff; text-decoration: none; }
+  p.acct { color: var(--sub); font-size: 14px; text-align: center; margin: 10px 0 0; }
+  #msg { font-size: 14px; margin-top: 10px; min-height: 1.5em; text-align: center; }
   #msg.ok { color: var(--ok); } #msg.warn { color: var(--warn); }
-  ol { padding-left: 20px; margin: 6px 0 0; font-size: 14px; color: var(--sub); }
 </style>
 </head>
 <body>
 <main>
-  <h1>토스 송금 버튼 시험</h1>
-  <p class="sub">입력한 값은 이 화면 안에서만 쓰입니다. 어디에도 저장하거나 보내지 않습니다.</p>
-
+  <h1>토스 송금 시험</h1>
   <div class="card">
-    <label for="bank">은행</label>
-    <select id="bank">
-      <option>카카오뱅크</option><option selected>토스뱅크</option><option>KB국민은행</option><option>신한은행</option>
-      <option>우리은행</option><option>하나은행</option><option>NH농협은행</option><option>IBK기업은행</option>
-      <option>케이뱅크</option><option>새마을금고</option><option>우체국예금보험</option><option>SC제일은행</option>
-      <option>부산은행</option><option>iM뱅크(대구)</option><option>경남은행</option><option>광주은행</option>
-      <option>전북은행</option><option>제주은행</option><option>신협</option><option>Sh수협은행</option>
-    </select>
-    <label for="acct">계좌번호 (숫자만 남깁니다)</label>
-    <input id="acct" inputmode="numeric" autocomplete="off" value="1001-2329-7463">
-    <label for="amt">금액 (비우면 보내는 사람이 정합니다)</label>
-    <input id="amt" inputmode="numeric" autocomplete="off" value="1000">
-    <code id="link">supertoss://send?…</code>
-  </div>
-
-  <div class="card">
-    <button id="go" type="button">토스로 보내기 (앱이 안 열리면 계좌 복사)</button>
-    <a id="raw" class="btn alt" href="#">그냥 링크로 열기</a>
+    <a id="toss" class="btn" href="supertoss://send?amount=1000&amp;bank=%ED%86%A0%EC%8A%A4%EB%B1%85%ED%81%AC&amp;accountNo=100123297463&amp;origin=qr">토스로 1,000원 응원하기</a>
+    <p class="acct">토스뱅크 1001-2329-7463</p>
     <div id="msg"></div>
-    <ol>
-      <li>토스가 열리면 은행·계좌·금액이 채워져 있는지 봅니다.</li>
-      <li>송금은 하지 말고 화면만 확인한 뒤 닫습니다.</li>
-      <li>PC나 토스가 없는 폰에서는 계좌만 복사되는지 봅니다.</li>
-    </ol>
   </div>
 </main>
 <script>
 (function () {
-  var bank = document.getElementById('bank'), acct = document.getElementById('acct'), amt = document.getElementById('amt');
-  var linkBox = document.getElementById('link'), raw = document.getElementById('raw'), msg = document.getElementById('msg');
-  function digits(s) { return String(s || '').replace(/\D/g, ''); }
-  function link() {
-    var p = new URLSearchParams();
-    if (digits(amt.value)) p.set('amount', digits(amt.value));
-    p.set('bank', bank.value);
-    p.set('accountNo', digits(acct.value));
-    p.set('origin', 'qr');
-    return 'supertoss://send?' + p.toString();
-  }
-  function refresh() { var l = link(); linkBox.textContent = l; raw.href = l; }
-  [bank, acct, amt].forEach(function (el) { el.addEventListener('input', refresh); el.addEventListener('change', refresh); });
-  refresh();
-
-  function say(text, cls) { msg.textContent = text; msg.className = cls || ''; }
+  var ACCOUNT = '토스뱅크 100123297463';
+  var msg = document.getElementById('msg');
+  var mobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || (navigator.maxTouchPoints > 1 && /Mac/.test(navigator.platform));
+  function say(text, cls) { msg.textContent = text; msg.className = cls; }
   function copy(text) {
     if (navigator.clipboard && window.isSecureContext) return navigator.clipboard.writeText(text);
     var t = document.createElement('textarea'); t.value = text; t.setAttribute('readonly', ''); t.style.position = 'fixed'; t.style.opacity = '0';
     document.body.appendChild(t); t.select();
     try { document.execCommand('copy'); return Promise.resolve(); } catch (e) { return Promise.reject(e); } finally { t.remove(); }
   }
-
-  document.getElementById('go').addEventListener('click', function () {
-    var no = digits(acct.value);
-    if (!no) { say('계좌번호를 먼저 넣어 주세요.', 'warn'); return; }
-    // Copy inside the tap (iOS drops clipboard access after a timer), then try the app.
-    // Whether the app opened can't be detected reliably, so the message is the same either way.
-    var mobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || (navigator.maxTouchPoints > 1 && /Mac/.test(navigator.platform));
-    copy(bank.value + ' ' + no).then(function () {
-      say(mobile ? '계좌번호를 복사해 뒀어요. 토스가 안 열리면 은행 앱에 붙여 넣어 주세요.'
+  // The link itself opens Toss; copying the account is the fallback when Toss isn't there.
+  document.getElementById('toss').addEventListener('click', function (e) {
+    if (!mobile) e.preventDefault();
+    copy(ACCOUNT).then(function () {
+      say(mobile ? '토스가 안 열리면 복사된 계좌번호를 은행 앱에 붙여 넣어 주세요.'
                  : 'PC에서는 토스 앱을 열 수 없어요. 계좌번호를 복사해 뒀어요.', 'ok');
-    }, function () {
-      say('복사가 막혔어요. 직접 적어 주세요: ' + bank.value + ' ' + no, 'warn');
-    });
-    if (mobile) location.href = link();
+    }, function () { say('계좌번호: ' + ACCOUNT, 'warn'); });
   });
 })();
 </script>
