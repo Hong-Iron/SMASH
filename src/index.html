@@ -171,7 +171,10 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--gold); outline-
 @media (max-width: 640px) { .notice { grid-template-columns: 1fr; } .notice img { height: auto; } }
 .maker { justify-self: end; margin-bottom: -18px; color: var(--muted); font-size: 13px; text-decoration: none; }
 .maker:hover { color: var(--fg); text-decoration: underline; text-underline-offset: 3px; }
-.fab { position: fixed; right: max(calc(16px + env(safe-area-inset-right, 0px)), calc((100vw - 1080px) / 2 + 16px)); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); z-index: 50; padding: 11px 16px; border-radius: 999px; background: #fee500; color: #191919; font: 700 14px var(--font-ui); text-decoration: none; white-space: nowrap; box-shadow: 0 8px 24px rgba(0, 0, 0, .5), 0 0 0 3px rgba(254, 229, 0, .18); transition: opacity .2s, transform .2s; }
+.fab { position: fixed; right: max(calc(16px + env(safe-area-inset-right, 0px)), calc((100vw - 1080px) / 2 + 16px)); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); z-index: 50; display: flex; gap: 8px; transition: opacity .2s, transform .2s; }
+.fab a { padding: 11px 16px; border-radius: 999px; font: 700 14px var(--font-ui); text-decoration: none; white-space: nowrap; }
+.fab .kakao { background: #fee500; color: #191919; box-shadow: 0 8px 24px rgba(0, 0, 0, .5), 0 0 0 3px rgba(254, 229, 0, .18); }
+.fab .toss { background: #3182f6; color: #fff; box-shadow: 0 8px 24px rgba(0, 0, 0, .5), 0 0 0 3px rgba(49, 130, 246, .2); }
 .fab.off { opacity: 0; transform: translateY(12px); pointer-events: none; }
 .wrap { padding-bottom: calc(84px + env(safe-area-inset-bottom, 0px)); }
 /* 지도: 남한을 8개 구역으로 나눈 어두운 지도. 구역을 누르면 그 구역으로 확대되고 학교가 핀으로 나온다.
@@ -326,7 +329,10 @@ footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
     <span>문의 <a href="mailto:hongcheolmin004@gmail.com" id="mail-link">hongcheolmin004@gmail.com</a></span>
   </footer>
 </main>
-<a class="fab off" id="fab" href="https://qr.kakaopay.com/FKcOJKyOy1f405462" target="_blank" rel="noopener" aria-label="카카오페이로 개발자 응원하기">💛 카카오페이로 응원</a>
+<div class="fab off" id="fab">
+  <a class="kakao" id="fab-kakao" href="https://qr.kakaopay.com/FKcOJKyOy1f405462" target="_blank" rel="noopener" aria-label="카카오페이로 개발자 응원하기">💛 카카오페이로 응원</a>
+  <a class="toss" data-ev="hub-support-fab-toss" href="supertoss://send?amount=1000&amp;bank=%ED%86%A0%EC%8A%A4%EB%B1%85%ED%81%AC&amp;accountNo=100123297463&amp;origin=qr" aria-label="토스로 개발자 응원하기">토스로 응원</a>
+</div>
 
 <script type="application/json" id="schools-data">__SCHOOLS__</script>
 <script type="application/json" id="hub-config">__HUB_CONFIG__</script>
@@ -354,7 +360,7 @@ footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
     document.getElementById('mail-link').addEventListener('click', function () { ev('hub-mail'); });
     // 떠 있는 버튼: 위쪽 응원 줄이 화면에 보일 때만 숨는다 (PC는 페이지가 짧아 아래 상자까지 기준으로 삼으면 거의 안 보였다)
     var fab = document.getElementById('fab'), shown = new Set();
-    fab.addEventListener('click', function () { ev('hub-support-fab'); });
+    document.getElementById('fab-kakao').addEventListener('click', function () { ev('hub-support-fab'); });
     var syncFab = function () { fab.classList.toggle('off', shown.size > 0); };
     if ('IntersectionObserver' in window) {
       var io = new IntersectionObserver(function (es) {
