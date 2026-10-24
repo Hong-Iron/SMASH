@@ -169,8 +169,9 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--gold); outline-
 .notice .text { color: var(--muted); font-size: 14px; }
 .notice .go { justify-self: start; padding: 7px 14px; border-radius: 8px; background: var(--hot); color: #1a0d05; font-weight: 600; font-size: 14px; }
 @media (max-width: 640px) { .notice { grid-template-columns: 1fr; } .notice img { height: auto; } }
-.maker { justify-self: end; margin-bottom: -18px; color: var(--muted); font-size: 13px; text-decoration: none; }
-.maker:hover { color: var(--fg); text-decoration: underline; text-underline-offset: 3px; }
+.maker { justify-self: end; margin: 0 0 -18px; color: var(--muted); font-size: 13px; }
+.maker a { color: inherit; text-decoration: none; }
+.maker a:hover { color: var(--fg); text-decoration: underline; text-underline-offset: 3px; }
 .fab { position: fixed; right: max(calc(16px + env(safe-area-inset-right, 0px)), calc((100vw - 1080px) / 2 + 16px)); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); z-index: 50; display: flex; gap: 8px; transition: opacity .2s, transform .2s; }
 .fab a { padding: 11px 16px; border-radius: 999px; font: 700 14px var(--font-ui); text-decoration: none; white-space: nowrap; }
 .fab .kakao { background: #fee500; color: #191919; box-shadow: 0 8px 24px rgba(0, 0, 0, .5), 0 0 0 3px rgba(254, 229, 0, .18); }
@@ -233,7 +234,7 @@ footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
 </head>
 <body>
 <main class="wrap">
-  <a class="maker" href="https://hong-iron.github.io/Hongs_Blog/" target="_blank" rel="noopener" id="blog-link">Hong-Iron 블로그 ↗</a>
+  <p class="maker">만든 사람 <a href="https://x.com/Hong_Iron_DEV" target="_blank" rel="noopener" id="x-link">@Hong_Iron_DEV</a> · <a href="https://hong-iron.github.io/Hongs_Blog/" target="_blank" rel="noopener" id="blog-link">블로그 ↗</a></p>
   <header class="hero">
     <h1>SMASH <span>대학교</span></h1>
     <p class="tag">우리 학교 캠퍼스를 3D로 부숴 보세요</p>
@@ -324,7 +325,7 @@ footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
     <span>학교와 관계없는 비공식 팬 게임입니다. 학교 로고와 교표는 쓰지 않습니다.</span>
     <span>학교 랭킹에는 학교 코드와 점수만 보냅니다. 방문 수는 쿠키를 쓰지 않는 GoatCounter로 셉니다.</span>
     <span>건물·도로 © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap 기여자</a> · 고도 AWS Terrain Tiles (SRTM 30 m 기반) · 소스 <a href="https://github.com/Hong-Iron/SMASH" target="_blank" rel="noopener">GitHub</a></span>
-    <span>문의 <a href="mailto:hongcheolmin004@gmail.com" id="mail-link">hongcheolmin004@gmail.com</a></span>
+    <span>만든 사람 HongCM · X <a href="https://x.com/Hong_Iron_DEV" target="_blank" rel="noopener" id="x-link-foot">@Hong_Iron_DEV</a> · 문의 <a href="mailto:hongcheolmin004@gmail.com" id="mail-link">hongcheolmin004@gmail.com</a></span>
   </footer>
 </main>
 <div class="fab off" id="fab">
@@ -342,6 +343,7 @@ footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
     if (Date.now() - closedAt > WEEK) strip.hidden = false;
     strip.querySelectorAll('a[data-ev]').forEach(function (a) { a.addEventListener('click', function () { ev(a.dataset.ev); }); });
     document.getElementById('blog-link').addEventListener('click', function () { ev('hub-blog'); });
+    ['x-link', 'x-link-foot'].forEach(function (id) { document.getElementById(id).addEventListener('click', function () { ev('hub-x'); }); });
     // 토스는 휴대폰에서만 앱 링크로 열린다. PC에서는 대신 계좌번호를 복사한다
     var phone = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || (navigator.maxTouchPoints > 1 && /Mac/.test(navigator.platform));
     document.querySelectorAll('a.toss').forEach(function (a) {
