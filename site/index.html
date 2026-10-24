@@ -108,6 +108,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--gold); outline-
 .support .row { display: flex; flex-wrap: wrap; gap: 8px; }
 .support a { flex: 1 1 auto; max-width: 420px; padding: 12px 18px; border-radius: 10px; text-align: center; text-decoration: none; font-weight: 700; font-size: 15px; color: #191919; }
 .support .kakao { background: #fee500; }
+.support a.toss { background: #3182f6; color: #fff; }
 
 .board { display: grid; gap: 12px; padding: 18px; background: var(--panel); border: 1px solid var(--line); border-radius: 14px; scroll-margin-top: 16px; }
 .board-head { display: flex; align-items: center; justify-content: space-between; gap: 10px 16px; flex-wrap: wrap; }
@@ -153,6 +154,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--gold); outline-
 .support-strip .acts { flex: 1 1 280px; display: flex; align-items: center; gap: 6px; min-width: 0; }
 .support-strip .acts a { flex: 1; padding: 8px 14px; border-radius: 9px; color: #191919; font-weight: 700; font-size: 13.5px; text-align: center; text-decoration: none; white-space: nowrap; }
 .support-strip .kakao { background: #fee500; }
+.support-strip .acts a.toss { background: #3182f6; color: #fff; }
 .support-strip .close { width: 28px; height: 28px; border: 0; border-radius: 8px; background: transparent; color: var(--muted); font-size: 20px; line-height: 1; cursor: pointer; }
 .support-strip .close:hover { background: var(--panel-hi); color: var(--fg); }
 .notices { display: grid; gap: 10px; }
@@ -264,6 +266,7 @@ footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
     <p><b>작은 후원이 큰 힘이 됩니다!</b></p>
     <div class="acts">
       <a class="kakao" data-ev="hub-support-kakaopay" href="https://qr.kakaopay.com/FKcOJKyOy1f405462" target="_blank" rel="noopener">카카오페이로 응원</a>
+      <a class="toss" data-ev="hub-support-toss" href="supertoss://send?amount=1000&amp;bank=%ED%86%A0%EC%8A%A4%EB%B1%85%ED%81%AC&amp;accountNo=100123297463&amp;origin=qr">토스로 응원</a>
       <button type="button" class="close" id="support-strip-close" aria-label="응원 안내 닫기 (7일 동안 숨김)">&times;</button>
     </div>
   </aside>
@@ -312,6 +315,7 @@ footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
     <p>작은 후원이 큰 힘이 됩니다!</p>
     <div class="row">
       <a class="kakao" href="https://qr.kakaopay.com/FKcOJKyOy1f405462" target="_blank" rel="noopener">카카오페이로 응원</a>
+      <a class="toss" data-ev="hub-support-box-toss" href="supertoss://send?amount=1000&amp;bank=%ED%86%A0%EC%8A%A4%EB%B1%85%ED%81%AC&amp;accountNo=100123297463&amp;origin=qr">토스로 응원</a>
     </div>
   </section>
 
@@ -335,6 +339,18 @@ footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
     if (Date.now() - closedAt > WEEK) strip.hidden = false;
     strip.querySelectorAll('a[data-ev]').forEach(function (a) { a.addEventListener('click', function () { ev(a.dataset.ev); }); });
     document.getElementById('blog-link').addEventListener('click', function () { ev('hub-blog'); });
+    // 토스는 휴대폰에서만 앱 링크로 열린다. PC에서는 대신 계좌번호를 복사한다
+    var phone = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || (navigator.maxTouchPoints > 1 && /Mac/.test(navigator.platform));
+    document.querySelectorAll('a.toss').forEach(function (a) {
+      if (!strip.contains(a)) a.addEventListener('click', function () { ev(a.dataset.ev); });
+      a.addEventListener('click', function (e) {
+        if (phone) return;
+        e.preventDefault();
+        var q = new URLSearchParams(a.getAttribute('href').split('?')[1] || ''), acct = (q.get('bank') || '') + ' ' + (q.get('accountNo') || '');
+        var label = a.textContent, done = function (t) { a.textContent = t; setTimeout(function () { a.textContent = label; }, 3000); };
+        try { navigator.clipboard.writeText(acct).then(function () { done('계좌 복사됨 · ' + acct); }, function () { done(acct); }); } catch (err) { done(acct); }
+      });
+    });
     document.getElementById('mail-link').addEventListener('click', function () { ev('hub-mail'); });
     // 떠 있는 버튼: 위쪽 응원 줄이 화면에 보일 때만 숨는다 (PC는 페이지가 짧아 아래 상자까지 기준으로 삼으면 거의 안 보였다)
     var fab = document.getElementById('fab'), shown = new Set();
