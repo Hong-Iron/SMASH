@@ -116,7 +116,10 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--gold); outline-
 .board h2 span { color: var(--gold); }
 .rank-down p { margin: 0; color: var(--fg); font-size: 15px; line-height: 1.6; }
 .rank-down .paused { padding: 3px 10px; border-radius: 999px; background: var(--bg); border: 1px solid var(--line); color: var(--muted); font-size: 12.5px; }
-.rank-down a.toss { justify-self: start; padding: 10px 16px; border-radius: 10px; background: #3182f6; color: #fff; font-weight: 700; font-size: 14.5px; text-decoration: none; }
+.rank-down .acts { display: flex; flex-wrap: wrap; gap: 8px; }
+.rank-down .acts a { flex: 1 1 220px; text-align: center; padding: 10px 16px; border-radius: 10px; font-weight: 700; font-size: 14.5px; text-decoration: none; }
+.rank-down .acts a.kakao { background: #fee500; color: #191919; }
+.rank-down .acts a.toss { background: #3182f6; color: #fff; }
 .tabs { display: inline-flex; padding: 3px; border: 1px solid var(--line); border-radius: 999px; background: var(--bg); }
 .tabs button { padding: 5px 14px; border: 0; border-radius: 999px; background: transparent; color: var(--muted); font: 600 13px var(--font-ui); cursor: pointer; }
 .tabs button[aria-selected="true"] { background: var(--hot); color: #1a0d05; }
@@ -258,7 +261,10 @@ footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
       <span class="paused">잠시 멈춤</span>
     </div>
     <p>너무 많은 분이 찾아와 주셔서 랭킹 서버 한도를 넘었어요.<br>학교 랭킹은 잠시 멈췄지만 게임은 그대로 할 수 있어요!</p>
-    <a class="toss" data-ev="hub-rank-down-toss" href="supertoss://send?amount=1000&amp;bank=%ED%86%A0%EC%8A%A4%EB%B1%85%ED%81%AC&amp;accountNo=100123297463&amp;origin=qr">랭킹 서버비 보태기 →</a>
+    <div class="acts">
+      <a class="kakao" id="rank-down-kakao" href="https://qr.kakaopay.com/FKcOJKyOy1f405462" target="_blank" rel="noopener">카카오페이로 서버비 보태기 →</a>
+      <a class="toss" data-ev="hub-rank-down-toss" href="supertoss://send?amount=1000&amp;bank=%ED%86%A0%EC%8A%A4%EB%B1%85%ED%81%AC&amp;accountNo=100123297463&amp;origin=qr">토스로 서버비 보태기 →</a>
+    </div>
   </section>
 
   <section class="board" id="rank" aria-labelledby="rank-title" hidden>
@@ -358,6 +364,7 @@ footer { color: var(--muted); font-size: 12.5px; display: grid; gap: 4px; }
     if (Date.now() - closedAt > WEEK) strip.hidden = false;
     strip.querySelectorAll('a[data-ev]').forEach(function (a) { a.addEventListener('click', function () { ev(a.dataset.ev); }); });
     document.getElementById('blog-link').addEventListener('click', function () { ev('hub-blog'); });
+    document.getElementById('rank-down-kakao').addEventListener('click', function () { ev('hub-rank-down-kakaopay'); });
     ['x-link', 'x-link-foot'].forEach(function (id) { document.getElementById(id).addEventListener('click', function () { ev('hub-x'); }); });
     // 토스는 휴대폰에서만 앱 링크로 열린다. PC에서는 대신 계좌번호를 복사한다
     var phone = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || (navigator.maxTouchPoints > 1 && /Mac/.test(navigator.platform));
