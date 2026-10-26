@@ -1,5 +1,16 @@
 [
   {
+    "id": "instagram-1026",
+    "date": "2026-10-26",
+    "until": "2026-11-30",
+    "tag": "소식",
+    "title": "SMASH 인스타그램을 열었어요: @smash_univ",
+    "body": "학교별 SMASH 리그 중계 영상과 업데이트 소식을 올려요. 다음에 중계할 학교는 댓글로 받아요.",
+    "url": "https://www.instagram.com/smash_univ/",
+    "image": "notice-instagram-1026.webp",
+    "cta": "인스타 보러 가기"
+  },
+  {
     "id": "update-1025",
     "date": "2026-10-25",
     "until": "2026-11-15",
