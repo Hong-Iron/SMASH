@@ -1,5 +1,16 @@
 [
   {
+    "id": "company-launch",
+    "date": "2026-11-08",
+    "until": "2026-11-29",
+    "tag": "새 게임",
+    "title": "새 게임 SMASH 회사 출시: 월요병 해소용 회사 부수기",
+    "body": "SMASH 대학교와 같은 방식으로 여의도·강남·판교·구로·부산 문현·잠실 등 전국 업무지구 33곳을 3D로 옮겨 놓았어요. 집·학교·병원·관공서는 부서지지 않아요.",
+    "url": "https://hong-iron.github.io/SMASH-COMPANY/",
+    "image": "notice-company-1108.webp",
+    "cta": "회사 부수러 가기"
+  },
+  {
     "id": "update-789",
     "date": "2026-11-01",
     "until": "2026-11-22",
