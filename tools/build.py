@@ -31,13 +31,13 @@ notice_html = (f'<section class="notices" aria-labelledby="notice-title"><h2 cla
 ld = {
     "@context": "https://schema.org",
     "@graph": [
-        {"@type": "WebSite", "name": "SMASH 대학교", "alternateName": "우리 학교 부수기 게임", "url": "https://hong-iron.github.io/SMASH/", "inLanguage": "ko"},
+        {"@type": "WebSite", "name": "SMASH 대학교", "alternateName": "우리 학교 부수기 게임", "url": "https://smash-univ.app/", "inLanguage": "ko"},
         {"@type": "ItemList", "name": "SMASH 대학교 캠퍼스 목록", "numberOfItems": len(schools),
          "itemListElement": [{"@type": "ListItem", "position": i + 1, "url": s["url"], "name": f'{s["campus"]} 부수기 게임'} for i, s in enumerate(by_name)]},
         # breadcrumb: Google shows "Hong-Iron › SMASH 대학교" in place of the bare address
         {"@type": "BreadcrumbList", "itemListElement": [
             {"@type": "ListItem", "position": 1, "name": "Hong-Iron", "item": "https://hong-iron.github.io/"},
-            {"@type": "ListItem", "position": 2, "name": "SMASH 대학교", "item": "https://hong-iron.github.io/SMASH/"}]},
+            {"@type": "ListItem", "position": 2, "name": "SMASH 대학교", "item": "https://smash-univ.app/"}]},
     ],
 }
 # 지도: 남한 시도 경계(KOSTAT 2013, 자유 이용 — github.com/southkorea/southkorea-maps)를 8개 구역으로 묶어 SVG로 그린다.

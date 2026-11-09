@@ -4,7 +4,7 @@
 
 우리 학교 캠퍼스를 3D로 부수는 게임을 모아 둔 첫 화면입니다. 학교와 관계없는 비공식 팬 게임입니다.
 
-**바로 가기:** https://hong-iron.github.io/SMASH/
+**바로 가기:** https://smash-univ.app/
 
 ## 학교
 
