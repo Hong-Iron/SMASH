@@ -42,19 +42,27 @@ begin
   exception when others then
     v_hdr := null;
   end;
-  -- 게이트웨이가 붙이는 x-forwarded-for의 첫 값을 먼저 본다. IP를 모르면 점수를 받지 않는다(예전에는 검사를 건너뛰었다)
-  v_ip := coalesce(nullif(split_part(coalesce(v_hdr ->> 'x-forwarded-for', ''), ',', 1), ''), v_hdr ->> 'cf-connecting-ip', v_hdr ->> 'x-real-ip');
+  -- 클라이언트가 조작 가능한 X-Forwarded-For 헤더 스푸핑(IP 위조)을 방지하기 위해
+  -- Cloudflare 엣지가 인증하여 주입하는 cf-connecting-ip를 최우선으로 신뢰한다.
+  -- (x-forwarded-for의 첫 값을 먼저 신뢰하면 클라이언트가 가짜 IP를 넣어 스로틀 및 일일 한도를 우회할 수 있다)
+  v_ip := coalesce(
+    nullif(trim(v_hdr ->> 'cf-connecting-ip'), ''),
+    nullif(trim(v_hdr ->> 'x-real-ip'), ''),
+    nullif(trim(split_part(coalesce(v_hdr ->> 'x-forwarded-for', ''), ',', 1)), '')
+  );
   if v_ip is null then return; end if;
   v_key := md5(v_ip || '|' || v_day::text);
 
+  -- 동시성 레이스 컨디션(TOCTOU) 방어: 선 기록 후 분당 호출 횟수 검증
   delete from smash_throttle t where t.at < now() - interval '2 minutes';
-  select count(*) into v_cnt from smash_throttle t where t.k = v_key and t.at > now() - interval '1 minute';
-  if v_cnt >= 60 then return; end if;              -- 1분에 60번 (학교 와이파이 몫으로 그대로)
   insert into smash_throttle (k) values (v_key);
+  select count(*) into v_cnt from smash_throttle t where t.k = v_key and t.at > now() - interval '1 minute';
+  if v_cnt > 60 then return; end if;              -- 1분에 60번 (학교 와이파이 몫으로 그대로)
 
   insert into smash_ipday as i (k, day, score) values (v_key, v_day, 0)
   on conflict (k, day) do nothing;
-  select i.score into v_used from smash_ipday i where i.k = v_key and i.day = v_day for update;
+  select i.score into v_used from smash_ipday i where i.k = v_key and day = v_day for update;
+  if v_used >= 100000000::bigint then return; end if;
   p_score := least(p_score, greatest(100000000::bigint - v_used, 0));
   update smash_ipday set score = score + p_score where k = v_key and day = v_day;
   if p_score = 0 and p_kills = 0 and not coalesce(p_new, false) then return; end if;
