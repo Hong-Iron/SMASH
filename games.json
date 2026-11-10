@@ -1,0 +1,17 @@
+[
+  {
+    "id": "company",
+    "name": "SMASH 회사",
+    "line": "우리 회사 사옥을 부수는 자매 게임",
+    "url": "https://company.smash-univ.app/",
+    "image": "https://company.smash-univ.app/og.jpg"
+  },
+  {
+    "id": "jonggang",
+    "name": "종강 파이터",
+    "line": "교수님과 싸우는 도트 격투 게임",
+    "url": "https://hong-iron.github.io/JONGGANG-FIGHTER/",
+    "image": "https://hong-iron.github.io/JONGGANG-FIGHTER/og.png",
+    "pixel": true
+  }
+]

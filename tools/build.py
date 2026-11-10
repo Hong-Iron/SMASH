@@ -12,7 +12,7 @@ notices = json.loads(nf.read_text(encoding="utf-8")) if nf.exists() else []
 import datetime
 today = (datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(hours=9)).date().isoformat()
 notices = [n for n in notices if not n.get("until") or n["until"] >= today]
-for k in ("__NOTICES__", "__SCHOOLS__", "__HUB_CONFIG__", "<!--GOATCOUNTER-->", "<!--JSONLD-->", "__CARDS__", "__COUNT__", "__MAP__"):
+for k in ("__NOTICES__", "__GAMES__", "__SCHOOLS__", "__HUB_CONFIG__", "<!--GOATCOUNTER-->", "<!--JSONLD-->", "__CARDS__", "__COUNT__", "__MAP__"):
     assert k in tpl, k
 e = lambda v: html.escape(str(v), quote=True)
 blob = lambda v: json.dumps(v, ensure_ascii=False).replace("</", "<\\/")
@@ -32,6 +32,15 @@ def notice(n):
             f'<strong>{e(n["title"])}</strong><span class="go">{e(n.get("cta", "보러 가기"))} →</span></div></a>')
 notice_html = (f'<section class="notices" aria-labelledby="notice-title"><h2 class="sec-title" id="notice-title">공지</h2>'
                f'{"".join(notice(n) for n in notices)}</section>') if notices else ""
+# 다른 게임: 기한 없이 늘 보이는 줄(games.json: [{id, name, line, url, image, pixel}]). 누르면 hub-game-<id>로 센다
+gf = root / "games.json"
+games = json.loads(gf.read_text(encoding="utf-8")) if gf.exists() else []
+def game(g):
+    return (f'<a class="game" href="{e(g["url"])}" data-id="{e(g["id"])}">'
+            f'<img src="{e(g["image"])}" alt="{e(g["name"])} 게임 화면" width="1200" height="630" loading="lazy" decoding="async"{' class="px"' if g.get("pixel") else ''}>'
+            f'<span class="body"><strong>{e(g["name"])}</strong><span class="line">{e(g["line"])}</span></span></a>')
+games_html = (f'<section class="others" aria-labelledby="others-title"><h2 class="sec-title" id="others-title">다른 게임</h2>'
+              f'<div class="games-row">{"".join(game(g) for g in games)}</div></section>') if games else ""
 ld = {
     "@context": "https://schema.org",
     "@graph": [
@@ -113,8 +122,10 @@ map_svg = (f'<svg class="kmap" id="kmap" viewBox="0 0 {W} {Hh}" data-w="{W}" dat
            f'<script type="application/json" id="map-sections">{blob(secs)}</script>')
 out = (tpl.replace("__SCHOOLS__", blob(schools)).replace("__HUB_CONFIG__", blob(pub)).replace("<!--GOATCOUNTER-->", gc)
        .replace("<!--JSONLD-->", '<script type="application/ld+json">' + blob(ld) + "</script>")
-       .replace("__NOTICES__", notice_html).replace("__MAP__", map_svg).replace("__CARDS__", cards).replace("__COUNT__", str(len(schools)))
+       .replace("__NOTICES__", notice_html).replace("__GAMES__", games_html).replace("__MAP__", map_svg).replace("__CARDS__", cards).replace("__COUNT__", str(len(schools)))
        # 랭킹을 멈춘 동안(config rankingPaused)은 안내 카드를 처음부터 보이고, 랭킹 서버는 부르지 않는다
-       .replace("__RANK_DOWN_HIDDEN__", "" if cfg.get("rankingPaused") else " hidden"))
+       .replace("__RANK_DOWN_HIDDEN__", "" if cfg.get("rankingPaused") else " hidden")
+       # 랭킹 칸은 처음부터 자리를 잡아 둔다(순위를 받은 뒤 나타나면 아래 목록이 밀린다). 멈춘 동안에는 숨긴다
+       .replace("__RANK_HIDDEN__", " hidden" if cfg.get("rankingPaused") else ""))
 (root / "site" / "index.html").write_text(out, encoding="utf-8")
 print("site/index.html", len(out.encode()) // 1024, "KB,", len(schools), "schools")
