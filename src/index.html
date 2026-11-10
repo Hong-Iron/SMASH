@@ -371,7 +371,7 @@ button:active, .hits a:active { transform: translateY(1px); }
       <h2 id="rank-down-title">학교 대항 <span>파괴 랭킹</span></h2>
       <span class="paused">잠시 멈춤</span>
     </div>
-    <p>10월 23일부터 방문이 몰려 랭킹 서버 무료 한도를 넘었어요. 점수 집계만 멈췄고 게임은 그대로예요.</p>
+    <p>지금 랭킹 서버에 닿지 않아요. 점수 집계만 멈췄고 게임은 그대로예요.</p>
     <div class="acts">
       <a class="kakao" id="rank-down-kakao" href="https://qr.kakaopay.com/FKcOJKyOy1f405462" target="_blank" rel="noopener">카카오페이로 서버비 보태기 →</a>
       <a class="toss" data-ev="hub-rank-down-toss" href="supertoss://send?amount=1000&amp;bank=%ED%86%A0%EC%8A%A4%EB%B1%85%ED%81%AC&amp;accountNo=100123297463&amp;origin=qr">토스로 서버비 보태기 →</a>
@@ -400,7 +400,7 @@ button:active, .hits a:active { transform: translateY(1px); }
     <div class="acts">
       <a class="kakao" data-ev="hub-support-kakaopay" href="https://qr.kakaopay.com/FKcOJKyOy1f405462" target="_blank" rel="noopener">카카오페이로 응원</a>
       <a class="toss" data-ev="hub-support-toss" href="supertoss://send?amount=1000&amp;bank=%ED%86%A0%EC%8A%A4%EB%B1%85%ED%81%AC&amp;accountNo=100123297463&amp;origin=qr">토스로 응원</a>
-      <button type="button" class="close" id="support-strip-close" aria-label="응원 안내 닫기 (7일 동안 숨김)">&times;</button>
+      <button type="button" class="close" id="support-strip-close" aria-label="응원 안내 닫기">&times;</button>
     </div>
   </aside>
 
@@ -467,7 +467,7 @@ button:active, .hits a:active { transform: translateY(1px); }
 <script type="application/json" id="schools-data">__SCHOOLS__</script>
 <script type="application/json" id="hub-config">__HUB_CONFIG__</script>
 <script>
-  // 응원 안내: 닫으면 7일 동안 숨기고, 누른 버튼은 방문 통계에 이벤트로 센다
+  // 응원 안내: 누른 버튼은 방문 통계에 이벤트로 센다
   (function () {
     var strip = document.getElementById('support-strip');
     var ev = function (path) { try { var g = window.goatcounter; if (g && g.count) g.count({ path: path, title: 'SMASH hub', event: true }); } catch (e) {} };
@@ -966,12 +966,11 @@ button:active, .hits a:active { transform: translateY(1px); }
     });
     function loadBoard() {
       if (!cfg.supabaseUrl || !cfg.supabaseKey || cfg.rankingPaused) return;
-      var h = { apikey: cfg.supabaseKey };
-      if (/^eyJ/.test(cfg.supabaseKey)) h.Authorization = 'Bearer ' + cfg.supabaseKey;
+      // 헤더를 붙이지 않는다: 랭킹 서버(Cloudflare Worker)는 키를 보지 않고, 헤더가 있으면 브라우저가 사전 요청(OPTIONS)을 한 번 더 보낸다
       // 서버가 멈추면 응답 없이 20초 넘게 걸려서, 8초에 끊고 '잠시 멈춤' 안내를 띄운다
       var ctl = window.AbortController ? new AbortController() : null;
       if (ctl) setTimeout(function () { ctl.abort(); }, 8000);
-      fetch(cfg.supabaseUrl.replace(/\/+$/, '') + '/rest/v1/rpc/smash_board', { headers: h, signal: ctl ? ctl.signal : undefined })
+      fetch(cfg.supabaseUrl.replace(/\/+$/, '') + '/rest/v1/rpc/smash_board', { signal: ctl ? ctl.signal : undefined })
         .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
         .then(function (rows) {
           if (!Array.isArray(rows)) return;

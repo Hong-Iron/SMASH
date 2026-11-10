@@ -8,6 +8,10 @@ schools = json.loads((root / "schools.json").read_text(encoding="utf-8"))
 cfg = json.loads((root / "config.json").read_text(encoding="utf-8"))
 nf = root / "notices.json"   # 공지 카드: [{id, date, until, tag, title, body, url, image, cta}] (body는 기록용, 화면에는 제목만)
 notices = json.loads(nf.read_text(encoding="utf-8")) if nf.exists() else []
+# 기한(until)이 지난 공지는 HTML에 넣지 않는다(화면에서는 어차피 지워지고, 그림만 받게 된다). 날짜는 한국 시간
+import datetime
+today = (datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(hours=9)).date().isoformat()
+notices = [n for n in notices if not n.get("until") or n["until"] >= today]
 for k in ("__NOTICES__", "__SCHOOLS__", "__HUB_CONFIG__", "<!--GOATCOUNTER-->", "<!--JSONLD-->", "__CARDS__", "__COUNT__", "__MAP__"):
     assert k in tpl, k
 e = lambda v: html.escape(str(v), quote=True)
@@ -23,7 +27,7 @@ cards = "".join(
 def notice(n):
     m, d = (int(x) for x in n["date"].split("-")[1:])
     return (f'<a class="notice" href="{e(n["url"])}" data-id="{e(n["id"])}" data-until="{e(n.get("until", ""))}">'
-            f'<img src="{e(n["image"])}" alt="{e(n["title"])} 화면" width="1200" height="630"{' class="px"' if n.get("pixel") else ''}>'
+            f'<img src="{e(n["image"])}" alt="{e(n["title"])} 화면" width="1200" height="630" loading="lazy" decoding="async"{' class="px"' if n.get("pixel") else ''}>'
             f'<div class="body"><span class="tag">{e(n.get("tag", "공지"))} · <time datetime="{e(n["date"])}">{m}월 {d}일</time></span>'
             f'<strong>{e(n["title"])}</strong><span class="go">{e(n.get("cta", "보러 가기"))} →</span></div></a>')
 notice_html = (f'<section class="notices" aria-labelledby="notice-title"><h2 class="sec-title" id="notice-title">공지</h2>'
