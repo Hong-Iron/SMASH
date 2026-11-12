@@ -574,26 +574,78 @@ button:active, .hits a:active { transform: translateY(1px); }
     var schools = JSON.parse(document.getElementById('schools-data').textContent);
     var grid = document.getElementById('schools'), q = document.getElementById('q'), sortSel = document.getElementById('sort'), countEl = document.getElementById('count');
     var CHO = ['ㄱ','ㄲ','ㄴ','ㄷ','ㄸ','ㄹ','ㅁ','ㅂ','ㅃ','ㅅ','ㅆ','ㅇ','ㅈ','ㅉ','ㅊ','ㅋ','ㅌ','ㅍ','ㅎ'];
+    var CHO_MAP = {};
+    CHO.forEach(function (c, i) {
+      CHO_MAP[c] = '[' + c + String.fromCharCode(0xAC00 + i * 588) + '-' + String.fromCharCode(0xAC00 + (i + 1) * 588 - 1) + ']';
+    });
     function chosung(str) {
       var out = '';
       for (var i = 0; i < str.length; i++) {
         var c = str.charCodeAt(i) - 0xAC00;
-        out += (c >= 0 && c < 11172) ? CHO[Math.floor(c / 588)] : str[i];
+        out += (c >= 0 && c < 11172) ? CHO[Math.floor(c / 588)] : str.charAt(i);
       }
       return out;
     }
     var norm = function (t) { return (t || '').toLowerCase().replace(/[\s·\-_.]/g, ''); };
+    var ALIASES = {
+      KAIST: '카이스트 한국과기원',
+      POSTECH: '포스텍 포항공대',
+      GIST: '지스트 광주과기원',
+      UNIST: '유니스트 울산과기원',
+      DGIST: '디지스트 대구경북과기원',
+      KARTS: '한예종',
+      KNSU: '한체대 한국체대',
+      SEOULTECH: '서울과기대 과기대',
+      KNUE: '교원대 한국교원대',
+      EWHA: '이대',
+      SOOKMYUNG: '숙대'
+    };
     schools.forEach(function (s, i) {
       s._i = i;
-      var text = [s.name, s.campus, s.code, s.nameEn, s.region, 'SMASH ' + s.code, s.name.replace('대학교', '대'), s.campus.replace('대학교', '대')].join(' ');
+      var baseCode = s.code.split('-')[0];
+      var extra = [
+        s.name.replace('대학교', '대'),
+        s.name.replace('교육대학교', '교대').replace('교육대', '교대'),
+        s.name.replace('여자대학교', '여대').replace('여자대', '여대'),
+        s.name.replace('외국어대학교', '외대'),
+        s.name.replace('과학기술대학교', '과기대'),
+        s.name.replace('공과대학교', '공대'),
+        ALIASES[s.code] || ALIASES[baseCode] || '',
+        s.campus.replace('대학교', '대'),
+        s.campus.replace('교육대학교', '교대'),
+        s.campus.replace('여자대학교', '여대'),
+        s.campus.replace('외국어대학교', '외대')
+      ].filter(Boolean);
+      var keys = [s.name, s.campus, s.code].concat(extra);
+      s._keys = keys;
+      s._choKeys = keys.map(chosung);
+      var text = [s.name, s.campus, s.code, s.nameEn, s.region, 'SMASH ' + s.code].concat(extra).join(' ');
       s._hay = norm(text);
       s._cho = norm(chosung(text));
     });
+    var qRegex = null, lastNq = null;
+    function getQueryRegex(nq) {
+      if (nq === lastNq) return qRegex;
+      lastNq = nq;
+      if (/[ㄱ-ㅎ]/.test(nq)) {
+        var pat = '';
+        for (var i = 0; i < nq.length; i++) {
+          var ch = nq.charAt(i);
+          pat += CHO_MAP[ch] || ch.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        }
+        try { qRegex = new RegExp(pat); } catch (e) { qRegex = null; }
+      } else {
+        qRegex = null;
+      }
+      return qRegex;
+    }
     function matches(s, query) {
       if (!query) return true;
       var nq = norm(query);
       if (s._hay.indexOf(nq) >= 0) return true;
-      return /^[ㄱ-ㅎ]+$/.test(nq) && s._cho.indexOf(nq) >= 0;
+      if (/^[ㄱ-ㅎ]+$/.test(nq) && s._cho.indexOf(nq) >= 0) return true;
+      var rx = getQueryRegex(nq);
+      return rx ? rx.test(s._hay) : false;
     }
     function card(s) {
       var a = document.createElement('a');
@@ -628,7 +680,8 @@ button:active, .hits a:active { transform: translateY(1px); }
       query = Array.from(String(query || '').replace(/[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(^|[^\uD800-\uDBFF])[\uDC00-\uDFFF]/g, function (m, pre) { return (pre || '') + '\uFFFD'; })).slice(0, 80).join('');
       var req = document.createElement('a');
       req.className = 'request';
-      req.href = 'https://github.com/Hong-Iron/SMASH/issues/new?title=' + encodeURIComponent('학교 추가 요청: ' + (query || '')) + '&body=' + encodeURIComponent('학교 이름:' + (query ? ' ' + query : '') + '\n캠퍼스:\n');
+      var title = query ? ('학교 추가 요청: ' + query) : '학교 추가 요청';
+      req.href = 'https://github.com/Hong-Iron/SMASH/issues/new?title=' + encodeURIComponent(title) + '&body=' + encodeURIComponent('학교 이름:' + (query ? ' ' + query : '') + '\n캠퍼스:\n');
       req.target = '_blank'; req.rel = 'noopener';
       var st = document.createElement('strong'); st.textContent = query ? '‘' + query + '’도 부수고 싶다면?' : '우리 학교도?';
       var sp = document.createElement('span'); sp.textContent = '부수고 싶은 학교를 알려 주세요. GitHub에 요청을 남기면 다음 후보에 올립니다.';
@@ -641,10 +694,13 @@ button:active, .hits a:active { transform: translateY(1px); }
     function ranked(query) {
       var nq = norm(query);
       var cho = /^[ㄱ-ㅎ]+$/.test(nq);
+      var rx = getQueryRegex(nq);
+      var startRx = rx ? new RegExp('^' + rx.source) : null;
       var starts = function (s) {
-        var short = s.name.replace('대학교', '대');
-        var keys = cho ? [chosung(short), chosung(s.name)] : [s.name, short, s.code];
-        return keys.some(function (k) { return norm(k).indexOf(nq) === 0; }) ? 0 : 1;
+        var keys = cho ? s._choKeys : s._keys;
+        if (keys.some(function (k) { return norm(k).indexOf(nq) === 0; })) return 0;
+        if (startRx && keys.some(function (k) { return startRx.test(norm(k)); })) return 0;
+        return 1;
       };
       return schools.filter(function (s) { return matches(s, query); })
         .sort(function (a, b) { return starts(a) - starts(b) || a.code.length - b.code.length || a.name.localeCompare(b.name, 'ko'); });
